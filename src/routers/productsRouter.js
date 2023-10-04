@@ -1,11 +1,12 @@
-import { productsData } from "../db/testdata.js";
 import { Router } from "express";
 import { productService } from "../services/service.js";
 
 const productsRouter=Router();
 
 productsRouter.get("/",(req,res)=>{
-    res.json(productsData);
+    const category = req.query.category;
+    const data = productService.findCategory(category);
+    res.json(data);
 })
 
 productsRouter.get("/search",(req,res)=>{
