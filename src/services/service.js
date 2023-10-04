@@ -1,7 +1,7 @@
 import { productsData } from "../db/testdata.js";
 
 class ProductService{
-    findCategory(category){
+    getProducts(category){
         if(!category){
             return productsData;
         }
@@ -9,8 +9,8 @@ class ProductService{
         return products;
     }
 
-    searchProduct(word){
-        const products = productsData.filter(item=>item.name.includes(word));
+    searchProducts(word){
+        const products = productsData.filter(item=>item.productName.includes(word));
         return products;
     }
 }
