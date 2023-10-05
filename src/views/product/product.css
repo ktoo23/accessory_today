@@ -6,7 +6,7 @@
 
 .prd-list .container .item-list .card {
   flex-basis: calc(33.33% - 20px);
-  /* box-sizing: border-box; */
+  box-sizing: border-box;
   border: none;
 }
 .prd-list .container .item-list .card img {
@@ -29,3 +29,5 @@
 .price {
   text-align: center;
 }
+
+/* 미디어쿼리 추가해서 브라우저 좁아졌을 때 겹치지 않게 해야함 */
