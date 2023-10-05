@@ -1,4 +1,4 @@
-const headerEl = `
+let categoryEl = `
    <body>
     <div class="col-sm-3 sidenav">
       <ul class="nav nav-pills nav-stacked">
@@ -12,13 +12,13 @@ const headerEl = `
   </body>
 `;
 
-const initHeader = () => {
+const initCategory = () => {
   const targetEl = document.getElementById("category");
   if (targetEl) {
-    targetEl.innerHTML = headerEl;
+    targetEl.innerHTML = categoryEl;
   } else {
     console.error("targetEl not found");
   }
 };
 
-initHeader();
+initCategory();
