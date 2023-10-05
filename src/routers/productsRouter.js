@@ -3,19 +3,14 @@ import { productService } from "../services/productService.js";
 
 const productRouter=Router();
 
-//getCategoryProducts
+//getProducts
 productRouter.get("/",async (req,res)=>{  
     const category = req.query.category;
-    const data = await productService.getProducts(category);
+    const word = req.query.word;
+    const data = await productService.getProducts(category,word);
     res.json(data);
 })
 
-//searchProducts
-productRouter.get("/search",async (req,res)=>{ 
-    const word = req.query.word;
-    const data = await productService.searchProducts(word);
-    res.json(data);
-})
 
 //getDetail
 productRouter.get("/:productId",async (req,res)=>{

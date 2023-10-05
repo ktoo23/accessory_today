@@ -2,6 +2,7 @@ import express from "express";
 import mongoose from "mongoose";
 import { userRouter } from "./routers/userRouter.js";
 import { categoryRouter } from "./routers/categoryRouter.js";
+import { productRouter } from "./routers/productsRouter.js";
 import bodyParser from "body-parser";
 
 const app = express();
@@ -21,7 +22,7 @@ app.get("/", (req, res) => {
   res.send("HOME");
 });
 
-app.use("/users", userRouter);
+app.use("/api/users", userRouter);
 app.use("/", categoryRouter);
-
+app.use("/api/products",productRouter);
 export { app };

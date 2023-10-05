@@ -1,20 +1,23 @@
-import Products from "../db/models/productModel.js";
+import {Products} from "../db/models/productModel.js";
+import mongoose from "mongoose";
+
+const ObjectId = mongoose.Types.ObjectId;
 
 class ProductService{
 
-    async getProducts(category){
+    async getProducts(category,word){
 
-        let products ={}
+        let products =await Products.find({});
 
-        if(!category){ //카테고리 값이 없을시 전체 출력
-            products = await Products.find({});
+        if (category){ //카테고리 검색
+            products = products.filter(item=>item.category===category);
         }
+        if (word){ //상품명 검색
+            products = products.filter(item=>item.productName.includes(word));
 
-        else{ //카테고리 값이 있을시 그 카테고리만 출력
-            products = await Products.find({category:category});
         }
         
-        const data = products.map(item=>{ //필요한 데이터만 출력하게 변환
+        const changedData = products.map(item=>{ //필요한 데이터만 출력하게 변환
             return { 
                 _id:item._id,
                 productName:item.productName,
@@ -22,26 +25,22 @@ class ProductService{
                 productImg:item.productImg
     }})
 
-        return data;
+        return {
+            status:200,
+            message:'해당 상품 목록입니다.',
+            products:changedData
+        };
     }
 
-    async searchProducts(word){
-        
-        const products = await Products.find({productName:{$regex:new RegExp(word, 'i')}});//단어가 포함되어 있기만 해도 찾을 수 있다. 
-
-        const data = products.map(item=>{ //필요한 데이터만 출력하게 변환
-            return {
-                _id:item._id,
-                productName:item.productName,
-                price:item.price,
-                productImg:item.productImg
-    }})
-        return data;
-    }
 
     async getDetail(Id){
-        const product = await Products.findById(Id); //id로 찾기
-        return product;
+        const targetId = new ObjectId(Id);//ObjectId형태로 변환
+        const product = await Products.findById(targetId); //id로 찾기
+        return {
+            status:200,
+            message:'상품의 상세 페이지입니다.',
+            product:product
+        };
     }
 }
 
