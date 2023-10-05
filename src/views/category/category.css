@@ -9,6 +9,13 @@ ul.nav.nav-pills.nav-stacked a {
 }
 
 ul.nav.nav-pills.nav-stacked a:hover {
-    color: #D3CDB3;
-    text-decoration: underline;
+    color: #D3CDB3 !important;
+    ;
+    text-decoration: underline !important;
+    ;
+}
+
+ul.nav.nav-pills.nav-stacked a:focus {
+    color: #D3CDB3 !important;
+    text-decoration: underline !important;
 }

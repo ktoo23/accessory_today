@@ -4,7 +4,7 @@ let dropdownCategories = ["ALL", "RING", "EARRING", "BRACELET", "NECKLACE"];
 let headerEl = `
 <header>
 <div class="logo">
-  <img src="./img/today-logo.png" alt="logo"/>
+  <img src="../public/img/today-logo.png" alt="logo"/>
 </div>
 
 <div class="header-nav">
