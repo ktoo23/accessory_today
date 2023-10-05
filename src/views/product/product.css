@@ -1,0 +1,31 @@
+.prd-list .container .item-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+
+.prd-list .container .item-list .card {
+  flex-basis: calc(33.33% - 20px);
+  /* box-sizing: border-box; */
+  border: none;
+}
+.prd-list .container .item-list .card img {
+  
+  /* border: 1px solid black; temp */
+  height: 300px;
+  width: 300px;
+  margin-bottom: 20px;
+  align-self: center;
+}
+
+.prd-list .container {
+  margin-top: 100px;
+}
+
+.name {
+  text-align: center;
+}
+
+.price {
+  text-align: center;
+}
