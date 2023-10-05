@@ -1,0 +1,14 @@
+ul.nav.nav-pills.nav-stacked {
+    display: block;
+    padding-left: 15%;
+}
+
+ul.nav.nav-pills.nav-stacked a {
+    color: #000000;
+    text-decoration: none;
+}
+
+ul.nav.nav-pills.nav-stacked a:hover {
+    color: #D3CDB3;
+    text-decoration: underline;
+}
