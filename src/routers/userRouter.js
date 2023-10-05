@@ -1,6 +1,7 @@
 import { Router } from "express";
 import { userService } from "../services/userService.js";
 import { User } from "../db/models/userModel.js";
+import { NonMember } from "../db/models/nonMemberModel.js";
 
 const userRouter = Router();
 
@@ -34,9 +35,10 @@ userRouter.post("/login", async (req, res) => {
 
 // 일반 회원 마이페이지
 userRouter.get("/mypage", async (req, res) => {
-  const accessTocken = req.header("Authorization");
+  const accessToken = req.header("Authorization").split("Bearer ")[1];
   try {
-    const getMyPageResult = await User.getMyPage(accessTocken);
+    const getMyPageResult = await userService.getMyPage(accessToken);
+    console.log(getMyPageResult);
     return res.json(getMyPageResult);
   } catch (err) {
     res.json(err);
