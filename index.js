@@ -1,6 +1,10 @@
 import express from "express";
 import "dotenv";
 
+import http from "http";
+import path from "path";
+const __dirname = path.resolve();
+
 const app = express();
 
 const PORT = process.env.PORT || 5000;
