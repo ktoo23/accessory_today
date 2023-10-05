@@ -11,8 +11,6 @@ const productSchema = new Schema({
     isNew: {type: Boolean, required: true, default: false},
     // 베스트 상품 여부
     isBest: {type: Boolean, required: true, default: false},
-    // 제조사
-    maker: {type: String, required: true},
     // 이미지 url
     productImg: {type: String, required: true},
 })

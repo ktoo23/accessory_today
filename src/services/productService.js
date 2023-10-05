@@ -3,11 +3,14 @@ import Products from "../db/models/productModel.js";
 class ProductService{
 
     async getProducts(category){
+        let products ={}
         if(!category){
-            return Products.find({});
+            products = await Products.find({});
         }
-        const products=await Products.find({category:category});
-        console.log(products)
+        else{
+            products = await Products.find({category:category});
+        }
+        
         const data = products.map(item=>{
             return {
                 _id:item._id,
