@@ -95,6 +95,4 @@ adminRouter.patch("/products", async (req, res) => {
   }
 });
 
-//const targetId = new ObjectId(Id);//ObjectId형태로 변환
-
 export { adminRouter };
