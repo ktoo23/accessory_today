@@ -23,7 +23,7 @@ let headerEl = `
 
     <div class="col">
       <ul class="header-middle">
-        <li><a href="">SHOP</a></li>
+        <li><a href="../product/product.html">SHOP</a></li>
         <li><a href="">신상품</a></li>
         <li><a href="">Best</a></li>
         <li><a href="">About</a></li>
@@ -52,43 +52,18 @@ const initHeader = () => {
   }
 };
 
-function updateDropdownMenu(items) {
-  const dropdownMenu = document.querySelector('.nav-item.dropdown .dropdown-menu');
-  dropdownMenu.innerHTML = ''; // 기존 메뉴 초기화
-
-  items.forEach((item) => {
-    const dropdownItem = document.createElement('li');
-    dropdownItem.innerHTML = `<a class="dropdown-item" href="#">${item}</a>`; // href 부분 수정필요
-    dropdownMenu.appendChild(dropdownItem);
-  });
-}
-
 initHeader();
-updateDropdownMenu(dropdownCategories);
 
-// 임시 카테고리 드롭다운 추가/삭제 함수
-function addDropdownItem(item) {
-  dropdownCategories.push(item);
-  updateDropdownMenu(dropdownCategories);
-}
+//브라우저가 좁아질 때 navbar를 숨기기위한 hamburger 사용한다면 쓸 부분
+// const navToggle = document.querySelector(".nav-toggle");
+// const menu = document.querySelector(".menu");
 
-function removeDropdownItem(item) {
-  const index = dropdownCategories.indexOf(item);
-  if (index !== -1) {
-    dropdownCategories.splice(index, 1);
-    updateDropdownMenu(dropdownCategories);
-  }
-}
-
-const navToggle = document.querySelector(".nav-toggle");
-const menu = document.querySelector(".menu");
-
-navToggle.addEventListener("click", function () {
-  menu.classList.toggle("show-links");
-  if (menu.classList.contains("show-links")) {
-    menu.style.height = "20rem"; // 원하는 높이로 설정하세요.
-  } else {
-    // 메뉴를 숨길 때
-    menu.style.height = "0";
-  }
-});
+// navToggle.addEventListener("click", function () {
+//   menu.classList.toggle("show-links");
+//   if (menu.classList.contains("show-links")) {
+//     menu.style.height = "20rem";
+//   } else {
+//     // 메뉴를 숨길 때
+//     menu.style.height = "0";
+//   }
+// });

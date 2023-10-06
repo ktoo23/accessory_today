@@ -6,7 +6,7 @@ const generateCards = () => {
   for (let i = 1; i <= num; i++) {
     imgNum = i;
     cards += `
-      <div class="card col ">
+      <div class="mainCard col column-gap">
         <img src="./img/ring${imgNum}.jpg" alt="best img">
       </div>
     `;
@@ -26,4 +26,16 @@ const initBestList = () => {
   }
 };
 
+let  newListEl = `${generateCards()}`;
+
+const initNewList = () => {
+  const targetEl = document.getElementById('newList');
+  if (targetEl) {
+    targetEl.innerHTML = newListEl;
+  } else {
+    console.error('targetEl not found');
+  }
+};
+
 initBestList();
+initNewList();

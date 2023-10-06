@@ -19,30 +19,26 @@
 
   <div id="header"></div>
 
-  <div class="container-fluid">
-    <div class="row">
-      <div class="col" id="mainImg">
-        <img src="./img/home.png" alt="main-img">
-      </div> 
-      <div class="best-container">
-      <div class="row">
-        <p class="main-text">BEST</p>
-      </div>
-
-      <div id="bestList" class="row">
-        <!-- <div id="bestList" class="row3"> -->
-          <!-- 임의사진 -->
+  <div class="row">
+      <div class="col-2" id="left"></div>
+      <div class="col-8" id="middle"> <!-- body -->
+        <div class="row mainImg">
+          <img src="./img/home.png" alt="main-img">
         </div>
+        <div class="row main-text">
+          <p>BEST</p>
+        </div>
+        <div class="row" id="bestList"></div>
+        <div class="row main-text">
+          <p>신상품</p>
+        </div>
+        <div class="row" id="newList"></div>
+      </div>
+      <div class="col-2" id="right">
       </div>
     </div>
-      
-
-    </div>
-  </div>
-
 
   <div id="footer"></div>
-
 
   <script src="./header/header.js"></script>
   <script src="./main.js"></script>
