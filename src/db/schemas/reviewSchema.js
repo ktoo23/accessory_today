@@ -5,6 +5,7 @@ const reviewSchema = new Schema({
     author: {type: String, required: true},
     content: {type: String, required: true},
     date: {type: Date, default: Date.now},
-  });
+    
+  },{ versionKey : false } );
 
 export {reviewSchema};
