@@ -23,6 +23,6 @@ app.get("/", (req, res) => {
   res.send("HOME");
 });
 
-app.use("/users", userRouter);
+app.use("/api/users", userRouter);
 
 export { app };
