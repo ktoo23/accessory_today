@@ -2,7 +2,7 @@
   max-height: 500px;
   height: auto;
   max-width: 100%;
- object-fit: cover;
+  object-fit: cover;
   margin: 0;
   padding: 0;
 }
@@ -15,7 +15,7 @@
   padding: 50px
 }
 
-.row > p {
+.row>p {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -32,13 +32,13 @@
   font-weight: bold;
   text-align: center;
   margin: 50px 0;
-  
+
 }
 
-.row .card  img{
+.row .card img {
   width: 200px;
   height: 200px;
-  align-items-center;
+  align-items: center;
   margin: 0;
   padding: 0;
 }
@@ -46,5 +46,5 @@
 .card .col {
   align-items: center;
   justify-content: space-between;
-  
+
 }

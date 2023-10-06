@@ -21,6 +21,8 @@ ul.nav.nav-pills.nav-stacked a:hover {
 
 .column-gap {
     margin-right: 100px !important;
+    display: flex;
+    justify-content: end;
 }
 
 .sidenav li {
