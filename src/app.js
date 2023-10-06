@@ -3,6 +3,7 @@ import mongoose from "mongoose";
 import { userRouter } from "./routers/userRouter.js";
 import { categoryRouter } from "./routers/categoryRouter.js";
 import { productRouter } from "./routers/productsRouter.js";
+import { adminRouter } from "./routers/adminRouter.js";
 import bodyParser from "body-parser";
 import { homeService } from "./services/productService.js";
 
@@ -29,4 +30,5 @@ app.get("/api", async (req, res) => {
 app.use("/api/users", userRouter);
 app.use("/", categoryRouter);
 app.use("/api/products", productRouter);
+app.use("/api", adminRouter);
 export { app };

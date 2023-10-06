@@ -4,7 +4,7 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-const PORT = process.env.PORT;
+const PORT = 5000;
 //mongoose.connect(process.env.mongooseurl);
 
 app.listen(PORT, () => {
