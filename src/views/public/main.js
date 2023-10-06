@@ -6,7 +6,7 @@ const generateCards = () => {
   for (let i = 1; i <= num; i++) {
     imgNum = i;
     cards += `
-      <div class="card col-sm">
+      <div class="card col ">
         <img src="./img/ring${imgNum}.jpg" alt="best img">
       </div>
     `;
@@ -15,11 +15,7 @@ const generateCards = () => {
   return cards;
 };
 
-let bestListEl = `
-<section class="best-list">         
-    ${generateCards()}
-</section>
-`;
+let  bestListEl = `${generateCards()}`;
 
 const initBestList = () => {
   const targetEl = document.getElementById('bestList');
