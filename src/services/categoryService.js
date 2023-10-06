@@ -8,7 +8,7 @@ import mongoose from "mongoose";
 const ObjectId = mongoose.Types.ObjectId;
 
 class CategoryService {
-  // 중복 카테고리 검사
+  // 새 카테고리 생성
   async newCategory(Category) {
     // 중복되는 카테고리가 존재하는지 검사
     const categoryExsist = await categoryModel.find({ Category: Category });
@@ -31,8 +31,34 @@ class CategoryService {
       newCategory: newCategory,
     };
   }
+
+  //카테고리 삭제
+
+  async deleteCategory(Category) {
+    //중복되는 카테고리가 있는지 검사
+
+    const categoryExsist = await categoryModel.find({ Category: Category });
+    // 중복되는 카테고리가 있을 경우 존재하지 않는 카테고리라고 알리기
+
+    if (categoryExsist.length === 0) {
+      return {
+        status: 400,
+        errMsg: "존재하지 않는 카테고리입니다.",
+      };
+    }
+    // db에서 삭제
+
+    await categoryModel.deleteOne({ Category: Category });
+    // 성공 메시지와 카테고리 삭제
+    return {
+      status: 200,
+      message: "카테고리가 삭제되었습니다",
+      Category: Category,
+    };
+  }
 }
 
+//
 const categoryService = new CategoryService();
 
 export { categoryService };
