@@ -22,3 +22,7 @@ ul.nav.nav-pills.nav-stacked a:hover {
 .column-gap {
     margin-right: 100px !important;
 }
+
+.sidenav li {
+    font-size: 23px;
+  }
