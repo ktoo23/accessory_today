@@ -1,0 +1,16 @@
+#mainImg {
+  max-height: 600px;
+}
+
+.main-text {
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  margin: 50px 0;
+}
+
+.card {
+  width: 350px;
+  height: 350px;
+
+}
