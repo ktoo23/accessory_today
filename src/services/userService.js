@@ -5,12 +5,26 @@ import { NonMember } from "../db/models/nonMemberModel.js";
 import { Order } from "../db/models/orderModel.js";
 import mongoose from "mongoose";
 
+const ObjectId = mongoose.Types.ObjectId;
+
 // 로그인 시 토큰 발급을 위한 secret key 생성, 일단은 여기다 적음.나중에 안보이게 해야함!
 // secret key는 한 번만 생성되어야 함.(고정)
 const SECRET_KEY = "thisissecret";
 
 class UserService {
-  // 회원가입 (포스트맨 성공)
+  async verifyToken(token) {
+    try {
+      // 토큰이 유효한지 확인하기
+      const decodingtoken = await jwt.verify(token, SECRET_KEY);
+      // 토큰이 유효하다면, 토큰을 해독한 내용을 반환
+      return decodingtoken;
+    } catch (err) {
+      // 토큰이 유효하지 않으면 에러 반환
+      return err;
+    }
+  }
+
+  // 회원가입
   async join(email, password, checkPassword, username, address, phone) {
     // 중복되는 이메일이 존재하는지 검사
     const userExsist = await User.find({ email: email });
@@ -50,7 +64,7 @@ class UserService {
     };
   }
 
-  // 로그인 (포스트맨 성공)
+  // 로그인
   async login(inputEmail, inputPassword) {
     // 입력받은 이메일이 DB에 존재하는지를 확인하고, 있으면 그 유저 정보 user에 담기
     const user = await User.findOne({ email: inputEmail });
@@ -102,19 +116,11 @@ class UserService {
     };
   }
 
-  // 일반 회원 마이페이지 (포스트맨 성공)
+  // 일반 회원 마이페이지
   async getMyPage(token) {
-    // 우선 토큰이 유효한지 확인하기
-    const decodingtoken = await jwt.verify(
-      token,
-      SECRET_KEY,
-      (err, decoded) => {
-        if (err) return err;
-        else return decoded;
-      }
-    );
-
-    // 토큰이 유효하지 않으면 에러 메세지 보내기
+    // 토큰이 유효한지 확인
+    const decodingtoken = await this.verifyToken(token);
+    // 토큰이 유효하지 않다면 에러 메세지 객체 반환
     if (!decodingtoken) {
       return {
         status: 400,
@@ -127,7 +133,7 @@ class UserService {
     // 해당 유저의 _id를 가지고 Order에서 회원이 주문한 것이 있으면 그 정보 찾기 (populate 사용!!)
     const userOrders = await Order.find({ user }).populate("user");
 
-    // 마이페이지에 처음 접근하면 주문처리 현황만 나오므로 배송 상태만 전달해주면 된다. (ex) {'배송중': 1, '배송 완료': 2})
+    // 마이페이지에 처음 접근하면 주문처리 현황이 나오는데, 이를 전달해주기 (ex) {'배송중': 1, '배송 완료': 2})
     const deliveries = {};
     for (let order of userOrders) {
       if (deliveries[order.deliveryStatus])
@@ -144,43 +150,43 @@ class UserService {
     };
   }
 
-  // 비회원 마이페이지 주문번호, 비밀번호 검증하기 (해야 함...)
+  // 일반 회원 주문 조회 페이지 접근
+  async getUserOrders(userId) {
+    // string 형태의 userId를 obejctId 형태로 바꾸기
+    userId = new ObjectId(userId);
+    // Order 스키마에서 user의 _id가 userId와 같은 주문 찾기 (한 user의 주문이 여러개일 수 있다.)
+    const userOrders = Order.find({ user: userId })
+      .populate("user")
+      .populate("orderProducts.products");
+    // postman에서 .populate("orderProducts.products") 를 쓰면 결과가 안나오고, .populate("orderProducts.products")를 없애면 결과가 잘 나오기는 하는데
+    // orderProducts 배열에서 products 부분의 값이 id 참조로 되어 있다. 아직 product 데이터를 안넣어서 그런가..?
+    // 회원이 주문한 목록을 내보내기
+    return userOrders;
+  }
+
+  // 비회원 마이페이지 주문번호, 비밀번호 검증하기 (테스트 해야 함...)
   async postNonMember(name, orderId, orderPassword) {
-    // 이름을 먼저 조회 (orders의 값으로 주문 정보가 들어갈 수 있게 populate 했다., find는 배열 반환)
-    const nameSame = await NonMember.find({ username: name }).populate(
-      "orders"
-    );
-    // 해당 이름의 비회원이 없으면 없다고 메시지 전달
-    if (!nameSame) {
-      return {
-        status: 400,
-        errMsg: "주문자가 존재하지 않습니다. 이름을 다시 확인해 주세요.",
-      };
-    }
-
-    // 이름이 일치하는 data들(nonMember) 중에서 orderId가 일치하는 data를 찾는다. ($elemMatch 연산자 사용, findOne은 단일 객체 반환)
-    const orderIdSame = await nameSame.findOne({
-      orders: {
-        $elemMatch: {
-          _id: orderId,
-        },
-      },
+    // Orders 콜렉션에서 우선 주문자가 비회원이고 주문자가 name과 같고, orderId가 같은 data만 골라내기 (user필드가 null인 것들)
+    const nonMemberOrder = await Order.findOne({
+      user: null,
+      orderer: name,
+      orderId: new ObjectId(orderId),
     });
-    // 주문 번호와 일치하는 정보를 찾지 못하면 주문이 존재하지 않는다는 메시지 전달
-    if (!orderIdSame) {
+    return nonMemberOrder;
+    // 해당 주문 번호나 이름의 비회원이 없으면 없다고 메시지 전달
+    if (!nonMemberOrder.length) {
       return {
         status: 400,
-        errMsg: "주문 내역을 찾지 못했습니다. 주문번호를 다시 확인해 주세요.",
+        errMsg: "주문 정보가 올바르지 않습니다. 다시 입력해 주세요.",
       };
     }
 
-    // 주문번호가 존재하는 경우 거기에 해당하는 member 중 orderPassword가 DB에 저장된 password와 일치하는지 확인
+    // 일치하는 데이터를 찾은 경우 거기에 해당하는 member 중 orderPassword가 Order DB에 저장된 password와 일치하는지 확인
     // Order에서 orderPassword 값은 해싱되어 저장되어 있을 것이기 때문에 bcrypt 사용!
     const isOrderPasswordSame = await bcrypt.compare(
       orderPassword,
-      orderIdSame.nonMemberPassword
+      nonMemberOrder.orderPassword
     );
-
     // 비밀번호가 일치하지 않으면 주문 비밀번호가 일치하지 않는다는 알림을 보낸다.
     if (!isOrderPasswordSame) {
       return {
@@ -189,22 +195,101 @@ class UserService {
       };
     }
 
-    // 다 일치하는 경우 비회원 페이지 접속 가능하고, 비회원 정보도 전달된다.
-    // 그 전에 orders에서 비회원이 주문한 것들만 걸러낸다.
-    const nonMemberOrders = await orderIdSame.orders(
-      (order) => order.orderEmail
-    );
-
+    // 다 일치하는 경우 비회원 페이지 접속 가능!
     return {
       status: 200,
-      message: `비회원 ${orderIdSame.username}님의 주문조회 페이지입니다.`,
-      nonMember: nonMemberData,
+      message: `${orderIdSame.orderer}님, 비회원 주문 확인이 성공적으로 완료되었습니다.`,
+      nonMemberOrder,
     };
   }
 
-  // 비회원 페이지 (비회원 주문조회 페이지)
-  getNonMemberPage() {
-    return "nonmember order";
+  // 비회원 페이지 (비회원 주문조회 페이지) (테스트 해봐야 함)
+  // (비회원 주문조회 페이지에서는 회원 마이페이지와는 다르게 접속하자마자 주문처리(배송) 현황과 주문 내역이 다 나옴.)
+  async getNonMemberPage(orderId) {
+    // Orders 컬렉션에서 id가 orderId인 것으로 찾으면 된다. (이미 위에서 비회원 주문자 검증을 마쳤으므로)
+    const nonMemberOrder = await Order.findById(new ObjectId(orderId));
+    // 이제 product에 해당 비회원이 주문한 제품의 모든 정보로 채운다.
+    const fillProducts = await nonMemberOrder
+      .find({})
+      .populate("orderProducts.products");
+    // fillProducts에는 비회원의 주문 현황과 주문 상품에 대한 정보가 모두 들어가 있고, 이를 응답으로 반환
+    return {
+      status: 200,
+      message: `${fillProducts.orderer}님의 비회원 주문 조회 페이지입니다.`,
+      nonMemberOrder: fillProducts,
+    };
+  }
+
+  // 사용자 주문 취소 요청 (비회원, 회원 모두)
+  async cancelOrder(orderId) {
+    // 우선 string 형태의 orderId를 ObjectId 형태로 바꾸기
+    orderId = new ObjectId(orderId);
+    // Order 컬렉션에서 그 id에 해당하는 주문 찾기
+    const findOrder = await Order.findById(orderId);
+    // 해당 주문의 배송 현황이 주문 완료가 아니면 그 주문 취소 불가
+    if (findOrder.deliveryStatus !== "주문 완료") {
+      return {
+        status: 400,
+        errMsg:
+          "배송 현황이 배송 준비중 단계 이상부터는 주문 취소가 불가합니다.",
+      };
+    }
+
+    // 배송 현황이 주문중이면 Order 컬렉션에서 해당 order를 삭제
+    await Order.findByIdAndDelete(orderId);
+
+    // 주문 삭제에 성공하면 성공 메세지 보내기
+    return {
+      status: 200,
+      message: "주문 취소가 성공적으로 이루어졌습니다.",
+    };
+  }
+
+  // 회원 정보 변경창에 들어가면 이미 등록되어 있는 회원 정보 보여주기 (회원에만 해당, 이메일은 변경할 수 없음!)
+  // 근데 이메일은 못바꿈! (고정)
+  async getUserInfo(userId) {
+    try {
+      // User 컬렉션에서 해당하는 유저 찾기
+      const user = await User.findOne({ _id: new ObjectId(userId) });
+      // 비밀번호를 제외한 유저의 정보를 보내주기
+      const { email, username, address, phone } = user;
+      return {
+        status: 200,
+        message: "form에 기본적으로 넣기 위한 비밀번호를 제외한 정보들입니다.",
+        userInfo: { email, username, address, phone },
+      };
+    } catch (err) {
+      return err;
+    }
+  }
+
+  // 회원 정보 수정 시 변경 상태 등록하기 (회원에만 해당)
+  async updateUserInfo(userId, password, username, address, phone) {
+    try {
+      // 일단 비밀번호 먼저 해싱
+      const hashedPassword = await bcrypt.hash(password, 5);
+
+      // User 컬렉션에서 userId를 가진 user 찾기
+      const user = await User.findById(new ObjectId(userId));
+      // user에서 password, username, address, phone 값을 업데이트
+      user.password = hashedPassword;
+      user.username = username;
+      user.address = address;
+      user.phone = phone;
+      // 변경된 정보를 저장
+      await user.save();
+
+      return {
+        status: 200,
+        message: "회원 정보 수정이 완료되었습니다.",
+      };
+    } catch (err) {
+      return {
+        status: 400,
+        errMsg: "회원 정보 수정 중 오류가 발생했습니다.",
+        err: err,
+      };
+    }
   }
 }
 
