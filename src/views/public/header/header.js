@@ -3,7 +3,7 @@ let dropdownCategories = ["ALL", "RING", "EARRING", "BRACELET", "NECKLACE"];
 
 let headerEl = `
 <header>
-  <div class="container">
+  <div class="container"> 
     <div class="row">
       <div class="logo">
         <img src="../public/img/today-logo.png" alt="logo"/>
@@ -24,8 +24,8 @@ let headerEl = `
     <div class="col">
       <ul class="header-middle">
         <li><a href="">SHOP</a></li>
-        <li><a href="">신상품</a></li>
-        <li><a href="">Best</a></li>
+        <li><a href="#newTitle">신상품</a></li>
+        <li><a href="#bestTitle">Best</a></li>
         <li><a href="">About</a></li>
       </ul>
     </div>
