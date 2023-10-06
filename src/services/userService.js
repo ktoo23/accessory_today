@@ -164,17 +164,16 @@ class UserService {
     return userOrders;
   }
 
-  // 비회원 마이페이지 주문번호, 비밀번호 검증하기 (테스트 해야 함...)
+  // 비회원 마이페이지 주문번호, 비밀번호 검증하기 =나중에 주문 시 비밀번호 해시화 저장 후 다시 테스트해서 통과하기만 하면 완료!)
   async postNonMember(name, orderId, orderPassword) {
     // Orders 콜렉션에서 우선 주문자가 비회원이고 주문자가 name과 같고, orderId가 같은 data만 골라내기 (user필드가 null인 것들)
     const nonMemberOrder = await Order.findOne({
       user: null,
       orderer: name,
-      orderId: new ObjectId(orderId),
+      _id: new ObjectId(orderId),
     });
-    return nonMemberOrder;
     // 해당 주문 번호나 이름의 비회원이 없으면 없다고 메시지 전달
-    if (!nonMemberOrder.length) {
+    if (!nonMemberOrder) {
       return {
         status: 400,
         errMsg: "주문 정보가 올바르지 않습니다. 다시 입력해 주세요.",
@@ -208,10 +207,12 @@ class UserService {
   async getNonMemberPage(orderId) {
     // Orders 컬렉션에서 id가 orderId인 것으로 찾으면 된다. (이미 위에서 비회원 주문자 검증을 마쳤으므로)
     const nonMemberOrder = await Order.findById(new ObjectId(orderId));
+
     // 이제 product에 해당 비회원이 주문한 제품의 모든 정보로 채운다.
-    const fillProducts = await nonMemberOrder
-      .find({})
-      .populate("orderProducts.products");
+    const fillProducts = await nonMemberOrder.populate(
+      "orderProducts.products"
+    );
+    // .execPopulate();
     // fillProducts에는 비회원의 주문 현황과 주문 상품에 대한 정보가 모두 들어가 있고, 이를 응답으로 반환
     return {
       status: 200,
@@ -226,6 +227,7 @@ class UserService {
     orderId = new ObjectId(orderId);
     // Order 컬렉션에서 그 id에 해당하는 주문 찾기
     const findOrder = await Order.findById(orderId);
+
     // 해당 주문의 배송 현황이 주문 완료가 아니면 그 주문 취소 불가
     if (findOrder.deliveryStatus !== "주문 완료") {
       return {
@@ -287,7 +289,28 @@ class UserService {
       return {
         status: 400,
         errMsg: "회원 정보 수정 중 오류가 발생했습니다.",
-        err: err,
+        err,
+      };
+    }
+  }
+
+  async deleteUser(userId) {
+    try {
+      // User 컬렉션에서 userId를 가진 user를 찾아 DB에서 삭제하기
+      const user = await User.findByIdAndDelete(new ObjectId(userId));
+      if (user) {
+        return {
+          status: 200,
+          message: "회원 탈퇴가 정상적으로 이루어졌습니다.",
+        };
+      } else {
+        return { status: 400, errMsg: "회원 정보 삭제에 실패했습니다." };
+      }
+    } catch (err) {
+      return {
+        status: 400,
+        errMsg: "회원 정보 삭제에 실패했습니다.",
+        err,
       };
     }
   }
