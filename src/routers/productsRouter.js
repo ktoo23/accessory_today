@@ -7,8 +7,7 @@ const productRouter=Router();
 
 //getProducts
 productRouter.get("/",async (req,res)=>{  
-    const category = req.query.category;
-    const word = req.query.word;
+    const {category,word} = req.query;
     const productsData = await productService.getProducts(category,word);
     res.json(productsData);
 })
@@ -26,7 +25,7 @@ productRouter.get("/:productId",async (req,res)=>{
 //getReview
 productRouter.get("/:productId/review",async (req,res)=>{
     const productId = req.params.productId;
-    const reviewData= await reviewService.getReview(productId,1);
+    const reviewData= await reviewService.getReview(productId,true);
     res.json(reviewData);
 })
 
