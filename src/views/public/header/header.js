@@ -25,8 +25,8 @@ let headerEl = `
     <div class="col">
       <ul class="header-middle">
         <li><a href="">SHOP</a></li>
-        <li><a href="">신상품</a></li>
-        <li><a href="">Best</a></li>
+        <li><a href="#newList">신상품</a></li>
+        <li><a href="#bestList">Best</a></li>
         <li><a href="">About</a></li>
       </ul>
     </div>
