@@ -1,13 +1,15 @@
 <!DOCTYPE html>
 <html lang="ko">
+<div id="wrapper">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>today Cart</title>
-    <link rel="stylesheet" href="./css/cart.css">
-    <script defer src="./js/cart.js"></script>
+    <link rel="stylesheet" href="cart.css">
+    <link rel="stylesheet" href="../public/footer/footer.css">
 </head>
 <body>
+    <section class="cart-name">장바구니</section>
     <section class="modal-layout display-none">
         <div class="carts-modal">
             <div class="modal-close">
@@ -30,7 +32,7 @@
                     </button>
                     <div class="dropdown-content">
                     <div class="size">LARGE</div>
-                    <div class="size">MIDIUM</div>
+                    <div class="size">MEDIUM</div>
                     <div class="size">SMALL</div>
                     </div>
                 </div>
@@ -59,7 +61,12 @@
     </section>
     <section>
         <div class="cart-empty">
-            <p>장바구니가 비어있습니다.</p>
+            <div>
+                <div class="cart-empty-div">
+                    <p>장바구니가 비어있습니다.</p>
+                    <button>계속 쇼핑하기</button>
+                </div>
+            </div>
         </div>
     </section>
     <section class="carts">
@@ -148,5 +155,11 @@
             </div>
         </div>
     </section>
-</body>
+    <section class="deleteCart">
+        <button class="deleteAll">전체 삭제</button>
+    </section>
+</div>
+    <footer class="footer"></footer>
 </html>
+<script src="../public/footer/footer.js"></script>
+<script src="cart.js"></script>
