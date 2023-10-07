@@ -1,6 +1,5 @@
 let footerEl = `
-<footer>
-        <img src="../img/today-logo.png" alt="">
+        <img src="../public/img/today-logo.png" alt="">
         <div>
             <p>평일 낮 13:00 ~ 밤 21:00 주말 및 공휴일 휴무</p>
             <p>운영시간외에 고객문의 게시판에 문의해 주시기 바랍니다.</p>
@@ -26,10 +25,10 @@ let footerEl = `
         <div>
             <p>(C)accessory__today.ALL RIGHTS RESERVED.</p>
         </div>
-    </footer>`;
+        `;
 
     const initFooter = () => {
-        const targetEl = document.getElementById('footer');
+        const targetEl = document.querySelector('.footer');
         if(targetEl) {
             targetEl.innerHTML = footerEl;
         } else {

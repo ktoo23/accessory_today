@@ -4,6 +4,7 @@ const $cartHeader = document.querySelector('.cart-header');
 const $cartEmpty = document.querySelector('.cart-empty');
 const $optionMenu = document.querySelector('.option-menu');
 
+let cart;
 // --------------------------------------------------------------------------------
 // ------------- localStorage -----------------------------------------------------
 // --------------------------------------------------------------------------------
@@ -36,24 +37,24 @@ const item3 =
     price: 14000,
     url: "home.png",
 }; 
-   saveItem(); // - 가상 데이터 추가 
+  saveItem(); // - 가상 데이터 추가 
 function saveItem() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = findCartItem();
     cart.push(item1);
     cart.push(item2);
     cart.push(item3);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    setItems(cart);
 }
 
 getItems();
 function getItems() {
-    const cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = findCartItem();
 
     if (cart.length < 1) {
-        $carts.style.visibility = "hidden";
+        $carts.style.display = "none";
         $cartEmpty.style.display = "block";
     } else {
-        $carts.style.visibility = "visible";
+        $carts.style.display = "flex";
         $cartEmpty.style.display = "none";
         cart.forEach((el, idx) => {
             const cartItem = addItemInCart(el, idx);
@@ -73,7 +74,7 @@ function addItemInCart(item, sequence) {
         <td colspan="2" class="cart-item">
             <div>
                 <input type="checkbox" name="check">
-                <img src="img/home.png" alt="">
+                <img src="../public/img/home.png" alt="">
                 <div class="cart-item-option">
                     <p class="cart-item-name">${item.productName}</p>
                     <p class="cart-item-size">
@@ -100,11 +101,10 @@ function addItemInCart(item, sequence) {
 
 // 데이터 삭제
 function deleteItem(itemSequence) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = findCartItem();
 
     cart.splice(itemSequence, 1);
-    console.log(cart);
-    localStorage.setItem("cart", JSON.stringify(cart));
+    setItems(cart);
 
     const $cartItems = $cartTable.querySelectorAll("tr:not([class='cart-header'])");
     $cartItems.forEach((el) => el.remove());
@@ -112,24 +112,41 @@ function deleteItem(itemSequence) {
     getItems();
 }
 
+// 전체 삭제
+function deleteAllItem() {
+    if(confirm("장바구니를 비우시겠습니까?")){
+        localStorage.removeItem("cart");
+        getItems();
+        document.querySelector('.deleteAll').style.visibility = "hidden";
+    } else return;
+    
+}
 // 데이터 수정
 function updateItem(itemSequence, updateSize, updateQuantity) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = findCartItem();
 
     cart[itemSequence].size = updateSize;
     cart[itemSequence].quantity = updateQuantity;
 
-    localStorage.setItem("cart", JSON.stringify(cart));
+    setItems(cart);
     const $cartItems = $cartTable.querySelectorAll("tr:not([class='cart-header'])");
     $cartItems.forEach((el) => el.remove());
     getItems();
 }
 
 function getItem(itemSequence) {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart = findCartItem();
     return cart[itemSequence];
 }
 
+// 현재 로컬 스토리지 이름을 cart로 정함. 나중에는 사용자 아이디에 따라 로컬스토리지 생성?
+function findCartItem() {
+    return JSON.parse(localStorage.getItem("cart")) || [];
+}
+
+function setItems(cart) {
+    localStorage.setItem("cart", JSON.stringify(cart));
+}
 function changePrice(price) {
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ","); 
 }
@@ -150,6 +167,8 @@ function returnIdAndSequence(target) {
     let $itemTarget = target.closest('tr');
     [ ,itemSequence,itemId] = $itemTarget.id.split('-');
 }
+
+document.querySelector('.deleteAll').addEventListener('click', deleteAllItem);
 
 function buttonEvent(target) {
     const name = target.className;
@@ -248,7 +267,7 @@ function showModal(target) {
     itemPrice = price;
     const optionHeader = `
     <div class="option-header">
-        <img src="img/home.png" alt="">
+        <img src="../public/img/home.png" alt="">
         <div>
             <p class="option-item-name">${productName}</p>
             <p class="option-item-price">${changePrice(price)}</p>
