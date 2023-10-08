@@ -127,10 +127,11 @@ userRouter
   .patch(async (req, res) => {
     try {
       const { userId } = req.query;
-      const { password, username, address, phone } = req.body;
+      const { password, checkPassword, username, address, phone } = req.body;
       const updateInfoResult = await userService.updateUserInfo(
         userId,
         password,
+        checkPassword,
         username,
         address,
         phone

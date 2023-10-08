@@ -197,8 +197,22 @@ class UserService {
   }
 
   // 회원 정보 수정 시 변경 상태 등록하기 (회원에만 해당)
-  async updateUserInfo(userId, password, username, address, phone) {
+  async updateUserInfo(
+    userId,
+    password,
+    checkPassword,
+    username,
+    address,
+    phone
+  ) {
     try {
+      // 비밀번호가 일치하는지 먼저 확인
+      if (password !== checkPassword) {
+        return {
+          stauts: 400,
+          errMsg: "비밀번호가 일치하지 않습니다.",
+        };
+      }
       // 일단 비밀번호 먼저 해싱
       const hashedPassword = await bcrypt.hash(password, 5);
 
