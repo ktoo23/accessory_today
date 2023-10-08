@@ -2,12 +2,13 @@ import { Router } from "express";
 import { productService } from "../services/productService.js";
 import { reviewService } from "../services/reviewService.js";
 import { inquiryService } from "../services/inquiryService.js";
-import { homeService } from "./services/productService.js";
+import { homeService } from "../services/productService.js";
 
 const productRouter=Router();
 
 //getProducts
 productRouter.get("/",async (req,res)=>{  
+    const {isNew,isBest}=req.query;
     if(isNew&&isBest){
         const bestData= await homeService.getBest();
         const newData= await homeService.getNew();
