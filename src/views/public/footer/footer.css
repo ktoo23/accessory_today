@@ -4,38 +4,23 @@
     box-sizing: border-box;
 }
 
-html, body {
-    height: 100%;
+.wrapper {
+    padding: 20px 0 0 20px;
+    margin: 0;
+    
 }
 
-#wrapper {
-    height: auto;
-    min-height: 100%;
-    padding-bottom: 500px;
-    margin-top: 3rem;
+footer {
+  height: 270px;
+  width: 100%;
+  position : relative;
+  bottom: 0;
+  background-color: rgb(159, 159, 159);
+  color: white;
+  font-size: 0.8rem;
 }
 
-.footer {
-    background-color: rgb(0, 0, 0, 0.3);
-    color:white;
-    font-size: 0.8rem;
-    height: 400px;
-    position : relative;
-    transform : translateY(-100%);
-}
-
-.footer img {
-    margin-left: 2rem;
-    margin-top: 2rem;
-    width: 150px;
-}
-
-.footer div {
-    margin-left: 2rem;
-    margin-bottom: 1.5rem;
-}
-
-.footer .footer-link {
+footer .footer-link {
     display: flex;
 }
 
