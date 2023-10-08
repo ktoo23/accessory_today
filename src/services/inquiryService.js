@@ -60,8 +60,8 @@ class InquiryService {
   
     async delInquiry(Id) {
       try {
-        const targetId = new ObjectId(Id);
-        await Inquiries.deleteOne({ _id: targetId });
+        
+        await Inquiries.deleteOne({ _id: new ObjectId(Id) });
         return {
           status: 200,
           message: 'success'

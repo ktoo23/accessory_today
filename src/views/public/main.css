@@ -1,0 +1,36 @@
+.row > .mainImg {
+  max-width: 100%;
+  height: 300px;
+  width: auto;
+  align-items: center;
+}
+
+.row .main-text > p {
+  font-size: 35px;
+  font-weight: bold;
+  text-align: center;
+  align-items: center;
+  margin: 50px 0;
+}
+
+.mainCard {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  gap: 15px;
+  margin: 5px;
+}
+
+.mainCard > img {
+  width: 300px;
+  height: 200px;
+}
+
+#bestList {
+  margin-bottom: 50px;
+}
+
+#newList {
+  margin-bottom: 300px;
+}

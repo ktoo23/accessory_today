@@ -3,8 +3,6 @@ import { userRouter } from "./routers/userRouter.js";
 import { categoryRouter } from "./routers/categoryRouter.js";
 import { productRouter } from "./routers/productsRouter.js";
 import { adminRouter } from "./routers/adminRouter.js";
-import { orderRouter } from "./routers/orderRouter.js";
-import { homeService } from "./services/productService.js";
 import bodyParser from "body-parser";
 
 const app = express();
@@ -13,10 +11,8 @@ app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.get("/api", async (req, res) => {
-  const bestData = await homeService.getBest();
-  const newData = await homeService.getNew();
-  res.json([bestData, newData]);
+app.get("/", (req, res) => {
+  res.send("HOME");
 });
 
 app.use("/", categoryRouter);

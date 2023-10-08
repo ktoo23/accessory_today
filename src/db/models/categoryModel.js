@@ -1,4 +1,4 @@
 import mongoose from "mongoose";
 import { CategorySchema } from "../schemas/categorySchema.js";
 
-export const categoryModel = mongoose.model("Category", CategorySchema);
+export const categoryModel = mongoose.model("category", CategorySchema);
