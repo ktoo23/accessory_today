@@ -1,5 +1,6 @@
 .flex-style {
     gap: 175px;
+    margin: 60px 0 140px 0 !important;
 }
 
 .login-form {
