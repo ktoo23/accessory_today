@@ -6,7 +6,7 @@ let headerEl = `
 <div class="container">
 <div class="row">
   <div class="logo">
-    <img src="../public/img/today-logo.png" alt="logo"/>
+    <img src="../../public/img/today-logo.png" alt="logo"/>
   </div>
 </div>
 </div>
@@ -42,7 +42,7 @@ let headerEl = `
     </div>
   </div>
 </header>
-`
+`;
 
 const initHeader = () => {
   const targetEl = document.getElementById('header');
