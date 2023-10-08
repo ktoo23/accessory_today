@@ -18,10 +18,11 @@ class AdminService {
     const productExsist = await Products.find({ productName: productName });
     // 중복되는 카테고리가 있을 경우 이미 존재하는 카테고리라고 알리기
     if (productExsist.length) {
-      return {
-        status: 400,
-        errMsg: "이미 존재하는 상품입니다.",
-      };
+      res.status(400).send("이미 존재하는 상품입니다.");
+      // return {
+      //   status: 400,
+      //   errMsg: "이미 존재하는 상품입니다.",
+      // };
     }
     // db에 저장하기
     const newProduct = new Products({
@@ -43,17 +44,9 @@ class AdminService {
   }
 
   //관리자 상품 삭제
-  async deleteProduct(
-    productName,
-    price,
-    category,
-    description,
-    isNew,
-    isBest,
-    productImg
-  ) {
+  async deleteProduct(productName) {
     // 중복되는 제품이 존재하는지 검사
-    const productExsist = await Products.find({ productName: productName });
+    const productExsist = await Products.findOne({ productName: productName });
     // 중복되는 카테고리가 있을 경우 존재하지 않는 상품이라고 알리기
     if (productExsist.length === 0) {
       return {

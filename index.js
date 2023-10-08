@@ -4,10 +4,15 @@ import dotenv from "dotenv";
 
 dotenv.config();
 
-mongoose
-  .connect(process.env.mongooseurl)
-  .then(() => console.log("mongoDB 연결에 성공하였습니다😊"))
-  .catch((err) => console.log("mongoDB 연결에 실패하였습니다😥" + err));
+const PORT = process.env.PORT;
+
+mongoose.connect(process.env.mongooseurl,{
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+}).then(() => console.log("mongoDB 연결에 성공하였습니다😊"))
+.catch((err) => console.log("mongoDB 연결에 실패하였습니다😥" + err));
+
+
 
 app.listen(process.env.PORT, () => {
   console.log(
