@@ -29,9 +29,9 @@ adminRouter.post("/products", async (req, res) => {
       isBest,
       productImg
     );
-    return res.json(newProductResult);
+    return res.status(200).json(newProductResult);
   } catch (err) {
-    return res.json(err);
+    return res.status(500).json({ errMessage: err.message });
   }
 });
 
