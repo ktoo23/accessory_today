@@ -44,7 +44,7 @@ let headerEl = `
     </div>
   </div>
 </header>
-`
+`;
 
 const initHeader = () => {
   const targetEl = document.getElementById('header');

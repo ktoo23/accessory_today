@@ -10,17 +10,22 @@
     padding: 20px;
 }
 
-.form-title-font {
-    font-size: 30px;
+.sumit-form {
+    color: #D3CDC8;
+    margin-bottom: 22px;
 }
 
-.form-custom-input {
-    margin-left: 15px;
+.form-title-font {
+    font-size: 25px;
+}
+
+.form-title-input {
+    margin-left: 5px;
     width: 250px;
 }
 
 .form-title {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
 }
 
 .form-btn {
