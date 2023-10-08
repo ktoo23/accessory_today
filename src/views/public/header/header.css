@@ -5,19 +5,19 @@ header {
   padding-top: 30px;
 }
 
-.logo img{
-  width:180px;
+.logo img {
+  width: 180px;
   margin: auto;
   display: flex;
 }
 
 .header-gap {
-  margin-top: 40px !important
+  margin-top: 40px !important;
 }
 
-input{
+#search {
   border: none;
-  width:160px;
+  width: 160px;
   border-bottom: 1px solid black;
 }
 
@@ -28,7 +28,6 @@ input{
 
 .cart a {
   min-width: 100px;
-  
 }
 
 .count a {
@@ -40,7 +39,7 @@ input{
 }
 
 .header-right .count {
-  margin-bottom:10px;
+  margin-bottom: 10px;
 }
 
 .header-right li {
@@ -50,10 +49,10 @@ input{
   padding: 0;
 }
 
-.header-right li a{
+.header-right li a {
   font-size: 19px;
-  color: black  !important;
-  text-decoration: none !important; 
+  color: black !important;
+  text-decoration: none !important;
   padding-right: 15px;
 }
 
@@ -72,18 +71,16 @@ input{
   display: flex;
 }
 
-
 .header-middle a {
-  color: black  !important;
-  text-decoration: none !important; 
-  font-size: 22px ;
+  color: black !important;
+  text-decoration: none !important;
+  font-size: 22px;
 
   min-width: 90px;
 }
 
-ul{
+ul {
   display: flex;
-  
 }
 
 .col {
@@ -91,5 +88,3 @@ ul{
   display: flex;
   justify-content: center;
 }
-
-
