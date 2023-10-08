@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 import { User } from "../db/models/userModel.js";
 import { NonMember } from "../db/models/nonMemberModel.js";
-import { Order } from "../db/models/orderModel.js";
+//import { Order } from "../db/models/orderModel.js";
 import mongoose from "mongoose";
 
 const ObjectId = mongoose.Types.ObjectId;
