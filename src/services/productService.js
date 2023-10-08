@@ -47,8 +47,7 @@ class ProductService{
 
     async getDetail(Id){ //제품의 상세 내용 출력
         try{
-            const targetId = new ObjectId(Id);//ObjectId형태로 변환
-            const product = await Products.findById(targetId); //id로 찾기
+            const product = await Products.findById(new ObjectId(Id)); //id로 찾기
             
             if (!product) {
                 return {
