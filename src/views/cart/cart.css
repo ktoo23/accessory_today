@@ -35,6 +35,9 @@ img {
     width: 100%;
 }
 
+input {
+    width: 20px;
+}
 button {
     text-align: center;
     padding: 0.3rem 0.5rem;
@@ -101,6 +104,13 @@ button:hover {
     padding: 0.8rem;
 }
 
+.cart-all-check {
+    display: flex;
+}
+
+.cart-all-check p {
+    margin: 0 auto;
+}
 /* cart-item column */
 .cart-item img {
     width: 80px;
@@ -153,6 +163,9 @@ button:hover {
     margin-bottom: 0.5rem;
 }
 
+.deleteAll {
+    margin-bottom: 1rem;
+}
 .nav {
     height: 100%;
     position: relative;
