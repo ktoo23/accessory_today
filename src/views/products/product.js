@@ -45,12 +45,14 @@ if (categorySelect) {
     e.preventDefault();
 
     const selected = e.target.getAttribute('data-category');
-
-    fetch(`/api/products?category=${selected}`)
+    const newURL = `/api/products?category=${selected}`;
+    
+    fetch(newURL)
       .then((response) => response.json())
       .then((data) => {
         const productData = data;
         prdListEl.innerHTML = generateCards(productData);
+        window.location.href = newURL;
       })
       .catch((error) => {
         console.error('Error', error);
