@@ -1,0 +1,84 @@
+.order-container {
+  justify-content: space-between;
+  padding: 0 10%;
+  margin: 0;
+}
+
+.row {
+  --bs-gutter-x: 0 !important;
+}
+.page-title > h2 {
+  text-align: center;
+  font-weight: bold;
+}
+
+.col-1 {
+  text-align: center;
+  align-items: center;
+}
+
+.order-container .cart-contents {
+  justify-content: space-between;
+}
+
+.order-list {
+  background-color: #f2f2f2;
+}
+
+.order-list .cart-title {
+  justify-content: space-between;
+  padding: 10px 0;
+}
+
+.item-info {
+  height: 150px;
+  align-items: center;
+  justify-content: space-between;
+  background-color: white;
+}
+
+.cart-price {
+  justify-content: end;
+  padding: 10px 0;
+}
+
+/* .cart-price > p {
+  padding: 0 15px;
+} */
+
+/* 배송 정보 form */
+label {
+  font-size: 18px;
+}
+
+.form-control {
+  width: 300px !important;
+}
+
+form > div {
+  border-bottom: 1px solid lightgray;
+  padding: 10px 0;
+}
+
+.phone-inputs {
+  display: flex;
+  align-items: center;
+}
+
+.phone-inputs input {
+  width: 100px !important;
+  margin: 0 5px;
+}
+
+
+
+.form-submit-btn {
+  background-color: #d3cdb3;
+  border: 1px solid #d3cdb3;
+  color: black;
+  width: 15rem;
+  height: 3rem;
+  border-radius: 10px;
+  display: block;
+  margin: 30px auto 100px;
+}
