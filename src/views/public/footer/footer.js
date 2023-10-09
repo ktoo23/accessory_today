@@ -24,13 +24,13 @@ let footerEl = `
     </div>
 `;
 
-    const initFooter = () => {
-        const targetEl = document.getElementById('footer');
-        if(targetEl) {
-            targetEl.innerHTML = footerEl;
-        } else {
-            console.error('targetEl not found');
-        }
-      };
+const initFooter = () => {
+  const targetEl = document.getElementById('footer');
+  if (targetEl) {
+    targetEl.innerHTML = footerEl;
+  } else {
+    console.error('targetEl not found');
+  }
+};
 
-      initFooter();
+initFooter();

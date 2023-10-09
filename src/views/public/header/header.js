@@ -2,13 +2,11 @@
 let dropdownCategories = ["ALL", "RING", "EARRING", "BRACELET", "NECKLACE"];
 
 let headerEl = `
-<header>
-  <div class="container"> 
-    <div class="row">
-      <div class="logo">
-        <img src="../public/img/today-logo.png" alt="logo"/>
-      </div>
-    </div>
+<header>  
+<div class="container">
+<div class="row">
+  <div class="logo">
+    <img src="../../public/img/today-logo.png" alt="logo"/>
   </div>
 </div>
 </div>
