@@ -4,7 +4,7 @@ const $cartHeader = document.querySelector('.cart-header');
 const $cartEmpty = document.querySelector('.cart-empty');
 const $optionMenu = document.querySelector('.option-menu');
 
-let cart;
+let cart, isAllCheck = false;
 // --------------------------------------------------------------------------------
 // ------------- localStorage -----------------------------------------------------
 // --------------------------------------------------------------------------------
@@ -53,9 +53,11 @@ function getItems() {
     if (cart.length < 1) {
         $carts.style.display = "none";
         $cartEmpty.style.display = "block";
+        document.querySelector('.deleteCart').style.display = "none";
     } else {
         $carts.style.display = "flex";
         $cartEmpty.style.display = "none";
+        document.querySelector('.deleteCart').style.display = "block";
         cart.forEach((el, idx) => {
             const cartItem = addItemInCart(el, idx);
             $cartTable.insertAdjacentHTML(
@@ -101,15 +103,24 @@ function addItemInCart(item, sequence) {
 
 // 데이터 삭제
 function deleteItem(itemSequence) {
+    const $checked = document.querySelectorAll('input[name="check"]:checked');
     cart = findCartItem();
 
     cart.splice(itemSequence, 1);
     setItems(cart);
 
     const $cartItems = $cartTable.querySelectorAll("tr:not([class='cart-header'])");
-    $cartItems.forEach((el) => el.remove());
+    $cartItems.forEach((el) => el.parentElement.remove());
 
     getItems();
+    if (isAllCheck) {
+        const $checkboxes = document.querySelectorAll('input[name="check"]');
+        totalPaymentAmount($checkboxes);
+        allCheck($checkboxes, true);
+    } else if ($checked.length > 1) {
+        // 보류 체크 된 상태가 남아있어야 한다.       
+    }
+
 }
 
 // 전체 삭제
@@ -129,9 +140,11 @@ function updateItem(itemSequence, updateSize, updateQuantity) {
     cart[itemSequence].quantity = updateQuantity;
 
     setItems(cart);
+
     const $cartItems = $cartTable.querySelectorAll("tr:not([class='cart-header'])");
-    $cartItems.forEach((el) => el.remove());
-    getItems();
+    $cartItems[`${itemSequence}`].querySelector('.cart-item-quantity p').innerText = `${updateQuantity}`;
+    $cartItems[`${itemSequence}`].querySelector('.cart-item-size').innerText = `${updateSize} - ${updateQuantity}`;
+
 }
 
 function getItem(itemSequence) {
@@ -187,7 +200,7 @@ function buttonEvent(target) {
 function checkEvent(target) {
     const name = target.name;
     const $checkboxes = document.querySelectorAll('input[name="check"]');
-    let isAllCheck = false;
+    isAllCheck = false;
 
     if (name === "all-check") {
       if (target.checked) {
