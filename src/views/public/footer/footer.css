@@ -1,0 +1,44 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+#wrapper {
+    height: auto;
+    min-height: 100%;
+    padding-bottom: 250px;
+}
+
+#footer {
+    height: 250px;
+    width: 100%;
+    padding: 1rem 0.8rem;
+    position : relative;
+    transform : translateY(-100%);
+    background-color: rgb(159, 159, 159);
+    color: white;
+    font-size: 0.8rem;
+}
+
+#footer .footer-link {
+    display: flex;
+}
+
+#footer .footer-info p {
+    margin-bottom: 0.5rem;
+}
+
+#footer .footer-link p {
+    margin-right: 0.8rem;
+    margin-bottom: 0.5rem;
+    cursor: pointer;
+}
+
+#footer .footer-link p:hover {
+    color: rgba(0, 0, 0, 0.5);
+}
