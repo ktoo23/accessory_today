@@ -14,10 +14,7 @@ class InquiryService {
         return data;
       } catch (error) {
         console.error('getInquiry 오류:', error);
-        return {
-          status: 500, // 내부 서버 오류
-          message: '서버에서 문의를 가져오는 중에 오류가 발생했습니다.'
-        };
+        return error;
       }
     }
   
@@ -45,16 +42,10 @@ class InquiryService {
         };
         
         await Inquiries.findOneAndUpdate({ productId, author }, data, { upsert: true });
-        return {
-          status: 200,
-          message: 'success'
-        };
+        return ;
       } catch (error) {
         console.error('putInquiry 오류:', error);
-        return {
-          status: 500, // 내부 서버 오류
-          message: '서버에서 문의를 작성 또는 수정하는 중에 오류가 발생했습니다.'
-        };
+        return error;
       }
     }
   
@@ -62,16 +53,11 @@ class InquiryService {
       try {
         
         await Inquiries.deleteOne({ _id: new ObjectId(Id) });
-        return {
-          status: 200,
-          message: 'success'
-        };
+
+        return ;
       } catch (error) {
         console.error('delInquiry 오류:', error);
-        return {
-          status: 500, // 내부 서버 오류
-          message: '서버에서 문의를 삭제하는 중에 오류가 발생했습니다.'
-        };
+        return error;
       }
     }
   }
