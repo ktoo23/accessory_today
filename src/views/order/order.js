@@ -3,7 +3,6 @@ import { findCartItem } from './cart.js';
 
 
 
-
 const initOrderInfo = () => {
   const targetEl = document.getElementById('orderInfo');
   if (targetEl) {
