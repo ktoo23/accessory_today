@@ -19,129 +19,131 @@
     />
   </head>
   <body>
-    <div id="header"></div>
-    <div class="join-container">
-      <form class="join-form" method="post">
-        <div class="first-line">
-          <label for="email">이메일*</label>
-          <div class="email-group">
-            <input type="text" class="form-control" id="email-user" />
-            <div>@</div>
-            <input type="text" class="form-control" id="email-domain" />
-          </div>
-        </div>
-        <div>
-          <label for="password">비밀번호*</label>
-          <input
-            type="password"
-            class="form-control"
-            id="password"
-            name="password"
-            placeholder="영문 대소문자/숫자 조합, 8~16자"
-          />
-        </div>
-        <div>
-          <label for="confirm-password">비밀번호 확인*</label>
-          <input
-            type="password"
-            class="form-control"
-            id="confirm-password"
-            name="confirm-password"
-            required
-          />
-        </div>
-        <div>
-          <label for="name">이름*</label>
-          <input
-            type="text"
-            class="form-control"
-            id="name"
-            name="name"
-            required
-          />
-        </div>
-        <div>
-          <label for="address">주소*</label>
-          <div class="post-group">
-            <input
-              type="text"
-              class="post-code"
-              id="post-code"
-              placeholder="우편번호"
-            />
-            <div class="input-group-append">
-              <button
-                class="btn btn-outline-secondary"
-                type="button"
-                id="address-search"
-              >
-                주소검색
-              </button>
+    <div id="wrapper">
+      <div id="header"></div>
+      <div class="join-container">
+        <form class="join-form" method="post">
+          <div class="first-line">
+            <label for="email">이메일*</label>
+            <div class="email-group">
+              <input type="text" class="form-control" id="email-user" />
+              <div>@</div>
+              <input type="text" class="form-control" id="email-domain" />
             </div>
           </div>
-          <div class="address-group">
+          <div>
+            <label for="password">비밀번호*</label>
             <input
-              type="text"
-              class="street-address"
-              id="street-address"
-              name="street-address"
-              placeholder="도로명 주소"
-            />
-            <input
-              type="text"
-              class="detail-address"
-              id="detail-address"
-              name="detail-address"
-              placeholder="상세주소"
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="영문 대소문자/숫자 조합, 8~16자"
             />
           </div>
-        </div>
-        <div class="phone">
-          <label for="phone-number">휴대전화*</label>
-          <div class="phone-inputs">
+          <div>
+            <label for="confirm-password">비밀번호 확인*</label>
             <input
-              type="tel"
+              type="password"
               class="form-control"
-              id="phone1"
-              name="phone1"
-              maxlength="3"
-              size="3"
-              required
-            />
-            -
-            <input
-              type="tel"
-              class="form-control"
-              id="phone2"
-              name="phone2"
-              maxlength="4"
-              size="4"
-              required
-            />
-            -
-            <input
-              type="tel"
-              class="form-control"
-              id="phone3"
-              name="phone3"
-              maxlength="4"
-              size="4"
+              id="confirm-password"
+              name="confirm-password"
               required
             />
           </div>
-        </div>
+          <div>
+            <label for="name">이름*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              required
+            />
+          </div>
+          <div>
+            <label for="address">주소*</label>
+            <div class="post-group">
+              <input
+                type="text"
+                class="post-code"
+                id="post-code"
+                placeholder="우편번호"
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  id="address-search"
+                >
+                  주소검색
+                </button>
+              </div>
+            </div>
+            <div class="address-group">
+              <input
+                type="text"
+                class="street-address"
+                id="street-address"
+                name="street-address"
+                placeholder="도로명 주소"
+              />
+              <input
+                type="text"
+                class="detail-address"
+                id="detail-address"
+                name="detail-address"
+                placeholder="상세주소"
+              />
+            </div>
+          </div>
+          <div class="phone">
+            <label for="phone-number">휴대전화*</label>
+            <div class="phone-inputs">
+              <input
+                type="tel"
+                class="form-control"
+                id="phone1"
+                name="phone1"
+                maxlength="3"
+                size="3"
+                required
+              />
+              -
+              <input
+                type="tel"
+                class="form-control"
+                id="phone2"
+                name="phone2"
+                maxlength="4"
+                size="4"
+                required
+              />
+              -
+              <input
+                type="tel"
+                class="form-control"
+                id="phone3"
+                name="phone3"
+                maxlength="4"
+                size="4"
+                required
+              />
+            </div>
+          </div>
 
-        <div class="form-submit-container">
-          <button
-            type="submit"
-            class="form-submit-btn"
-            value="submit"
-            onclick="submitForm()"
-          >
-            회원가입
-          </button>
-        </div>
-      </form>
+          <div class="form-submit-container">
+            <button
+              type="submit"
+              class="form-submit-btn"
+              value="submit"
+              onclick="submitForm()"
+            >
+              회원가입
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
     <div id="footer"></div>
     <script src="../public/header/header.js"></script>
