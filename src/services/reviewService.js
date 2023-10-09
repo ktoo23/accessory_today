@@ -60,8 +60,8 @@ class ReviewService {
   
     async delReview(Id) {
       try {
-        const targetId = new ObjectId(Id);
-        await Reviews.deleteOne({ _id: targetId });
+        
+        await Reviews.deleteOne({ _id: new ObjectId(Id) });
         return {
           status: 200,
           message: 'success'
