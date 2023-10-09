@@ -83,3 +83,12 @@ form > div {
   display: block;
   margin: 30px auto 100px;
 }
+
+/* orderComplete.html style */
+
+.complete-title {
+  background-color: lightgray;
+}
+h1 {
+
+}
