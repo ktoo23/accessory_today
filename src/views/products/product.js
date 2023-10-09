@@ -40,20 +40,24 @@ const initProductsList = () => {
 };
 
 // 카테고리 클릭 시 해당 상품 목록 불러옴
-categorySelect.addEventListener('click', (e) => {
-  e.preventDefault();
+if (categorySelect) {
+  categorySelect.addEventListener('click', (e) => {
+    e.preventDefault();
 
-  const selected = e.target.getAttribute('data-category');
+    const selected = e.target.getAttribute('data-category');
 
-  fetch(`api/products?category=${selected}`)
-    .then((response) => response.json())
-    .then((data) => {
-      const productData = data;
-      prdListEl.innerHTML = generateCards(productData);
-    })
-    .catch((error) => {
-      console.error('Error', error);
-    });
-});
+    fetch(`/api/products?category=${selected}`)
+      .then((response) => response.json())
+      .then((data) => {
+        const productData = data;
+        prdListEl.innerHTML = generateCards(productData);
+      })
+      .catch((error) => {
+        console.error('Error', error);
+      });
+  });
+} else {
+  console.error('categorySelect not found');
+}
 
 initProductsList();
