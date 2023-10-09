@@ -9,40 +9,6 @@ let cart,
 // --------------------------------------------------------------------------------
 // ------------- localStorage -----------------------------------------------------
 // --------------------------------------------------------------------------------
-const item1 = {
-  itemId: 11,
-  productName: "PARARREL SYMBOL RING",
-
-  size: "LARGE",
-  quantity: 1,
-  price: 43000,
-  url: "home.png",
-};
-
-const item2 = {
-  itemId: 11,
-  productName: "PARARREL SYMBOL RING",
-  size: "SMALL",
-  quantity: 2,
-  price: 54000,
-  url: "home.png",
-};
-const item3 = {
-  itemId: 13,
-  productName: "TRIRIRIRI TOTOKO",
-  size: "SMALL",
-  quantity: 1,
-  price: 14000,
-  url: "home.png",
-};
-saveItem(); // - 가상 데이터 추가
-function saveItem() {
-  cart = findCartItem();
-  cart.push(item1);
-  cart.push(item2);
-  cart.push(item3);
-  setItems(cart);
-}
 
 getItems();
 function getItems() {
@@ -153,13 +119,14 @@ function getItem(itemSequence) {
 }
 
 // 현재 로컬 스토리지 이름을 cart로 정함. 나중에는 사용자 아이디에 따라 로컬스토리지 생성?
-export function findCartItem() {
+function findCartItem() {
   return JSON.parse(localStorage.getItem("myCart")) || [];
 }
 
 function setItems(cart) {
   localStorage.setItem("myCart", JSON.stringify(cart));
 }
+
 function changePrice(price) {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
