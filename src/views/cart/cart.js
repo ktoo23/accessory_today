@@ -120,7 +120,7 @@ function getItem(itemSequence) {
 
 // 현재 로컬 스토리지 이름을 cart로 정함. 나중에는 사용자 아이디에 따라 로컬스토리지 생성?
 function findCartItem() {
-  return JSON.parse(localStorage.getItem("myCart")) || [];
+    return JSON.parse(localStorage.getItem("myCart")) || [];
 }
 
 function setItems(cart) {

@@ -10,6 +10,7 @@
 .page-title > h2 {
   text-align: center;
   font-weight: bold;
+  padding-bottom: 25px;
 }
 
 .col-1 {
@@ -19,6 +20,7 @@
 
 .order-container .cart-contents {
   justify-content: space-between;
+  margin-bottom: 80px;
 }
 
 .order-list {
@@ -39,14 +41,15 @@
 
 .cart-price {
   justify-content: end;
-  padding: 10px 0;
+  padding: 10px 10px !important;
 }
 
-/* .cart-price > p {
-  padding: 0 15px;
-} */
-
 /* 배송 정보 form */
+#order-form > span {
+  font-size: 22px;
+  font-weight: bold;
+}
+
 label {
   font-size: 18px;
 }
@@ -69,8 +72,6 @@ form > div {
   width: 100px !important;
   margin: 0 5px;
 }
-
-
 
 .form-submit-btn {
   background-color: #d3cdb3;
