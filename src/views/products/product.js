@@ -1,40 +1,59 @@
-const num = 6; // hard code
+const prdListEl = document.getElementById('prdList');
+const categorySelect = document.getElementById('categorySelect');
 
-const generateCards = () => {
+// 상품 하나씩 카드로 만듦
+const generateCards = (productData) => {
   let cards = '';
 
-  for (let i = 0; i < num; i++) {
+  for (let i = 0; i < productData.length; i++) {
+    const product = productData[i];
+
     cards += `
-      <div class="card">
-        <img src="../product/prdTempImg.jpg" alt="product img">
-        <div class="text">
-          <p class="name">name</p>
-          <p class="price">price</p>
+        <div class="card">
+          <img src="${product.productImg}" alt="productImg">
+          <div class="text">
+            <p class="prd-name">${product.productName}</p>
+            <p class="price">${product.price}</p>
+          </div>
         </div>
-      </div>
-    `;
+      `;
   }
 
   return cards;
 };
 
-let prdListEl = `
-<section class="prd-list">
-        <div class="container">
-            <div class="item-list">            
-                ${generateCards()}
-            </div>
-        </div>
-</section>
-`;
-
+// 만든 카드로 list 만듦
 const initProductsList = () => {
-  const targetEl = document.getElementById('prdList');
-  if (targetEl) {
-    targetEl.innerHTML = prdListEl;
+  if (prdListEl) {
+    prdListEl.innerHTML = `
+      <section class="prd-list">
+        <div class="container">
+          <div class="item-list">            
+            ${generateCards([])}
+          </div>
+        </div>
+      </section>
+    `;
   } else {
     console.error('targetEl not found');
   }
 };
+
+// 카테고리 클릭 시 해당 상품 목록 불러옴
+categorySelect.addEventListener('click', (e) => {
+  e.preventDefault();
+
+  const selected = e.target.getAttribute('data-category');
+
+  fetch(`api/products?category=${selected}`)
+    .then((response) => response.json())
+    .then((data) => {
+      const productData = data;
+      prdListEl.innerHTML = generateCards(productData);
+    })
+    .catch((error) => {
+      console.error('Error', error);
+    });
+});
 
 initProductsList();

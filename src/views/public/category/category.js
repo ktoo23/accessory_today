@@ -1,14 +1,15 @@
 let categoryEl = `
     <div class="sidenav">
-      <ul class="nav nav-pills nav-stacked">
-        <li><a href="#">ALL</a></li>
-        <li><a href="#">RING</a></li>
-        <li><a href="#">EARRING</a></li>
-        <li><a href="#">BRACELET</a></li>
-        <li><a href="#">NECKLACE</a></li>
+      <ul id="categorySelect" class="nav nav-pills nav-stacked">
+        <li><a href="#" data-category='all'>ALL</a></li>
+        <li><a href="#" data-category='ring'>RING</a></li>
+        <li><a href="#" data-category='earring'>EARRING</a></li>
+        <li><a href="#" data-category='bracelet'>BRACELET</a></li>
+        <li><a href="#" data-category='necklace'>NECKLACE</a></li>
     </ul>
     </div>
 `;
+
 
 const initCategory = () => {
   const targetEl = document.getElementById("category");
