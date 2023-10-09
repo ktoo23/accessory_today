@@ -1,14 +1,16 @@
-const prdListEl = document.getElementById('prdList');
-const categorySelect = document.getElementById('categorySelect');
+document.addEventListener('DOMContentLoaded', () => {
+  
+  const prdListEl = document.getElementById('prdList');
+  const categorySelect = document.getElementById('categorySelect');
 
-// 상품 하나씩 카드로 만듦
-const generateCards = (productData) => {
-  let cards = '';
+  // 상품 하나씩 카드로 만듦
+  const generateCards = (productData) => {
+    let cards = '';
 
-  for (let i = 0; i < productData.length; i++) {
-    const product = productData[i];
+    for (let i = 0; i < productData.length; i++) {
+      const product = productData[i];
 
-    cards += `
+      cards += `
         <div class="card">
           <img src="${product.productImg}" alt="productImg">
           <div class="text">
@@ -17,49 +19,46 @@ const generateCards = (productData) => {
           </div>
         </div>
       `;
-  }
+    }
 
-  return cards;
-};
+    return cards;
+  };
 
-// 만든 카드로 list 만듦
-const initProductsList = () => {
-  if (prdListEl) {
-    prdListEl.innerHTML = `
+  // 만든 카드로 list 만듦
+  const initProductsList = (productData) => {
+    if (prdListEl) {
+      prdListEl.innerHTML = `
       <section class="prd-list">
         <div class="container">
           <div class="item-list">            
-            ${generateCards([])}
-          </div>
+            ${generateCards(productData)}
+                     </div>
         </div>
       </section>
     `;
-  } else {
-    console.error('targetEl not found');
-  }
-};
+    } else {
+      console.error('targetEl not found');
+    }
+  };
 
-// 카테고리 클릭 시 해당 상품 목록 불러옴
-if (categorySelect) {
+
+  // 카테고리 클릭 시 해당 상품 목록 불러옴
   categorySelect.addEventListener('click', (e) => {
     e.preventDefault();
 
     const selected = e.target.getAttribute('data-category');
     const newURL = `/api/products?category=${selected}`;
-    
+
     fetch(newURL)
       .then((response) => response.json())
       .then((data) => {
         const productData = data;
-        prdListEl.innerHTML = generateCards(productData);
-        window.location.href = newURL;
+        prdListEl.innerHTML = generateCards(productData); // 이상한데..
       })
       .catch((error) => {
         console.error('Error', error);
       });
   });
-} else {
-  console.error('categorySelect not found');
-}
 
-initProductsList();
+  initProductsList();
+});
