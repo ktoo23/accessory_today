@@ -10,7 +10,7 @@ categoryRouter.post("/categorys", async (req, res) => {
   const { newCategory } = req.body;
   try {
     // 카테고리 개설 요청 처리 결과를 받음. (상태 코드 200이면 성공)
-    const newCategoryResult = await categoryService.newCategory(category);
+    const newCategoryResult = await categoryService.newCategory(newCategory);
     return res.json(newCategoryResult);
   } catch (err) {
     return res.json(err);
