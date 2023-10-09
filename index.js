@@ -1,16 +1,21 @@
-import express from "express";
-import "dotenv";
+import mongoose from "mongoose";
+import { app } from "./src/app.js";
+import dotenv from "dotenv";
 
-const app = express();
+dotenv.config();
 
-const PORT = process.env.PORT || 5000;
+const PORT = process.env.PORT;
 
-app.get("/", (req, res) => {
-  res.send("Hello World!");
-});
+mongoose
+  .connect(process.env.mongooseurl, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => console.log("mongoDB 연결에 성공하였습니다😊"))
+  .catch((err) => console.log("mongoDB 연결에 실패하였습니다😥" + err));
 
-app.listen(PORT, () => {
+app.listen(process.env.PORT, () => {
   console.log(
-    `${__dirname}정상적으로 서버를 시작하였습니다.  http://localhost:${PORT}`
+    `정상적으로 서버를 시작하였습니다.  http://127.0.0.1:${process.env.PORT}`
   );
 });

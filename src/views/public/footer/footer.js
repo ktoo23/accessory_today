@@ -25,11 +25,11 @@ let footerEl = `
 `;
 
 const initFooter = () => {
-  const targetEl = document.getElementById("footer");
+  const targetEl = document.getElementById('footer');
   if (targetEl) {
     targetEl.innerHTML = footerEl;
   } else {
-    console.error("targetEl not found");
+    console.error('targetEl not found');
   }
 };
 

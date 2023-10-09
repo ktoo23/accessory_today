@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>today Cart</title>
+    <link rel="stylesheet" href="../public/header/header.css" />
+    <link rel="stylesheet" href="../public/footer/footer.css">
+    <link rel="stylesheet" href="cart.css">
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0"
+    />
+</head>
+<body>
+<div id="wrapper">
+    <div id="header"></div>
+    <section class="cart-name">장바구니</section>
+    <section class="modal-layout display-none">
+        <div class="carts-modal">
+            <div class="modal-close">
+                X
+            </div>
+            <div class="modal-card">
+                <!-- <div class="option-header">
+                    <img src="img/home.png" alt="">
+                    <div>
+                        <p class="option-item-name">상품명</p>
+                        <p class="option-item-price">84,000</p>
+                    </div>
+                </div> -->
+                <div class="option-menu">
+                <p>SIZE*</p>
+                <div class="dropdown">
+                    <button class="dropbtn">
+                    <span class="dropbtn_content">[필수] 사이즈를 선택해주세요.</span>
+                    <span class="dropbtn_click" style="font-family: Material Icons; font-size : 16px; color : #3b3b3b; float:right;">arrow_drop_down</span>
+                    </button>
+                    <div class="dropdown-content">
+                    <div class="size">LARGE</div>
+                    <div class="size">MEDIUM</div>
+                    <div class="size">SMALL</div>
+                    </div>
+                </div>
+                </div>
+                <!-- <div class="option-content">
+                    <div>
+                        <p class="option-size">SIZE MEN</p>
+                        <p class="option-delete">X</p>
+                    </div>
+                    <div class="option-num">
+                        <div class="minus">-</div>
+                        <div class="quantity">3</div>
+                        <div class="plus">+</div>
+                    </div>
+                </div> -->
+                <!-- <div class="option-total-price">
+                    <p>총수량 0개</p>
+                    <p>84,000</p>
+                </div> -->
+            </div>
+            <div class="option-btn">
+                <button class="option-cancel">취소</button>
+                <button class="option-update">변경</button>
+            </div>
+          </div>
+    </section>
+    <section>
+        <div class="cart-empty">
+            <div>
+                <div class="cart-empty-div">
+                    <p>장바구니가 비어있습니다.</p>
+                    <button>계속 쇼핑하기</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="carts">
+        <table class="cart-table">
+            <tr class="cart-header">
+                <td class="cart-all-check">
+                    <input type="checkbox" name="all-check"> <p>전체선택</p>
+                </td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+            </tr>
+            <!-- <tr id="cart-1">
+                <td colspan="2" class="cart-item">
+                    <div>
+                        <input type="checkbox" name="check">
+                        <img src="img/home.png" alt="">
+                        <div class="cart-item-option">
+                            <p class="cart-item-name">PARARREL SYMBOL RING-NAVY</p>
+                            <p class="cart-item-size">WOMEN - 1</p>
+                            <p class="cart-item-size">MEN - 1</p>
+                        </div>
+                    </div>
+                </td>
+                
+                <td class="cart-item-num">
+                    <p>1</p>
+                    <button class="option-update-btn">옵션/수량 변경</button>
+                </td>
+                <td class="cart-item-price">
+                    <p>43,000</p>
+                </td>
+                <td>
+                    <div class="cart-item-btn">
+                        <button class="deleteBtn">삭제하기</button>
+                        <button class="orderBtn">상품주문</button>
+                    </div>
+                </td>
+            </tr>
+            
+            <tr id="cart-2">
+                <td colspan="2" class="cart-item">
+                    <div>
+                        <input type="checkbox" name="check">
+                        <img src="img/home.png" alt="">
+                        <div class="cart-item-option">
+                            <p class="cart-item-name">GARDEN NECK RING-IVORY</p>
+                            <p class="cart-item-size">MEN - 2</p>
+                        </div>
+                    </div>
+                </td>
+                <td class="cart-item-num">
+                    <p>2</p>
+                    <button class="option-update-btn">옵션/수량 변경</button>
+                </td>
+                <td class="cart-item-price">
+                    <p>54,000</p>
+                </td>
+                <td>
+                    <div class="cart-item-btn">
+                        <button class="deleteBtn">삭제하기</button>
+                        <button class="orderBtn">상품주문</button>
+                    </div>
+                </td>
+            </tr> -->
+        </table>
+        <div class="nav">
+            <div class="items-order">
+                <p>주문하기</p>
+                <div>
+                    <p>총 상품 금액</p>
+                    <p class="items-price">0</p>
+                </div>
+                <div>
+                    <p>총 배송비</p>
+                    <p class="delivery-fee">0</p>
+                </div>
+                <div>
+                    <p>총 결제금액</p>
+                    <p class="payment">0</p>
+                </div>
+                <div>
+                    <button id="orderCheckBtn">선택 상품 주문</button>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="deleteCart">
+        <button class="deleteAll">전체 삭제</button>
+    </section>
+</div>
+    <footer id="footer"></footer>
+</html>
+<script src="../public/header/header.js"></script>
+<script src="../public/footer/footer.js"></script>
+<script src="cart.js"></script>
