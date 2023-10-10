@@ -22,7 +22,7 @@ const generateCards = () => {
 };
 */
 const generateCards = () => {
-  let cards = '';
+  let cards = "";
 
   for (let i = 1; i <= num; i++) {
     imgNum = i;
@@ -36,27 +36,46 @@ const generateCards = () => {
   return cards;
 };
 
-let  bestListEl = `${generateCards()}`;
+let bestListEl = `${generateCards()}`;
 
 const initBestList = () => {
-  const targetEl = document.getElementById('bestList');
+  const targetEl = document.getElementById("bestList");
   if (targetEl) {
     targetEl.innerHTML = bestListEl;
   } else {
-    console.error('targetEl not found');
+    console.error("targetEl not found");
   }
 };
 
-let  newListEl = `${generateCards()}`;
+let newListEl = `${generateCards()}`;
 
 const initNewList = () => {
-  const targetEl = document.getElementById('newList');
+  const targetEl = document.getElementById("newList");
   if (targetEl) {
     targetEl.innerHTML = newListEl;
   } else {
-    console.error('targetEl not found');
+    console.error("targetEl not found");
   }
 };
 
 initBestList();
 initNewList();
+
+// 로컬스토리지 Authorization 항목이 있다면 (토큰이 있으면) Login이 아니라 Logout이 되어야 한다.
+const link = document.querySelector(".header-right li:first-child a");
+if (localStorage.getItem("Authorization")) {
+  link.innerText = "LOGOUT";
+} else {
+  link.innerText = "LOGIN";
+  link.href = "/login";
+}
+
+// 로그아웃 (만약 클릭한 글자가 LOGOUT일 때, localstorage에 있는 Authorizaion 항목 삭제)
+const logout = document.querySelector(".header-right li:first-child a");
+logout.addEventListener("click", (e) => {
+  if (logout.innerText === "LOGOUT") {
+    localStorage.removeItem("Authorization");
+    // 삭제하고 다시 연결하면 LOGIN이라고 뜸.
+    window.location.href = "/";
+  }
+});

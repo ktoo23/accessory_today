@@ -13,18 +13,17 @@ class CategoryService {
    
     if (categoryExsist) {
       return {
-        status: 400,
+        status: 404,
         errMsg: "이미 존재하는 카테고리입니다.",
       };
     }
     // db에 저장하기
-    
-    await categoryModel.create({category});
+    await categoryModel.create({ category });
     // 성공 메시지와 새로 가입한 유저 정보 반환
     return {
-      status: 200,
+      status: 201,
       message: "카테고리가 생성되었습니다",
-      newCategory: category,
+      newCategory: newCategory,
     };
   }
 

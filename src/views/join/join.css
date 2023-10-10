@@ -1,0 +1,113 @@
+.join-container {
+    padding: 0 10%;
+    margin-top: 100px;
+}
+
+.first-line {
+    border-top: 1px solid lightgray;
+}
+
+label {
+    font-size: 18px;
+}
+
+.form-control {
+    width: 300px !important;
+}
+
+form>div {
+    border-bottom: 1px solid lightgray;
+    padding: 10px 0;
+}
+
+.phone-inputs {
+    display: flex;
+    align-items: center;
+}
+
+.phone-inputs input {
+    width: 100px !important;
+    margin: 0 5px;
+}
+
+.form-submit-btn {
+    background-color: #d3cdb3;
+    border: 1px solid #d3cdb3;
+    color: black;
+    width: 15rem;
+    height: 3rem;
+    border-radius: 10px;
+    display: block;
+    margin: 30px auto 100px;
+}
+
+/* 이메일폼 css */
+.email-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+/* 주소폼 css */
+.post-group {
+    display: flex;
+}
+
+.post-code {
+    border: var(--bs-border-width) solid #dee2e6;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    margin-right: 18px;
+}
+
+.post-code:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+}
+
+.address-group {
+    display: inline-grid;
+}
+
+.street-address {
+    border: var(--bs-border-width) solid #dee2e6;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    width: 480px;
+    margin: 10px 0;
+}
+
+.street-address:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+}
+
+.detail-address {
+    border: var(--bs-border-width) solid #dee2e6;
+    border-radius: var(--bs-border-radius);
+    transition: border-color .15s ease-in-out, box-shadow .15s ease-in-out;
+    padding: 0.375rem 0.75rem;
+    font-size: 1rem;
+    font-weight: 400;
+    width: 480px;
+}
+
+.detail-address:focus {
+    color: var(--bs-body-color);
+    background-color: var(--bs-body-bg);
+    border-color: #86b7fe;
+    outline: 0;
+    box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+}
