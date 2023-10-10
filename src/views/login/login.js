@@ -1,3 +1,5 @@
+// 회원 로그인, 비회원 로그인(주문 검증) 구현 완료!
+
 const loginBtn = document.querySelector(".login-btn");
 const guestBtn = document.querySelector(".inquiry-btn");
 const loginForm = document.querySelector(".login-form");
@@ -44,9 +46,7 @@ async function handleGuestLoginSubmit(e) {
   const orderId = document.querySelector(".order-number").value;
   const orderPassword = document.querySelector(".guest-password").value;
   const postData = { orderer, orderId, orderPassword };
-  console.log(postData);
-
-  await fetch("/api/users/non-memeber-login", {
+  await fetch("/api/users/non-member-login", {
     method: "POST",
     headers: {
       "Content-Type": "application/json", // JSON 데이터 전송을 위한 헤더
@@ -55,8 +55,8 @@ async function handleGuestLoginSubmit(e) {
   })
     .then((res) => res.json())
     .then((data) => {
-      if (data.status === 200) {
-        alert("로그인 성공!");
+      if (data.status == 200) {
+        window.location.href = `/non-member-page/orderId${data.orderId}`;
       } else {
         alert(data.errMsg);
       }

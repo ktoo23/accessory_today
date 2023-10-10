@@ -1,3 +1,5 @@
+// 회원가입 구현 완료!
+
 const joinButton = document.querySelector(".form-submit-container button");
 const joinForm = document.querySelector(".join-form");
 
