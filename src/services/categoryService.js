@@ -10,7 +10,10 @@ class CategoryService {
     
     const categoryExsist = await categoryModel.findOne({ category: category });
     // 중복되는 카테고리가 있을 경우 이미 존재하는 카테고리라고 알리기
+<<<<<<<<< Temporary merge branch 1
    
+=========
+>>>>>>>>> Temporary merge branch 2
     if (categoryExsist) {
       return {
         status: 404,
@@ -23,7 +26,6 @@ class CategoryService {
     return {
       status: 201,
       message: "카테고리가 생성되었습니다",
-      newCategory: newCategory,
     };
   }
 
