@@ -16,6 +16,6 @@ mongoose
 
 app.listen(process.env.PORT, () => {
   console.log(
-    `정상적으로 서버를 시작하였습니다.  http://127.0.0.1:${process.env.PORT}`
+    `정상적으로 서버를 시작하였습니다.  http://127.0.0.1:${PORT}`
   );
 });
