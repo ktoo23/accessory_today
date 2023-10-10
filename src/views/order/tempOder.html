@@ -46,11 +46,11 @@
             <div class="col-1 delivery-fee">배송비</div>
             <div class="col-1 total-price">합계</div>
           </div>
-          <div class="row cart-price">상품구매금액배송비무료=합계</div>
+          <div class="row cart-price">상품 구매금액 ${item-price} + 배송비 무료 = 합계 ${total-price} 원</div>
         </div>
-      </div>
       <div>
         <form id="order-form" method="post">
+          <span>배송 정보</span>
           <div>
               <label for="receiver_name">받으시는 분*</label>
               <input type="text" class="form-control" id="receiver-name" name="receiver-name" required>
@@ -86,10 +86,6 @@
       </form>
       </div>
 
-
-
-
-    </div>
 
     <div id="footer"></div>
 
