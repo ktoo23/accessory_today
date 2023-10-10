@@ -47,7 +47,7 @@ class ProductService{
     async getDetail(Id){ //제품의 상세 내용 출력
         try{
             const product = await Products.findById(new ObjectId(Id)); //id로 찾기
-            
+
             return product;
 
         }catch(error){
