@@ -22,7 +22,7 @@ const generateCards = () => {
 };
 */
 const generateCards = () => {
-  let cards = '';
+  let cards = "";
 
   for (let i = 1; i <= num; i++) {
     imgNum = i;
@@ -36,25 +36,25 @@ const generateCards = () => {
   return cards;
 };
 
-let  bestListEl = `${generateCards()}`;
+let bestListEl = `${generateCards()}`;
 
 const initBestList = () => {
-  const targetEl = document.getElementById('bestList');
+  const targetEl = document.getElementById("bestList");
   if (targetEl) {
     targetEl.innerHTML = bestListEl;
   } else {
-    console.error('targetEl not found');
+    console.error("targetEl not found");
   }
 };
 
-let  newListEl = `${generateCards()}`;
+let newListEl = `${generateCards()}`;
 
 const initNewList = () => {
-  const targetEl = document.getElementById('newList');
+  const targetEl = document.getElementById("newList");
   if (targetEl) {
     targetEl.innerHTML = newListEl;
   } else {
-    console.error('targetEl not found');
+    console.error("targetEl not found");
   }
 };
 

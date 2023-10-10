@@ -39,6 +39,21 @@ viewsRouter.get("/products", (req, res) => {
   );
 });
 
+// 유저 정보 변경 페이지
+viewsRouter.get("/user/userinfo/:userId", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "src",
+      "views",
+      "user",
+      "userInfo",
+      "userInfo.html"
+    )
+  );
+});
+
+
 // 상품 디테일 페이지
 viewsRouter.get("/products/details", (req, res) => {
   res.sendFile(
@@ -71,6 +86,20 @@ viewsRouter.get("/user/orderTracking", (req, res) => {
       "user",
       "orderTracking",
       "orderTracking.html"
+    )
+  );
+});
+
+// 비회원 주문 조회
+viewsRouter.get("/non-member/order-tracking/:orderId", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "src",
+      "views",
+      "user",
+      "nonMemberPage",
+      "nonMemberPage.html"
     )
   );
 });
