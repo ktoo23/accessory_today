@@ -1,4 +1,5 @@
 import express from "express";
+import path from "path";
 import { userRouter } from "./routers/userRouter.js";
 import { orderRouter } from "./routers/orderRouter.js";
 import { categoryRouter } from "./routers/categoryRouter.js";
@@ -14,6 +15,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
 app.use(viewsRouter);
+
+app.use("/", express.static(path.join(process.cwd(), "src", "public")));
+
 app.use("/", categoryRouter);
 app.use("/api", adminRouter);
 app.use("/api/users", userRouter);
