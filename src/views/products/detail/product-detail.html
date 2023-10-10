@@ -24,104 +24,113 @@
     />
   </head>
   <body>
-    <div id="header"></div>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-2 column-gap" id="category"></div>
-        <div class="col-8">
-          <div class="productDet-wrapper">
-            <div class="productDet-container">
-              <div class="productDet-image">
-                <img src="../prdDeImg1.png" alt="상품 이미지" />
-                <div class="image-separator"></div>
-                <img src="../prdDeImg2.png" alt="상품 이미지" />
-              </div>
-              <div class="productDet-order">
-                <p>NECKLACE</p>
-                <p class="product-price">KRW 320,000</p>
-                <div class="counter">
-                  <span class="number">0</span>
-                  <div class="number-button">
-                    <button class="arrow-up">
-                      <span class="material-symbols-outlined">expand_less</span>
-                    </button>
-                    <button class="arrow-down">
-                      <span class="material-symbols-outlined">
-                        keyboard_arrow_down
-                      </span>
-                    </button>
-                    <div></div>
+    <div id="wrapper">
+      <div id="header"></div>
+      <div class="container-fluid">
+        <div class="row">
+          <div class="col-2 column-gap" id="category"></div>
+          <div class="col-8">
+            <div class="productDet-wrapper">
+              <div class="productDet-container">
+                <div class="productDet-image">
+                  <img src="../prdDeImg1.png" alt="상품 이미지" />
+                  <div class="image-separator"></div>
+                  <img src="../prdDeImg2.png" alt="상품 이미지" />
+                </div>
+                <div class="productDet-order">
+                  <p>NECKLACE</p>
+                  <p class="product-price">KRW 320,000</p>
+                  <div class="counter">
+                    <span class="number">0</span>
+                    <div class="number-button">
+                      <button class="arrow-up">
+                        <span class="material-symbols-outlined"
+                          >expand_less</span
+                        >
+                      </button>
+                      <button class="arrow-down">
+                        <span class="material-symbols-outlined">
+                          keyboard_arrow_down
+                        </span>
+                      </button>
+                      <div></div>
+                    </div>
                   </div>
+                  <button class="order-button">주문하기</button>
+                  <button class="add-to-cart-button">장바구니 담기</button>
                 </div>
-                <button class="order-button">주문하기</button>
-                <button class="add-to-cart-button">장바구니 담기</button>
               </div>
-            </div>
-            <div class="product-detail-bottom">
-              <hr />
-              <!-- 후기 섹션 -->
-              <section class="reviews">
-                <div class="reviews-container">
-                  <span class="reviews-font">REVIEW</span>
-                  <button class="reviews-btn">
-                    <a href="../detail/products-detail-form.html?type=review">후기작성</a>
-                  </button>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>날짜</th>
-                      <th class="no-border">작성자</th>
-                      <th>평점</th>
-                      <th>내용</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>1</td>
-                      <td>상품이 매우 만족스럽습니다.</td>
-                      <td>jc**</td>
-                      <td>2023-10-11</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>가격 대비 좋아요.</td>
-                      <td>jc**</td>
-                      <td>2023-10-11</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
-              <!-- 문의하기 섹션 -->
-              <section class="questions">
-                <div class="questions-container">
-                  <span class="questions-font">Q&A</span>
-                  <button class="questions-btn" type="questions">
-                    <a href="../detail/products-detail-form.html?type=question">문의작성</a>
-                  </button>
-                </div>
-                <table>
-                  <thead>
-                    <tr>
-                      <th>날짜</th>
-                      <th class="no-border">작성자</th>
-                      <th>내용</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                      <td>2023-10-12</td>
-                      <td>고객3</td>
-                      <td>제품 사용 방법을 알려주세요.</td>
-                    </tr>
-                    <tr>
-                      <td>2023-10-13</td>
-                      <td>고객4</td>
-                      <td>재고 상황은 어떤가요?</td>
-                    </tr>
-                  </tbody>
-                </table>
-              </section>
+              <div class="product-detail-bottom">
+                <hr />
+                <!-- 후기 섹션 -->
+                <section class="reviews">
+                  <div class="reviews-container">
+                    <span class="reviews-font">REVIEW</span>
+                    <button class="reviews-btn">
+                      <a href="../detail/products-detail-form.html?type=review"
+                        >후기작성</a
+                      >
+                    </button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>날짜</th>
+                        <th class="no-border">작성자</th>
+                        <th>평점</th>
+                        <th>내용</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>1</td>
+                        <td>상품이 매우 만족스럽습니다.</td>
+                        <td>jc**</td>
+                        <td>2023-10-11</td>
+                      </tr>
+                      <tr>
+                        <td>2</td>
+                        <td>가격 대비 좋아요.</td>
+                        <td>jc**</td>
+                        <td>2023-10-11</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+                <!-- 문의하기 섹션 -->
+                <section class="questions">
+                  <div class="questions-container">
+                    <span class="questions-font">Q&A</span>
+                    <button class="questions-btn" type="questions">
+                      <a
+                        href="../detail/products-detail-form.html?type=question"
+                        >문의작성</a
+                      >
+                    </button>
+                  </div>
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>날짜</th>
+                        <th class="no-border">작성자</th>
+                        <th>내용</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>2023-10-12</td>
+                        <td>고객3</td>
+                        <td>제품 사용 방법을 알려주세요.</td>
+                      </tr>
+                      <tr>
+                        <td>2023-10-13</td>
+                        <td>고객4</td>
+                        <td>재고 상황은 어떤가요?</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </section>
+              </div>
             </div>
           </div>
         </div>
