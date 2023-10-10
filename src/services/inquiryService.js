@@ -20,19 +20,6 @@ class InquiryService {
   
     async putInquiry(title, author, content, productId) {
       try {
-        if (!title || !author || !content ) { // 하나라도 없으면 에러
-          return {
-            status: 400,
-            errmsg: '잘못된 형식의 문의입니다!'
-          };
-        }
-
-        if(!productId){
-            return {
-                status:404,
-                errmsg:'상품을 찾을 수 없습니다.'
-            }
-        }
 
         const data = {
           title,

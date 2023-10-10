@@ -48,18 +48,11 @@ class ProductService{
         try{
             const product = await Products.findById(new ObjectId(Id)); //id로 찾기
             
-            if (!product) {
-                return {
-                  status: 404, // 찾을 수 없음
-                  message: '상품을 찾을 수 없습니다.'
-                };
-              }
-
             return product;
 
         }catch(error){
             console.error('getDetail 오류:',error);
-            return error;
+            return {error:error.message};
         }
     }
 }
