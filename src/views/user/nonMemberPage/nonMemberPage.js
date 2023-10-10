@@ -24,15 +24,18 @@ async function loadNonMemberOrder(e) {
           cnt += product.count;
         }
         const product = orderedProducts[0].products;
+        const size = orderedProducts[0].size;
         // console.log(product);
         const productName =
           orderedProducts.length === 1
             ? product.productName
-            : `${product.productName}외 ${orderedProducts.length - 1} 품목`;
+            : `${product.productName}-${size}외 ${
+                orderedProducts.length - 1
+              } 품목`;
         table.innerHTML += `<tr id=order-item0>
               <td>${orderInfo._id}</td>
               <td>
-                <img src=${product.productImg} />
+                <img src='${product.productImg}' />
               </td>
               <td>${productName}</td>
               <td>${orderInfo.totalPrice}</td>
