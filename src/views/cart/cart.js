@@ -34,7 +34,7 @@ function orderItem(sequence) {
     const order = { productName, productImg, size, count, totalPrice };
     if (order) {
       localStorage.setItem("order", JSON.stringify(order));
-      location.href="/";
+      location.href="/order";
     }
 }
 // 선택한 상품 주문
@@ -69,7 +69,7 @@ document.querySelector('#orderCheckBtn').addEventListener('click', () => {
         if(idx.includes(i) === false) return cart[i]; 
       });
       setItems(cart);
-      location.href="/";
+      location.href="/order";
     }
 
 });
