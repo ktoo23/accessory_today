@@ -18,7 +18,7 @@ app.use(viewsRouter);
 
 app.use("/", express.static(path.join(process.cwd(), "src", "public")));
 
-app.use("/", categoryRouter);
+app.use("/api", categoryRouter);
 app.use("/api", adminRouter);
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
