@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ko">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Today</title>
+    <link rel="stylesheet" href="/public/header/header.css" />
+    <link rel="stylesheet" href="/public/footer/footer.css" />
+    <link rel="stylesheet" href="/user/userInfo/userInfo.css" />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-4bw+/aepP/YC94hEpVNVgiZdgIC5+VKNBQNGCHeKRQN+PtmoHDEXuppvnDJzQIu9"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <div id="wrapper">
+      <div id="header"></div>
+      <div class="update-div">
+        <p class="info-title">기본정보</p>
+        <form class="update-form" method="post">
+          <div class="first-line">
+            <label for="email">이메일*</label>
+            <div class="email-group">
+              <input
+                type="text"
+                class="form-control"
+                id="email-user"
+                readonly
+              />
+              <div>@</div>
+              <input
+                type="text"
+                class="form-control"
+                id="email-domain"
+                readonly
+              />
+            </div>
+          </div>
+          <div>
+            <label for="password">비밀번호*</label>
+            <input
+              type="password"
+              class="form-control"
+              id="password"
+              name="password"
+              placeholder="영문 대소문자/숫자/특수문자, 8~16자"
+              required="required"
+            />
+          </div>
+          <div>
+            <label for="confirm-password">비밀번호 확인*</label>
+            <input
+              type="password"
+              class="form-control"
+              id="confirm-password"
+              name="confirm-password"
+              required
+            />
+          </div>
+          <div>
+            <label for="name">이름*</label>
+            <input
+              type="text"
+              class="form-control"
+              id="name"
+              name="name"
+              required
+            />
+          </div>
+          <div>
+            <label for="address">주소*</label>
+            <div class="post-group">
+              <input
+                type="text"
+                class="post-code"
+                id="post-code"
+                placeholder="우편번호"
+                required
+              />
+              <div class="input-group-append">
+                <button
+                  class="btn btn-outline-secondary"
+                  type="button"
+                  id="address-search"
+                >
+                  주소검색
+                </button>
+              </div>
+            </div>
+            <div class="address-group">
+              <input
+                type="text"
+                class="street-address"
+                id="street-address"
+                name="street-address"
+                placeholder="도로명 주소"
+                required
+              />
+              <input
+                type="text"
+                class="detail-address"
+                id="detail-address"
+                name="detail-address"
+                placeholder="상세주소"
+                required
+              />
+            </div>
+          </div>
+          <div class="phone">
+            <label for="phone-number">휴대전화*</label>
+            <div class="phone-inputs">
+              <input
+                type="tel"
+                class="form-control"
+                id="phone1"
+                name="phone1"
+                maxlength="3"
+                size="3"
+                required
+              />
+              -
+              <input
+                type="tel"
+                class="form-control"
+                id="phone2"
+                name="phone2"
+                maxlength="4"
+                size="4"
+                required
+              />
+              -
+              <input
+                type="tel"
+                class="form-control"
+                id="phone3"
+                name="phone3"
+                maxlength="4"
+                size="4"
+                required
+              />
+            </div>
+          </div>
+          <button
+              class="form-submit-btn"
+            >정보 변경
+      </div>
+        </form>
+    </div>
+    <div id="footer"></div>
+    <script src="/public/header/header.js"></script>
+    <script src="/public/footer/footer.js"></script>
+    <script src="/user/userInfo/userInfo.js"></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
+  </body>
+</html>

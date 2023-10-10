@@ -1,0 +1,102 @@
+section {
+    position: relative;
+    height: 500px;
+    display: flex;
+    align-items: center;
+}
+
+.nav-list a {
+    text-decoration: none;
+    color: black;
+}
+
+.nav-list {
+    display: flex;
+    flex-direction: column;
+    width: 300px;
+    height: 100%;
+    padding-top: 3rem;
+    padding-left: 1.2rem;
+}
+
+.nav-list button {
+    border: none;
+    background-color: #fff;
+    text-align: left;
+    color: #9e9d9d;
+}
+
+.nav-list button:hover {
+    color: rgba(0, 0, 0, 1);
+}
+
+
+/* nav font */
+.nav-list .mypage-title {
+    font-size: 1.6rem;
+}
+
+.nav-list .order-management-title,
+.nav-list .info-management-title {
+    font-size: 1.2rem;
+}
+
+.nav-list .order-check,
+.nav-list .info-update {
+    color: #9e9d9d;
+}
+
+.nav-list .order-check:hover,
+.nav-list .info-update:hover {
+    color: rgba(0, 0, 0, 1);
+}
+
+.mypage-div {
+    width: 70%;
+    height: 350px;
+    padding: 0.8rem;
+}
+
+.mypage-div > p {
+    font-size: 1.8rem;
+}
+
+.order-status {
+    width: auto;
+    min-width: 800px;
+    border: 0.2px solid #d4d2d2;
+    padding: 1.2rem 1.5rem;
+}
+
+.order-status-title {
+    font-size: 1.1rem;
+    font-weight: 700;
+}
+
+.status-boxes {
+    display: flex;
+}
+
+.status-boxes div {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100px;
+    height: 90px;
+    background-color: #D3CDB3;
+    border-radius: 10px;
+}
+
+.status-boxes div p {
+    color: white;
+    margin-bottom: 0;
+}
+
+.arrow {
+    margin: 0 0.8rem;
+    font-size: 1.5rem;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
