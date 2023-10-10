@@ -11,7 +11,7 @@ viewsRouter.get("/", (req, res) => {
 });
 
 // About
-viewsRouter.get("/", (req, res) => {
+viewsRouter.get("/about", (req, res) => {
   res.sendFile(path.join(process.cwd(), "src", "views", "public", "about.html"));
 });
 
