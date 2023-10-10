@@ -36,7 +36,7 @@ viewsRouter.use(
   express.static(path.join(process.cwd(), "src", "views", "user", "mypage"))
 );
 viewsRouter.use(
-  "/mypage/order-tracking",
+  "/mypage/order-tracking/:orderId",
   express.static(
     path.join(process.cwd(), "src", "views", "mypage", "orderTracking")
   )
@@ -98,7 +98,8 @@ viewsRouter.get("/mypage", (req, res) => {
 });
 
 // 회원 주문 조회
-viewsRouter.get("/mypage/order-tracking", (req, res) => {
+// 이 부분은 주문 id가 필요하므로 orderId를 추가함.
+viewsRouter.get("/mypage/order-tracking/:orderId", (req, res) => {
   res.sendFile(
     path.join(
       process.cwd(),
