@@ -6,10 +6,77 @@ const $optionMenu = document.querySelector(".option-menu");
 
 let cart,
   isAllCheck = false;
+
+// 스크롤 높이 구해서 해당 높이 === 모달창 높이
+let scrollHeight;
+window.onload = () => {
+
+  scrollHeight = Math.max(
+    document.body.scrollHeight, document.documentElement.scrollHeight,
+    document.body.offsetHeight, document.documentElement.offsetHeight,
+    document.body.clientHeight, document.documentElement.clientHeight
+  );
+}
+
+// 단일 상품 주문
+function orderItem(sequence) {
+  cart = findCartItem();
+
+  // order 로컬스토리지 초기화
+  if(localStorage.getItem("order").length > 0) {
+    localStorage.removeItem("order");
+  }
+
+  let { productName, productImg, size, quantity: count, price } = cart[sequence]; 
+  let totalPrice = count * price;
+    // 선택한 상품 주문 시 장바구니에 있던 상품 삭제
+    deleteCartItem(sequence, cart);
+    const order = { productName, productImg, size, count, totalPrice };
+    if (order) {
+      localStorage.setItem("order", JSON.stringify(order));
+      location.href="/";
+    }
+}
+// 선택한 상품 주문
+document.querySelector('#orderCheckBtn').addEventListener('click', () => {
+  const $checked = document.querySelectorAll('input[name="check"]:checked');
+  if ($checked.length < 1) {
+    alert("상품을 선택해주세요");
+    return;
+  }
+
+  let order = [];
+  cart = findCartItem();
+  // order 로컬스토리지 초기화
+  if(localStorage.getItem("order")) {
+    localStorage.removeItem("order");
+  }
+
+  let idx = []; // 선택한 상품 주문시 장바구니에 선택했던 상품 삭제하기 위해 인덱스 저장해두는 변수
+  order = Array.from($checked).map((el) => {
+     let sequence = el.closest('tr').id.split('-')[1];
+     let { productName, productImg, size, quantity: count, price } = cart[sequence]; 
+     let totalPrice = count * price;
+
+     idx.push(+sequence);
+     return { productName, productImg, size, count, totalPrice };
+    });
+
+    if (order) {
+      localStorage.setItem("order", JSON.stringify(order));
+       // 선택한 상품 주문 시 장바구니에 있던 상품 삭제
+      cart = Array.from(cart).filter((el, i) => {
+        if(idx.includes(i) === false) return cart[i]; 
+      });
+      setItems(cart);
+      location.href="/";
+    }
+
+});
+
 // --------------------------------------------------------------------------------
 // ------------- localStorage -----------------------------------------------------
 // --------------------------------------------------------------------------------
-
 getItems();
 function getItems() {
   cart = findCartItem();
@@ -33,7 +100,7 @@ function getItems() {
 function addItemInCart(item, sequence) {
   let totalPrice = `${item.price * item.quantity}`;
   return `
-    <tr id="cart-${sequence}-${item.itemId}">
+    <tr id="cart-${sequence}-${item.productId}">
         <td colspan="2" class="cart-item">
             <div>
                 <input type="checkbox" name="check">
@@ -64,24 +131,29 @@ function addItemInCart(item, sequence) {
 
 // 데이터 삭제
 function deleteItem(itemSequence) {
-  const $checked = document.querySelectorAll('input[name="check"]:checked');
   cart = findCartItem();
 
-  cart.splice(itemSequence, 1);
-  setItems(cart);
+  deleteCartItem(itemSequence, cart);
 
-  const $cartItems = $cartTable.querySelectorAll(
-    "tr:not([class='cart-header'])"
+  scrollHeight = Math.max(
+    document.body.scrollHeight, document.documentElement.scrollHeight,
+    document.body.offsetHeight, document.documentElement.offsetHeight,
+    document.body.clientHeight, document.documentElement.clientHeight
   );
-  $cartItems.forEach((el) => el.parentElement.remove());
+  
+  const $cartItems = $cartTable.querySelectorAll("tr:not([class='cart-header'])");
+    $cartItems.forEach((el) => el.parentElement.remove());
 
-  getItems();
+    getItems();
   if (isAllCheck) {
     const $checkboxes = document.querySelectorAll('input[name="check"]');
     totalPaymentAmount($checkboxes);
     allCheck($checkboxes, true);
-  } else if ($checked.length > 1) {
-    // 보류 체크 된 상태가 남아있어야 한다.
+  } else {
+    document.querySelector('input[name="all-check"]').checked = false;
+     document.querySelector('.items-price').innerText = 0;
+     document.querySelector('.payment').innerText = 0;
+     document.querySelector('.delivery-fee').innerText = 0;
   }
 }
 
@@ -111,6 +183,9 @@ function updateItem(itemSequence, updateSize, updateQuantity) {
   $cartItems[`${itemSequence}`].querySelector(
     ".cart-item-size"
   ).innerText = `${updateSize} - ${updateQuantity}`;
+  $cartItems[`${itemSequence}`].querySelector(
+    ".cart-item-price p"
+  ).innerText = `${changePrice(+cart[itemSequence].price * +updateQuantity)}`;
 }
 
 function getItem(itemSequence) {
@@ -125,6 +200,11 @@ function findCartItem() {
 
 function setItems(cart) {
   localStorage.setItem("myCart", JSON.stringify(cart));
+}
+
+function deleteCartItem(sequence, cart) {
+  cart.splice(sequence, 1);
+  setItems(cart);
 }
 
 function changePrice(price) {
@@ -158,6 +238,7 @@ function buttonEvent(target) {
   } else if (name === "deleteBtn") {
     deleteItem(itemSequence);
   } else if (name === "orderBtn") {
+    orderItem(target.closest("tr").id.split('-')[1]);
   }
 }
 
@@ -244,6 +325,7 @@ document.querySelector(".option-cancel").addEventListener("click", () => {
 
 let itemPrice;
 function showModal(target) {
+  $modalLayout.style.height = `${scrollHeight}px`;
   let item = getItem(itemSequence);
   let { productName, price, quantity, size } = item;
   itemPrice = price;
