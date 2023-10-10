@@ -4,7 +4,8 @@
     box-sizing: border-box;
 }
 
-html, body {
+html,
+body {
     height: 100%;
 }
 
@@ -18,8 +19,8 @@ html, body {
     height: 250px;
     width: 100%;
     padding: 1rem 0.8rem;
-    position : relative;
-    transform : translateY(-100%);
+    position: relative;
+    transform: translateY(-100%);
     background-color: rgb(159, 159, 159);
     color: white;
     font-size: 0.8rem;
