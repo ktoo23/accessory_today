@@ -32,9 +32,9 @@
           <div class="productDet-wrapper">
             <div class="productDet-container">
               <div class="productDet-image">
-                <img src="" alt="상품 이미지" class="products-img"/>
+                <img src="" alt="상품 이미지" class="products-img" />
                 <div class="image-separator"></div>
-                <img src="" alt="상품 이미지" class="productsDet-img"/>
+                <img src="" alt="상품 이미지" class="productsDet-img" />
               </div>
               <div class="productDet-order">
                 <p class="product-name">PRODUCTS</p>
@@ -54,8 +54,8 @@
                   </div>
                 </div>
                 <select
-                  name="productSize"
-                  id="productSize"
+                  name="productsize"
+                  id="product-size"
                   class="form-select mb-3"
                 >
                   <option value="" disabled selected>상품사이즈</option>
@@ -63,9 +63,7 @@
                   <option value="medium">medium</option>
                   <option value="large">large</option>
                 </select>
-                <button class="order-button">
-                  <a href="/order/order.html" class="order-link">주문하기</a>
-                </button>
+                <button class="order-button">주문하기</button>
                 <button class="add-to-cart-button">장바구니 담기</button>
               </div>
             </div>
@@ -75,12 +73,7 @@
               <section class="reviews">
                 <div class="reviews-container">
                   <span class="reviews-font">REVIEW</span>
-                  <button class="reviews-btn">
-                    <a
-                      href="/products/details/products-detail-form.html?type=question"
-                      >후기작성</a
-                    >
-                  </button>
+                  <button class="reviews-btn" id="reviews-btn">후기작성</button>
                 </div>
                 <table>
                   <thead>
@@ -111,11 +104,8 @@
               <section class="questions">
                 <div class="questions-container">
                   <span class="questions-font">Q&A</span>
-                  <button class="questions-btn" type="questions">
-                    <a
-                      href="/products/details/products-detail-form.html?type=question"
-                      >문의작성</a
-                    >
+                  <button class="questions-btn" id="questions-btn">
+                    문의작성
                   </button>
                 </div>
                 <table>
