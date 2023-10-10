@@ -85,10 +85,37 @@ form > div {
 }
 
 /* orderComplete.html style */
+.complete-container{
+  display: flex ;
+  padding: 0px !important;  
+  justify-content: center;
 
-.complete-title {
-  background-color: lightgray;
 }
-h1 {
 
+.complete-contents {
+  position: relative;
+}
+.complete-contents > .complete-title {
+  padding: 20px 100px;
+  white-space: nowrap;
+}
+span {
+  margin: 10px 0;
+}
+
+.column-gap {
+  padding-right: 30px;
+}
+
+#orderNum span{
+  text-align: center;
+  
+}
+
+
+
+.complete-title{
+  background-color: lightgray;
+  justify-content: center;
+  padding: 10px;
 }
