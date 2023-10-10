@@ -5,9 +5,9 @@ const viewsRouter = express.Router();
 
 viewsRouter.use("/", express.static(path.join(process.cwd(), "src/views")));
 
-// 홈
-viewsRouter.get("/", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "src", "views", "public", "main.html"));
+// ABOUT
+viewsRouter.get("/about", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "src", "views", "public", "about.html"));
 });
 
 // 장바구니
@@ -35,7 +35,7 @@ viewsRouter.get("/order", (req, res) => {
 // 상품 페이지
 viewsRouter.get("/products", (req, res) => {
   res.sendFile(
-    path.join(process.cwd(), "src", "views", "products", "products.html")
+    path.join(process.cwd(), "src", "views", "products", "product.html")
   );
 });
 
