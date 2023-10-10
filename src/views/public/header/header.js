@@ -39,18 +39,17 @@ let headerEl = `
 </header>
 `;
 
-
 const initHeader = () => {
-  const targetEl = document.getElementById('header');
+  const targetEl = document.getElementById("header");
   if (targetEl) {
     targetEl.innerHTML = headerEl;
     const btns = targetEl.querySelectorAll(".navbtn");
 
-    btns.forEach(btn => {
+    btns.forEach((btn) => {
       btn.addEventListener("click", clickHandler);
     });
   } else {
-    console.error('targetEl not found');
+    console.error("targetEl not found");
   }
 };
 
@@ -99,22 +98,21 @@ function clickHandler(e) {
 function logoImagePath() {
   const imagePaths = {
     main: "./img/today-logo.png",
-    other: "../public/img/today-logo.png"
-};
+    other: "../public/img/today-logo.png",
+  };
 
-const currentPage = "other";
-const logoImage = document.getElementById("logo");
+  const currentPage = "other";
+  const logoImage = document.getElementById("logo");
 
-if (logoImage) {
+  if (logoImage) {
     const imagePath = imagePaths[currentPage];
-    console.log(imagePath)
+    console.log(imagePath);
     if (imagePath) {
-        logoImage.src = imagePath;
-        
+      logoImage.src = imagePath;
     } else {
-        console.error("이미지 경로를 찾을 수 없습니다.");
+      console.error("이미지 경로를 찾을 수 없습니다.");
     }
-}
+  }
 }
 
 initHeader();

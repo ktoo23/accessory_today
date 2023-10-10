@@ -18,8 +18,13 @@ async function handleLoginFormSubmit(e) {
   e.preventDefault();
   const email = document.getElementById("userEmail").value;
   const password = document.getElementById("password").value;
+
+  if (!email || !password) {
+    alert("모든 정보를 입력해 주세요.");
+    return;
+  }
+
   const postData = { email, password };
-  console.log(postData);
 
   await fetch("/api/users/member-login", {
     method: "POST",
@@ -45,6 +50,12 @@ async function handleGuestLoginSubmit(e) {
   const orderer = document.querySelector(".guest-name").value;
   const orderId = document.querySelector(".order-number").value;
   const orderPassword = document.querySelector(".guest-password").value;
+
+  if (!orderer || !orderId || !orderPassword) {
+    alert("모든 정보를 입력해 주세요.");
+    return;
+  }
+
   const postData = { orderer, orderId, orderPassword };
   await fetch("/api/users/non-member-login", {
     method: "POST",
@@ -56,7 +67,7 @@ async function handleGuestLoginSubmit(e) {
     .then((res) => res.json())
     .then((data) => {
       if (data.status == 200) {
-        window.location.href = `/non-member-page/orderId${data.orderId}`;
+        window.location.href = `/non-member/order-tracking/${data.orderId}`;
       } else {
         alert(data.errMsg);
       }
