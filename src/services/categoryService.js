@@ -7,24 +7,24 @@ class CategoryService {
   // 새 카테고리 생성
   async newCategory(category) {
     // 중복되는 카테고리가 존재하는지 검사
+    
     const categoryExsist = await categoryModel.findOne({ category: category });
     // 중복되는 카테고리가 있을 경우 이미 존재하는 카테고리라고 알리기
-    if (categoryExsist.length) {
+   
+    if (categoryExsist) {
       return {
         status: 400,
         errMsg: "이미 존재하는 카테고리입니다.",
       };
     }
     // db에 저장하기
-    const newCategory = new categoryModel({
-      category,
-    });
-    await categoryModel.create(newCategory);
+    
+    await categoryModel.create({category});
     // 성공 메시지와 새로 가입한 유저 정보 반환
     return {
       status: 200,
       message: "카테고리가 생성되었습니다",
-      newCategory: newCategory,
+      newCategory: category,
     };
   }
 
