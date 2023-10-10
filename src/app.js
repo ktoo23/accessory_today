@@ -11,12 +11,14 @@ const app = express();
 app.use(express.json());
 
 
-app.use(viewsRouter);
+app.use(viewRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/admin", adminRouter);
 app.use("/api/users", userRouter);
 app.use("/api/products", productRouter);
 app.use("/api/orders", orderRouter);
+
+
 // 에러 핸들러 미들웨어
 app.use((err, req, res, next) => {
   // 에러 처리 로직을 여기에 작성합니다.
@@ -25,5 +27,6 @@ app.use((err, req, res, next) => {
   // 클라이언트에게 에러 응답을 보내거나 다른 에러 처리 작업을 수행합니다.
   res.status(500).json({ error: "서버 에러 발생" });
 });
+
 
 export { app };
