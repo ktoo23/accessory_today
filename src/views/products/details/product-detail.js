@@ -3,7 +3,7 @@ const numberElement = document.querySelector(".number");
 const arrowUp = document.querySelector(".arrow-up");
 const arrowDown = document.querySelector(".arrow-down");
 
-let number = 0;
+let number = 1;
 
 function increaseNumber() {
   number++;
@@ -11,7 +11,7 @@ function increaseNumber() {
 }
 
 function decreaseNumber() {
-  if (number > 0) {
+  if (number > 1) {
     number--;
     numberElement.textContent = number;
   }
@@ -21,24 +21,26 @@ arrowUp.addEventListener("click", increaseNumber);
 arrowDown.addEventListener("click", decreaseNumber);
 
 // 상품 데이터
-const productId = "6523ab70a7ebddef6d97827e";
-console.log("Extracted productId:", productId);
+const pathSegments = window.location.pathname.split("/");
+const productId = pathSegments[pathSegments.length - 1]; // 마지막 세그먼트를 가져옵니다.
+let product = {};
+console.log("productId:", productId);
 fetch(`/api/products/${productId}`)
   .then((response) => {
     if (!response.ok) {
-      throw new Error("Network response was not ok: " + response.statusText);
+      throw new Error("Error");
     }
     return response.json();
   })
   .then((product) => {
-    // 이곳에서 product를 사용합니다.
     console.log(product);
     document.querySelector(".product-name").textContent = product.productName;
     document.querySelector(".product-price").textContent = product.price;
-    document.querySelector(".productDet-image").src = product.productImg;
+    document.querySelector(".products-img").src = product.productImg;
+    document.querySelector(".productsDet-img").src = product.description;
   })
   .catch((error) => {
-    console.error("Error fetching product data:", error);
+    console.error("Error", error);
   });
 
 const productSizeSelect = document.getElementById("productSize");

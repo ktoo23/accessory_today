@@ -97,6 +97,11 @@ span.number {
     background-color: #555;
 }
 
+.order-link {
+    text-decoration: none;
+    color: #fff;
+}
+
 .product-detail-bottom {
     margin-bottom: 330px;
 }
