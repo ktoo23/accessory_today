@@ -3,32 +3,113 @@ import path from "path";
 
 const viewsRouter = express.Router();
 
-// 페이지별로 html, css, js 파일들을 라우팅함
-// 아래와 같이 하면, http://localhost:5000/ 에서는 views/home/home.html 파일을,
-// http://localhost:5000/register 에서는 views/register/register.html 파일을 화면에 띄움
-viewsRouter.use("/", serveStatic("public"));
-viewsRouter.use("/join", serveStatic("join"));
-viewsRouter.use("/login", serveStatic("login"));
-viewsRouter.use("/cart", serveStatic("cart"));
-viewsRouter.use("/mypage", serveStatic("mypage"));
-viewsRouter.use("/admin", serveStatic("admin"));
-viewsRouter.use("/products", serveStatic("products"));
-viewsRouter.use("/order", serveStatic("order"));
-viewsRouter.use("/search", serveStatic("search"));
+viewsRouter.use(
+  "/",
+  express.static(path.join(process.cwd(), "src", "views", "public"))
+);
+viewsRouter.use(
+  "/cart",
+  express.static(path.join(process.cwd(), "src", "views", "cart"))
+);
+viewsRouter.use(
+  "/join",
+  express.static(path.join(process.cwd(), "src", "views", "join"))
+);
+viewsRouter.use(
+  "/login",
+  express.static(path.join(process.cwd(), "src", "views", "login"))
+);
+viewsRouter.use(
+  "/order",
+  express.static(path.join(process.cwd(), "src", "views", "order"))
+);
+viewsRouter.use(
+  "/products",
+  express.static(path.join(process.cwd(), "src", "views", "products"))
+);
+viewsRouter.use(
+  "/products/details",
+  express.static(path.join(process.cwd(), "src", "views", "products", "detail"))
+);
+viewsRouter.use(
+  "/mypage",
+  express.static(path.join(process.cwd(), "src", "views", "user", "mypage"))
+);
+viewsRouter.use(
+  "/mypage/order-tracking/:orderId",
+  express.static(
+    path.join(process.cwd(), "src", "views", "mypage", "orderTracking")
+  )
+);
 
-// views폴더 내의 ${resource} 폴더 내의 모든 파일을 웹에 띄우며,
-// 이 때 ${resource}.html 을 기본 파일로 설정함.
-function serveStatic(resource) {
-  const dirname = path.resolve();
+// 홈
+viewsRouter.get("/", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "src", "views", "public", "main.html"));
+});
 
-  const resourcePath = path.join(dirname, `./src/views/${resource}`);
-  let option = {};
-  if (resource === "public") option = { index: "main.html" };
-  else if (resource === "products") option = { index: "product.html" };
-  else option = { index: `${resource}.html` };
+// 장바구니
+viewsRouter.get("/cart", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "src", "views", "cart", "cart.html"));
+});
 
-  // express.static 은 express 가 기본으로 제공하는 함수임
-  return express.static(resourcePath, option);
-}
+// 회원가입
+viewsRouter.get("/join", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "src", "views", "join", "join.html"));
+});
+
+// 로그인
+viewsRouter.get("/login", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "src", "views", "login", "login.html"));
+});
+
+// 주문 페이지
+// tempOder는 무엇인가요?
+// order가 html이 뜨지 않습니다!
+viewsRouter.get("/order", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "src", "views", "order", "order.html"));
+});
+
+// 상품 페이지
+viewsRouter.get("/products", (req, res) => {
+  res.sendFile(
+    path.join(process.cwd(), "src", "views", "products", "product.html")
+  );
+});
+
+// 상품 디테일 페이지
+viewsRouter.get("/products/details", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "src",
+      "views",
+      "products",
+      "detail",
+      "product-detail.html"
+    )
+  );
+});
+
+// 마이페이지 첫화면
+viewsRouter.get("/mypage", (req, res) => {
+  res.sendFile(
+    path.join(process.cwd(), "src", "views", "user", "mypage", "mypage.html")
+  );
+});
+
+// 회원 주문 조회
+// 이 부분은 주문 id가 필요하므로 orderId를 추가함.
+viewsRouter.get("/mypage/order-tracking/:orderId", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "src",
+      "views",
+      "user",
+      "orderTracking",
+      "orderTracking.html"
+    )
+  );
+});
 
 export { viewsRouter };
