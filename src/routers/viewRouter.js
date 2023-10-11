@@ -42,7 +42,7 @@ viewsRouter.get("/order", (req, res) => {
 // 상품 페이지
 viewsRouter.get("/products", (req, res) => {
   res.sendFile(
-    path.join(process.cwd(), "src", "views", "products", "product.html")
+    path.join(process.cwd(), "src", "views", "products", "products.html")
   );
 });
 

@@ -21,6 +21,16 @@ section {
     padding: 0 0.5rem;
 }
 
+/* select option */
+.select-div {
+    display: flex;
+    border: 5px solid  #e2e1e1;
+    padding: 1.5rem 0rem 1.5rem 4rem;
+}
+
+.status-select {
+    margin-right: 0.5rem;
+}
 .order-tracking-title {
     text-align: left;
     font-size: 1.2rem;
@@ -33,15 +43,14 @@ section {
 }
 
 .no-order-product {
-    display: flex;
-    width: 100%;
     font-size: 1.5rem;
     height: 200px;
 }
 
-.no-order-product p{
+.no-order-product p {
     display: flex;
     justify-content: center;
+    align-items: center;
     height: 100%;
     color: #9e9d9d;
 }
@@ -71,14 +80,20 @@ section {
 .order-tracking-table tr {
     border-bottom: 1px solid #c4c3c3;
 }
+
 .order-tracking-table td {
-    padding: 1.1rem 0;
+    padding: 1.2rem 0;
+}
+
+.order-tracking-table .order-id p {
+    margin: 0;
 }
 .order-tracking-table th {
     border-top: 1px solid #9e9d9d;
     border-bottom: 1px solid #9e9d9d;
 
 }
+
 tr img {
     width: 80px;
 
