@@ -38,6 +38,7 @@ img {
 input {
     width: 20px;
 }
+
 button {
     text-align: center;
     padding: 0.3rem 0.5rem;
@@ -51,7 +52,8 @@ button:hover {
 }
 
 .carts {
-    margin-bottom: 2rem;
+    margin-bottom: 9rem;
+    min-height: 120px;
 }
 
 .cart-name {
@@ -222,12 +224,9 @@ button:hover {
 /* modal 옵션창 */
 .modal-layout {
     width: 100%;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.4);
-  
+    top: 0;
     position: absolute;
     z-index: 99;
-  
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -236,6 +235,7 @@ button:hover {
 
 .carts-modal {
     padding: 0.5rem 1rem;
+    border: 3px solid #d4d2d2;
     width: 500px;
     height: auto;
     background-color: #fff;

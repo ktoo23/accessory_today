@@ -10,6 +10,7 @@ const app = express();
 
 app.use(express.json());
 
+
 app.use(viewsRouter);
 app.use("/api/category", categoryRouter);
 app.use("/api/admin", adminRouter);

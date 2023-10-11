@@ -54,27 +54,27 @@
 .counter {
     display: flex;
     justify-content: center;
+    align-items: center;
     gap: 13px;
 }
 
 span.number {
     border-bottom: 2px solid;
-    height: 35px;
 }
 
 
-button.arrow-up {
+.arrow-up {
     background: none;
     border: none;
     padding: 0;
-    margin: 0;
+    margin: 0 !important;
 }
 
-button.arrow-down {
+.arrow-down {
     background: none;
     border: none;
     padding: 0;
-    margin: 0;
+    margin: 0 !important;
 }
 
 .productDet-order button {
@@ -95,6 +95,11 @@ button.arrow-down {
 .order-button:hover,
 .add-to-cart-button:hover {
     background-color: #555;
+}
+
+.order-button {
+    text-decoration: none;
+    color: #fff;
 }
 
 .product-detail-bottom {

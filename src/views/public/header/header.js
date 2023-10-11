@@ -63,3 +63,23 @@ function logoImagePath() {
 
 initHeader();
 logoImagePath();
+
+// 로컬스토리지 Authorization 항목이 있다면 (토큰이 있으면) Login이 아니라 Logout이 되어야 한다.
+const link = document.querySelector(".header-right li:first-child a");
+if (localStorage.getItem("Authorization")) {
+  link.innerText = "LOGOUT";
+  link.href = "/";
+} else {
+  link.innerText = "LOGIN";
+  link.href = "/login";
+}
+
+// 로그아웃 (만약 클릭한 글자가 LOGOUT일 때, localstorage에 있는 Authorizaion 항목 삭제)
+const logout = document.querySelector(".header-right li:first-child a");
+logout.addEventListener("click", (e) => {
+  if (logout.innerText === "LOGOUT") {
+    localStorage.removeItem("Authorization");
+    // 삭제하고 다시 연결하면 LOGIN이라고 뜸.
+    window.location.href = "/";
+  }
+});

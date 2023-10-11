@@ -10,6 +10,11 @@ viewsRouter.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "src", "views", "public", "main.html"));
 });
 
+// About
+viewsRouter.get("/about", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "src", "views", "public", "about.html"));
+});
+
 // 장바구니
 viewsRouter.get("/cart", (req, res) => {
   res.sendFile(path.join(process.cwd(), "src", "views", "cart", "cart.html"));

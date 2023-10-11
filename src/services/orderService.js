@@ -79,7 +79,7 @@ class OrderService {
     try {
       let orderProducts = [];
       for (let product of products) {
-        const { curProduct, count } = product;
+        const { curProduct, count, size } = product;
         const targetProduct = await Products.findOne({
           productName: curProduct.productName,
           productImg: curProduct.productImg,
@@ -95,6 +95,7 @@ class OrderService {
         orderProducts.push({
           products: new ObjectId(targetProduct._id),
           count,
+          size,
         });
       }
 

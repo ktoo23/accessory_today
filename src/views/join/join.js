@@ -39,6 +39,12 @@ async function joinHandler(e) {
     return;
   }
 
+  let reg = new RegExp(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/);
+  if (!reg.test(password)) {
+    alert("비밀번호를 다시 입력해주세요.");
+    return;
+  }
+
   const email = user + "@" + domain;
   const address = `${postCode},${streetAddress},${detailAddress}`;
   const phone = `${phone1}-${phone2}-${phone3}`;

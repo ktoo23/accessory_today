@@ -96,8 +96,8 @@ async function updateData() {
   const password = $pwd.value;
   const checkPassword = $pwdCheck.value;
 
-  let reg = new RegExp('/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/');
-  if (!reg.test(password)) {
+  let reg = new RegExp(/^(?=.*[a-zA-Z])(?=.*[!@#$%^*+=-])(?=.*[0-9]).{8,16}$/);
+  if (reg.test(password) === false) {
     alert("비밀번호를 다시 입력해주세요.")
     $pwd.focus();
     return;

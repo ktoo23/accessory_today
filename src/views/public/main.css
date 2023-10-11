@@ -34,3 +34,47 @@
 #newList {
   margin-bottom: 300px;
 }
+
+/* about css */
+.about-page {
+  position: relative;
+  height: 800px; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.about-text {
+  position: absolute;
+  height: 800px;
+  background-color: rgba(255, 255, 255, 0.9); 
+  padding: 20px;
+  max-width: 1000px;
+  text-align: center;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: brown;
+
+}
+
+.text-box  {
+  width: 600px;
+}
+h1 {
+  padding: 80px 0 20px 0;
+}
+
+h3 {
+  padding-bottom: 20px;
+}
+
+.about-page img {
+  opacity: 0.5;
+  height: 800px;
+  width: 100%;
+}
+
+.contact-box {
+  margin-top: 100px;
+}
