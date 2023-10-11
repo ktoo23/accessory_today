@@ -44,7 +44,7 @@ fetch(`/api/products/${productId}`)
       productId: productData._id,
       productName: productData.productName,
       size: product.size,
-      quantity: 1, // 기본값으로 1 설정
+      quantity: product.quantity,
       price: productData.price,
       productImg: productData.productImg,
     };
@@ -88,6 +88,46 @@ document
     alert("장바구니에 추가되었습니다.");
   });
 
+//BUY NOW 버튼 클릭 시
+document.querySelector(".order-button").addEventListener("click", function () {
+  const { productImg, productName, price, quantity, size } = product;
+
+  const token = localStorage.getItem("Authorization") || "";
+
+  product.size = productSizeSelect.value;
+  if (product.size === "" || product.size === null) {
+    alert("상품 사이즈를 선택해주세요.");
+    return;
+  }
+
+  if (!token) {
+    const orderUrl = `/order?productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
+    window.location.href = orderUrl;
+    return;
+  }
+
+  // 토큰이 있을 경우(로그인 상태)
+  fetch(`/api/products/${productId}`, {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => {
+      if (response.ok) {
+        const cartUrl = `/cart?productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
+        window.location.href = cartUrl;
+      }
+      // 토큰 검증 실패
+      else {
+        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+        window.location.href = "/login";
+      }
+    })
+    .catch((error) => console.error("Error: ", error));
+});
+
 // 후기,문의 버튼 클릭 시 로그인 토큰 검사
 document.getElementById("reviews-btn").addEventListener("click", function () {
   console.log("Reviews button clicked");
@@ -111,7 +151,7 @@ function verifyTokenAndRedirect(url) {
     return;
   }
 
-  fetch("/api/products/{productId}", {
+  fetch(`/api/products/${productId}`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -127,4 +167,75 @@ function verifyTokenAndRedirect(url) {
       }
     })
     .catch((err) => console.log(err));
+}
+
+//후기,문의작성 title, author,content
+function fetchReviews(productId, getAll = false) {
+  fetch(`/products/${productId}/review?getAll=${getAll}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("error" + response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const tableBody = document.querySelector("#review-table tbody");
+      data.forEach((review) => {
+        const row = document.createElement("tr");
+
+        const dateCell = document.createElement("td");
+        dateCell.textContent = review.data;
+        row.appendChild(dateCell);
+
+        const idCell = document.createElement("td");
+        idCell.textContent = review._id;
+        row.appendChild(idCell);
+
+        const titleCell = document.createElement("td");
+        titleCell.textContent = review.title;
+        row.appendChild(titleCell);
+
+        const contentCell = document.createElement("td");
+        contentCell.textContent = review.content;
+        row.appendChild(contentCell);
+
+        tableBody.appendChild(row);
+      });
+    })
+    .catch((err) => console.error("Error", err));
+}
+
+function fetchQestion(productId, getAll = false) {
+  fetch(`/products/${productId}/inquiry?getAll=${getAll}`)
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("error " + response.statusText);
+      }
+      return response.json();
+    })
+    .then((data) => {
+      const tableBody = document.querySelector("#question-table tbody");
+      data.forEach((review) => {
+        const row = document.createElement("tr");
+
+        const dateCell = document.createElement("td");
+        dateCell.textContent = question.data;
+        row.appendChild(dateCell);
+
+        const idCell = document.createElement("td");
+        idCell.textContent = question._id;
+        row.appendChild(idCell);
+
+        const titleCell = document.createElement("td");
+        titleCell.textContent = question.title;
+        row.appendChild(titleCell);
+
+        const contentCell = document.createElement("td");
+        contentCell.textContent = question.content;
+        row.appendChild(contentCell);
+
+        tableBody.appendChild(row);
+      });
+    })
+    .catch((err) => console.error("Error", err));
 }
