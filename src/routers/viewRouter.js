@@ -67,7 +67,7 @@ viewsRouter.get("/products/details", (req, res) => {
       "src",
       "views",
       "products",
-      "detail",
+      "details",
       "product-detail.html"
     )
   );
