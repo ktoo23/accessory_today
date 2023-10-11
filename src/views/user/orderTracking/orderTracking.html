@@ -19,6 +19,7 @@
     />
 </head>
 <body>
+  <body>
    <div id="wrapper">
         <div id="header"></div>
         <section>
@@ -27,14 +28,25 @@
                 <p>></p>
                 <p class="order-tracking-title">주문 조회</p>
             </div>
-            <div class="no-order-product">
-              <p>주문 내역이 없습니다.</p>
-            </div>
+            <div class="select-div">
+              <select id="order-status-select" name="order-status-select" class="status-select">
+                <option value="all" selected="selected">전체 주문처리상태</option>
+                <option value="order_complete">주문 완료</option>
+                <option value="shipped_begin">배송 준비중</option>
+                <option value="shipped_start">배송중</option>
+                <option value="shipped_complete">배송 완료</option>
+              </select>
+              <span class="period">
+                <button class="today">오늘</button>
+                <button class="months">1개월</button>
+                <button class="three-months">3개월</button>
+                <button class="six-months">6개월</button>
+            </span>
+             </div>
             <div class="order-div">
-                <p>주문/배송 조회</p>
                 <table class="order-tracking-table">
-                  <tr clas="title">
-                    <th>주문번호</th>
+                  <tr class="order-title">
+                    <th>주문일자[주문번호]</th>
                     <th>이미지</th>
                     <th>상품정보</th>
                     <th>구매금액</th>
@@ -43,6 +55,9 @@
                     <th>배송상태</th>
                   </tr>
                 </table>
+                <div class="no-order-product">
+                  <p>주문 내역이 없습니다.</p>
+                </div>
             </div>
         </section>
    </div> 
