@@ -60,14 +60,14 @@ viewsRouter.get("/user/userinfo/:userId", (req, res) => {
 
 
 // 상품 디테일 페이지
-viewsRouter.get("/products/details", (req, res) => {
+viewsRouter.get("/products/details/:productId", (req, res) => {
   res.sendFile(
     path.join(
       process.cwd(),
       "src",
       "views",
       "products",
-      "detail",
+      "details",
       "product-detail.html"
     )
   );

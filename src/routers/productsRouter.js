@@ -2,7 +2,7 @@ import { Router } from "express";
 import { productService } from "../services/productService.js";
 import { reviewService } from "../services/reviewService.js";
 import { inquiryService } from "../services/inquiryService.js";
-import { validator } from "../middlewares/errorMiddleware.js";
+import { putwrongReview } from "../middlewares/errorMiddleware.js";
 
 const productRouter=Router();
 
@@ -23,6 +23,11 @@ productRouter.get("/:productId",async (req,res,next)=>{
     try{
         const productId = req.params.productId;
         const productsData = await productService.getDetail(productId);
+
+        if(!productsData){
+            res.status(404).send("해당 상품이 없습니다!");
+        }
+
         res.status(200).json(productsData);
     }catch(err){
         next(err);
@@ -42,7 +47,7 @@ productRouter.get("/:productId/review",async (req,res,next)=>{
 })
 
 //uploadReview
-productRouter.put("/:productId/review",validator.wrongReview,async (req,res,next)=>{
+productRouter.put("/:productId/review",putwrongReview,async (req,res,next)=>{
     try{
         const {title,author,content}=req.body;
         const productId=req.params.productId;
@@ -77,7 +82,7 @@ productRouter.get("/:productId/inquiry",async (req,res,next)=>{
 })
 
 //uploadInquiry
-productRouter.put("/:productId/inquiry",validator.wrongReview,async (req,res,next)=>{
+productRouter.put("/:productId/inquiry",putwrongReview,async (req,res,next)=>{
     try{
         const {title,author,content}=req.body;
         const productId=req.params.productId;
@@ -98,11 +103,5 @@ productRouter.delete("/:productId/inquiry",async(req,res,next)=>{
         next(err);
 }
 })
-
-productRouter.use((err, req, res, next) => {
-    const statusCode = err.statusCode || 500;
-    const errorMessage = err.message || 'Internal Server Error';
-    res.status(statusCode).send(errorMessage);
-});
 
 export {productRouter};
