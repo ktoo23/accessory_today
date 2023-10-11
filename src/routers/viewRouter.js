@@ -68,7 +68,7 @@ viewsRouter.get("/products/details", (req, res) => {
       "src",
       "views",
       "products",
-      "detail",
+      "details",
       "product-detail.html"
     )
   );
@@ -82,8 +82,8 @@ viewsRouter.get("/mypage", (req, res) => {
 });
 
 // 회원 주문 조회
-// 이 부분은 주문 id가 필요하므로 orderId를 추가함.
-viewsRouter.get("/user/orderTracking", (req, res) => {
+// 이 부분은 주문 id가 필요하므로 userId를 추가함.
+viewsRouter.get("/user/orderTracking/:userId", (req, res) => {
   res.sendFile(
     path.join(
       process.cwd(),

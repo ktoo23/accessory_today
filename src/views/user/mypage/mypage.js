@@ -5,7 +5,7 @@ const delivery = document.querySelector(".delivery");
 const deliveryComplete = document.querySelector(".delivery-complete");
 
 document.querySelector(".order-tracking").addEventListener("click", () => {
-  window.location.href = "/user/orderTracking";
+  window.location.href = `/user/orderTracking/${userId}`;
 });
 
 let userId;
@@ -15,8 +15,8 @@ document.querySelector(".info-update").addEventListener("click", () => {
 
 const token = localStorage.getItem("Authorization") || "";
 if (!token) {
-  alert("회원가입 페이지로 이동합니다.");
-  location.href = "/join";
+  alert("로그인이 필요한 서비스입니다.");
+  location.href = "/login";
 } else getUserData();
 
 async function getUserData() {
@@ -30,7 +30,7 @@ async function getUserData() {
     .then((res) => {
       if (res.status !== 200) {
         alert("로그인이 필요한 서비스입니다.");
-        window.location.href = "/";
+        window.location.href = "/login";
       }
       return res.json();
     })
@@ -65,4 +65,27 @@ async function getUserData() {
       }
     })
     .catch((err) => console.log(err));
+}
+
+// 회원탈퇴
+document.querySelector('.user-wdrl').addEventListener('click', deleteUser);
+
+async function deleteUser() {
+
+  if (!confirm("회원 탈퇴하시겠습니까?")) return;
+
+  await fetch(`/api/users/mypage/userinfo-edit?userId=${userId}`, {
+    method: "DELETE",
+  })
+    .then((res) => {
+      return res.json();
+    })
+    .then((data) => {
+      if (data.status === 200) {
+        alert("회원 탈퇴되었습니다😭");
+        localStorage.removeItem("Authorization");
+        window.location.href = "/";
+      } else console.log(data.errMsg);
+    })
+    .catch((err) => console.log(err.errMsg));
 }
