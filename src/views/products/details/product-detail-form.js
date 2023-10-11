@@ -29,8 +29,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const reviewData = {
       title: formTitleInput.value,
-      content: formContent.value,
       author: formAuthor.value,
+      content: formContent.value,
     };
     submitData(
       `/api/products/${productId}/review`,
@@ -48,8 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const questionData = {
       title: formTitleInput.value,
-      content: formContent.value,
       author: formAuthor.value,
+      content: formContent.value,
     };
     submitData(
       `/api/products/${productId}/inquiry`,

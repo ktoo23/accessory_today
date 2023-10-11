@@ -106,7 +106,7 @@ document.querySelector(".order-button").addEventListener("click", function () {
   }
 
   // 토큰이 있을 경우(로그인 상태)
-  fetch(`/api/products/${productId}`, {
+  fetch(`/api/verify-user`, {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
