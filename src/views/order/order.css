@@ -7,6 +7,7 @@
 .row {
   --bs-gutter-x: 0 !important;
 }
+
 .page-title > h2 {
   text-align: center;
   font-weight: bold;
@@ -159,4 +160,67 @@ div.phone {
   border-color: #86b7fe;
   outline: 0;
   box-shadow: 0 0 0 0.25rem rgba(13, 110, 253, .25);
+}
+
+.check-password {
+  color: red;
+  display: none;
+}
+
+#confirm-password-section > label {
+  display: flex;
+}
+
+/* orderComplete css */
+.complete-container{
+  display: flex ;
+  padding: 0px !important;  
+  margin: 0 auto;
+  justify-content: center;
+
+}
+
+.row .complete-contents {
+  position: relative;
+  margin: 100px auto;
+  max-width: 800px;
+}
+
+.complete-contents > .complete-title {
+  padding: 40px 100px;
+  white-space: nowrap;
+  border-radius: 15px;
+}
+
+#orderNum {
+  margin: 30px 0;
+  font-size: 20px;
+  font-weight: bold;
+  text-align: center;
+}
+
+.row .toMain-btn {
+  width: 300px;
+  margin: 0 auto;
+}
+
+.row .toMain-btn button {
+  padding: 15px;
+  margin: 30px 0;
+  border: none;
+  border-radius: 10px;
+  background-color: #D3CDB3;
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.complete-title{
+  background-color: lightgray;
+  justify-content: center;
+  padding: 10px;
+  max-width: 800px;
+}
+
+.complete-container > .row {
+  margin-right: 300px;
 }
