@@ -27,6 +27,7 @@ let product = {};
 console.log("productId:", productId);
 fetch(`/api/products/${productId}`)
   .then((response) => {
+    console.log(response);
     if (!response.ok) {
       throw new Error("Error");
     }
@@ -43,8 +44,6 @@ fetch(`/api/products/${productId}`)
     product = {
       productId: productData._id,
       productName: productData.productName,
-      size: product.size,
-      quantity: product.quantity,
       price: productData.price,
       productImg: productData.productImg,
     };
@@ -132,13 +131,13 @@ document.querySelector(".order-button").addEventListener("click", function () {
 document.getElementById("reviews-btn").addEventListener("click", function () {
   console.log("Reviews button clicked");
   verifyTokenAndRedirect(
-    "/products/details/products-detail-form.html?type=review"
+    `/products/details/products-detail-form.html?type=review`
   );
 });
 
 document.getElementById("questions-btn").addEventListener("click", function () {
   verifyTokenAndRedirect(
-    "/products/details/products-detail-form.html?type=question"
+    `/products/details/products-detail-form.html?type=question`
   );
 });
 
@@ -159,6 +158,7 @@ function verifyTokenAndRedirect(url) {
     },
   })
     .then((response) => {
+      console.log(response);
       if (response.ok) {
         window.location.href = url;
       } else {
@@ -169,9 +169,12 @@ function verifyTokenAndRedirect(url) {
     .catch((err) => console.log(err));
 }
 
-//후기,문의작성 title, author,content
+//후기,문의작성 title,author,content
 function fetchReviews(productId, getAll = false) {
-  fetch(`/products/${productId}/review?getAll=${getAll}`)
+  // URL을 동적으로 구성합니다.
+  const url = `/products/${productId}/review?getAll=${getAll}`;
+
+  fetch(url)
     .then((response) => {
       if (!response.ok) {
         throw new Error("error" + response.statusText);
@@ -184,7 +187,7 @@ function fetchReviews(productId, getAll = false) {
         const row = document.createElement("tr");
 
         const dateCell = document.createElement("td");
-        dateCell.textContent = review.data;
+        dateCell.textContent = review.date;
         row.appendChild(dateCell);
 
         const idCell = document.createElement("td");
@@ -205,8 +208,11 @@ function fetchReviews(productId, getAll = false) {
     .catch((err) => console.error("Error", err));
 }
 
-function fetchQestion(productId, getAll = false) {
-  fetch(`/products/${productId}/inquiry?getAll=${getAll}`)
+function fetchQuestion(productId, getAll = false) {
+  // URL을 동적으로 구성합니다.
+  const url = `/products/${productId}/inquiry?getAll=${getAll}`;
+
+  fetch(url)
     .then((response) => {
       if (!response.ok) {
         throw new Error("error " + response.statusText);
@@ -215,11 +221,11 @@ function fetchQestion(productId, getAll = false) {
     })
     .then((data) => {
       const tableBody = document.querySelector("#question-table tbody");
-      data.forEach((review) => {
+      data.forEach((question) => {
         const row = document.createElement("tr");
 
         const dateCell = document.createElement("td");
-        dateCell.textContent = question.data;
+        dateCell.textContent = question.date;
         row.appendChild(dateCell);
 
         const idCell = document.createElement("td");
