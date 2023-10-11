@@ -13,6 +13,25 @@ const ObjectId = mongoose.Types.ObjectId;
 const SECRET_KEY = process.env.SECRET_KEY;
 
 class OrderService {
+  async verifyAdmin(token) {
+    try {
+      // 토큰이 없으면 접근 불가
+      if (!token) {
+        return false;
+      }
+      // 토큰이 유효한지 확인하기
+      const decodingToken = await jwt.verify(token, SECRET_KEY);
+      // 토큰이 유효하다면, 토큰을 해독한 내용을 반환
+      if (!decodingToken.isAdmin) {
+        return false;
+      }
+      return true;
+    } catch (err) {
+      // 토큰이 유효하지 않으면 에러 반환
+      return err;
+    }
+  }
+
   // 사용자 주문 구현해야 함.
   async getUserInfo(token) {
     // token 값이 null인 경우 보낼 기본 회원 정보가 없다.
@@ -79,7 +98,7 @@ class OrderService {
     try {
       let orderProducts = [];
       for (let product of products) {
-        const { curProduct, count } = product;
+        const { curProduct, count, size } = product;
         const targetProduct = await Products.findOne({
           productName: curProduct.productName,
           productImg: curProduct.productImg,
@@ -95,6 +114,7 @@ class OrderService {
         orderProducts.push({
           products: new ObjectId(targetProduct._id),
           count,
+          size,
         });
       }
 
@@ -162,8 +182,17 @@ class OrderService {
   }
 
   // 관리자 주문 관리 목록 => 모든 주목 목록을 가져옴
-  async getAllOrdersList() {
+  async getAllOrdersList(accessToken) {
     try {
+      // 접근 권한이 있는지를(관리자로 로그인이 되어 있는지를) 검사
+      const verifyResult = await this.verifyAdmin(accessToken);
+      if (!verifyResult) {
+        return {
+          status: 400,
+          errMsg: "접근 권한이 없는 페이지입니다.",
+        };
+      }
+
       // Order 컬렉션에서 모든 주목 목록들을 가져온다.
       const allOrders = await Order.find({})
         .populate("user")
@@ -176,6 +205,7 @@ class OrderService {
         };
       } else {
         return {
+          status: 200,
           allOrders,
         };
       }

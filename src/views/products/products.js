@@ -39,7 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
     e.preventDefault();
   
     const selected = categorySelect.value;
-    console.log(selected)
+    console.log(selected);
   
     if (selected) {
       fetchAndRenderProducts(selected);

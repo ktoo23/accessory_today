@@ -4,7 +4,7 @@ const ObjectId = mongoose.Types.ObjectId; //ObjectId 형식으로 변환
 
 class ReviewService {
     async getReview(productId, getAll) {
-      try {
+
         let data = {};
         
         if (getAll) { // 전부 가져오기
@@ -14,14 +14,11 @@ class ReviewService {
           data = await Reviews.find({ productId }).limit(2);
         }
         return data;
-      } catch (error) {
-        console.error('getReview 오류:', error);
-        return error;
-      }
+
     }
   
     async putReview(title, author, content, productId) {
-      try {
+
 
         const data = {
           title,
@@ -33,22 +30,16 @@ class ReviewService {
         await Reviews.findOneAndUpdate({ productId, author }, data, { upsert: true });
         
         return ;
-      } catch (error) {
-        console.error('putReview 오류:', error);
-        return error;
-      }
+
     }
   
     async delReview(Id) {
-      try {
+
         
         await Reviews.deleteOne({ _id: new ObjectId(Id) });
         
         return ;
-      } catch (error) {
-        console.error('delReview 오류:', error);
-        return error;
-      }
+
     }
   }
   
