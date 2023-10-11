@@ -47,14 +47,25 @@ form > div {
     margin: 0 5px;
 }
 
+.user-button {
+    display: flex;
+    justify-content: center;
+}
+
 .form-submit-btn {
     background-color: #d3cdb3;
     border: 1px solid #d3cdb3;
     color: black;
-    width: 15rem;
+    width: 12rem;
     height: 3rem;
     border-radius: 10px;
     display: block;
+    margin-right: 0.5rem;
+}
+
+.form-submit-btn:hover {
+    background: rgba(0, 0, 0, 0.3);
+    color: #fff;
 }
 
 /* 이메일폼 css */
