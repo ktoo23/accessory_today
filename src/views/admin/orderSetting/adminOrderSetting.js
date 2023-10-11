@@ -40,7 +40,15 @@ async function getAllOrderList() {
 
 // 화면에 모든 주문 정보들을 보여주기 위한 함수
 function showOrderInfo(allOrders) {
+  console.log(allOrders);
   const orderTable = document.querySelector(".order-table");
+  const orderDiv = document.querySelector(".order-div");
+
+  if (!allOrders) {
+    orderDiv.innerHTML += `<h3 style='text-align: center; margin-top: 30px; color: grey'>주문 내역이 없습니다.</h3>`;
+    return;
+  }
+
   for (let i = 0; i < allOrders.length; i++) {
     const order = allOrders[i];
     const orderProduct = order.orderProducts[0];
@@ -92,45 +100,51 @@ function showOrderInfo(allOrders) {
 
 // 배송 상태를 변경하는 함수
 async function changeDeliveryStatus(e) {
-  const targetOrderId =
-    e.target.parentElement.parentElement.firstElementChild.innerText;
-  const status =
-    e.target.parentElement.previousElementSibling.firstElementChild.value;
-  const patchData = { deliveryStatus: status };
-  await fetch(`/api/orders/${targetOrderId}`, {
-    method: "PATCH",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(patchData),
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.status !== 200) {
-        alert(data.errMsg);
-      } else {
-        alert(data.message);
-        window.location.href = "/admin/order-setting";
-      }
+  const change = confirm("해당 상품의 배송 상태를 변경하시겠습니까?");
+  if (change) {
+    const targetOrderId =
+      e.target.parentElement.parentElement.firstElementChild.innerText;
+    const status =
+      e.target.parentElement.previousElementSibling.firstElementChild.value;
+    const patchData = { deliveryStatus: status };
+    await fetch(`/api/orders/${targetOrderId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(patchData),
     })
-    .catch((err) => alert(err));
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status !== 200) {
+          alert(data.errMsg);
+        } else {
+          alert(data.message);
+          window.location.href = "/admin/order-setting";
+        }
+      })
+      .catch((err) => alert(err));
+  }
 }
 
 // 배송 완료된 상품의 주문을 삭제할 수 있는 함수
 async function deleteOrder(e) {
-  const targetOrderId =
-    e.target.parentElement.parentElement.firstElementChild.innerText;
-  await fetch(`/api/orders/${targetOrderId}`, {
-    method: "DELETE",
-  })
-    .then((res) => res.json())
-    .then((data) => {
-      if (data.status !== 200) {
-        alert(data.errMsg);
-      } else {
-        alert(data.message);
-        window.location.href = "/admin/order-setting";
-      }
+  const deleteOrder = confirm("해당 주문을 삭제하시겠습니까?");
+  if (deleteOrder) {
+    const targetOrderId =
+      e.target.parentElement.parentElement.firstElementChild.innerText;
+    await fetch(`/api/orders/${targetOrderId}`, {
+      method: "DELETE",
     })
-    .catch((err) => alert(err));
+      .then((res) => res.json())
+      .then((data) => {
+        if (data.status !== 200) {
+          alert(data.errMsg);
+        } else {
+          alert(data.message);
+          window.location.href = "/admin/order-setting";
+        }
+      })
+      .catch((err) => alert(err));
+  }
 }
