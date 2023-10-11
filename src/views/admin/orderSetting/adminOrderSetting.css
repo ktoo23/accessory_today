@@ -1,0 +1,92 @@
+section {
+  position: relative;
+  height: 100%;
+  display: flex;
+  align-items: center;
+}
+
+.nav-list a {
+  text-decoration: none;
+  color: black;
+}
+
+.nav-list {
+  display: flex;
+  flex-direction: column;
+  width: 250px;
+  height: 800px;
+  padding-top: 3rem;
+  padding-left: 1.2rem;
+}
+
+.nav-list button {
+  border: none;
+  background-color: #fff;
+  text-align: left;
+  color: #9e9d9d;
+}
+
+.nav-list button:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
+/* nav font */
+.nav-list .mypage-title {
+  font-size: 1.6rem;
+}
+
+.nav-list .order-management-title,
+.nav-list .info-management-title {
+  font-size: 1.2rem;
+}
+
+.nav-list .order-check,
+.nav-list .info-update {
+  color: #9e9d9d;
+}
+
+.nav-list .order-check:hover,
+.nav-list .info-update:hover {
+  color: rgba(0, 0, 0, 1);
+}
+
+.order-div {
+  width: 70%;
+  height: 100%;
+  padding: 0.8rem;
+}
+
+.order-div > p {
+  font-size: 1.8rem;
+}
+
+/* orderTracking table */
+.order-table {
+  width: 100%;
+  text-align: center;
+}
+.order-table th {
+  padding: 1.2rem 0;
+}
+.order-table td {
+  padding: 0.8rem 0;
+}
+.order-table th {
+  border-top: 1px solid #9e9d9d;
+  border-bottom: 1px solid #9e9d9d;
+}
+tr img {
+  width: 80px;
+}
+
+button {
+  text-align: center;
+  padding: 0.3rem 0.5rem;
+  border: #fff;
+  border-radius: 0.3rem;
+}
+
+button:hover {
+  cursor: pointer;
+  background: rgba(0, 0, 0, 0.2);
+}

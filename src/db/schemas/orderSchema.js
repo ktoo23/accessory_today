@@ -10,6 +10,7 @@ export const orderSchema = new Schema({
         required: true,
       },
       count: { type: Number, required: true },
+      size: { type: String, required: true },
     },
   ],
   totalPrice: { type: Number, required: true },
