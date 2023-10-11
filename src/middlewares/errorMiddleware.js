@@ -1,14 +1,12 @@
-class Validator{
-    wrongReview =(req,res,next) => {
-        if(!req.body.title||!req.body.content||!req.body.author){
-            const error =  new Error("형식이 잘못되었다!");
-            error.statusCode = 400;
-            throw error;
+
+const putwrongReview =(req,res,next) => {
+    const {title,content,author}=req.body; 
+    if(!title||!content||!author){
+            res.status(400).send("형식이 잘못되었습니다!");
         }
         next();
     }
-}
 
-const validator = new Validator();
-export {validator};
+
+export {putwrongReview};
 

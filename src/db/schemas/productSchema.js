@@ -4,7 +4,6 @@ const productSchema = new Schema({
     productName: {type: String, required: true, unique: true},
     price: {type: Number, required: true},
     category: {type: String, required: true},
-    size :{type:String},
     description: {type: String, requird: true},
     // 신상품 여부
     isNew: {type: Boolean, required: true, default: false},

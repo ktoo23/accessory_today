@@ -88,8 +88,11 @@ orderRouter
 
 // 관리자 주문 관리 목록 (모든 주문들의 정보가 나옴.) => 포스트맨 성공!
 orderRouter.get("/setting", async (req, res) => {
+  const accessToken = req.header("Authorization").split("Bearer ")[1];
+  console.log(accessToken);
   try {
-    const allOrdersList = await orderService.getAllOrdersList();
+    const allOrdersList = await orderService.getAllOrdersList(accessToken);
+    // console.log(allOrdersList);
     if (allOrdersList) {
       return res.status(200).json(allOrdersList);
     } else {
@@ -103,12 +106,15 @@ orderRouter.get("/setting", async (req, res) => {
 // 관리자 배송 상태 관리 => 포스트맨 성공!
 orderRouter.patch("/:orderId", async (req, res) => {
   const { orderId } = req.params;
+  console.log(orderId);
   const { deliveryStatus } = req.body;
+  console.log(deliveryStatus);
   try {
     const changeResult = await orderService.adminChangeDeliveryStatus(
       orderId,
       deliveryStatus
     );
+    console.log(changeResult);
     if (changeResult.status === 200) {
       return res.status(200).json(changeResult);
     } else {

@@ -51,12 +51,10 @@ function getAddress() {
 }).open();
 }
 
+// 마이 페이지 - 유저 데이터 불러오기
 async function getUserData() {
   await fetch(`/api/users/mypage/userinfo-edit?userId=${id}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json", // JSON 데이터 전송을 위한 헤더
-    },
   })
     .then((res) => {
       return res.json();
@@ -64,7 +62,6 @@ async function getUserData() {
     .then((data) => {
       const { status, message, userInfo } = data;
       if (data.status === 200) {
-        console.log(userInfo);
         const email = userInfo.email.split('@');
         $emailUser.value = email[0];
         $emailDomain.value = email[1];
@@ -81,7 +78,7 @@ async function getUserData() {
         $detailAddress.value = address[2];
 
       } else {
-        console.error(error);
+        console.log(data.errMsg);
       }
     })
     .catch((err) => console.log(err.errMsg));
@@ -107,6 +104,7 @@ async function updateData() {
     $pwdCheck.value = "";
     return;
   }
+
   const updateData = {
     email,
     password,
@@ -130,7 +128,7 @@ async function updateData() {
       if (data.status === 200) {
         alert("회원 정보가 수정되었습니다.");
         window.location.href="/mypage";
-      }
+      } else console.log(data.errMsg);
     })
     .catch((err) => console.log(err.errMsg));
 }
