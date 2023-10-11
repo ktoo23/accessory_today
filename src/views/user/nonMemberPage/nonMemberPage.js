@@ -28,7 +28,7 @@ async function loadNonMemberOrder(e) {
         // console.log(product);
         const productName =
           orderedProducts.length === 1
-            ? product.productName
+            ? `${product.productName}-${size}`
             : `${product.productName}-${size}외 ${
                 orderedProducts.length - 1
               } 품목`;
