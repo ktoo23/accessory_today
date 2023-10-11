@@ -89,7 +89,7 @@ userRouter
     try {
       const cancelOrderResult = await userService.cancelOrder(orderId);
       console.log(cancelOrderResult);
-      // 삭제에 성공하면 다시 비회원 주문조회 페이지로 리다이렉트 (주문 삭제 결과 반영)
+      // 삭제에 성공하면 다시 회원 주문조회 페이지로 리다이렉트 (주문 삭제 결과 반영)
       if (cancelOrderResult.status === 200) {
         return res.status(200).json(cancelOrderResult);
         // return res.redirect("/mypage/order-tracking");
