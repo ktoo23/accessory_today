@@ -54,3 +54,31 @@ function submitReview(title, content) {
 function submitQuestion(title, content) {
   alert("문의가 제출되었습니다: " + title + " - " + content);
 }
+
+
+// 폼에서 후기 작성 -> API로 데이터 전송
+document.addEventListener('DOMContentLoaded', function(){
+    const form = document.querySelector('form');
+    form.addEventListener('submit', function(event){
+        event.preventDefault();
+
+        const reviewData = new FormData(form);
+
+        fetch('YOUR_API_ENDPOINT', {
+            method: 'POST',
+            body: reviewData
+        })
+        .then(response => response.json())
+        .then(data => {
+            if(data.success){
+                alert('Review submitted successfully!');
+            } else {
+                alert('Failed to submit review');
+            }
+        })
+        .catch(err => {
+            console.error('Error:', err);
+            alert('Failed to submit review');
+        });
+    });
+});
