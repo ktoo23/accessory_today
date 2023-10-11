@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", function () {
   const formTitleElement = document.getElementById("submit-form");
   const formTitleInput = document.getElementById("form-title-input");
   const formContent = document.getElementById("form-content");
+  const formAuthor = document.getElementById("form-author-input");
   const saveButton = document.getElementById("save-button");
 
   if (type === "review") {
@@ -28,6 +29,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const reviewData = {
       title: formTitleInput.value,
+      author: formAuthor.value,
       content: formContent.value,
     };
     submitData(
@@ -46,6 +48,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const questionData = {
       title: formTitleInput.value,
+      author: formAuthor.value,
       content: formContent.value,
     };
     submitData(
