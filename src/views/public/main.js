@@ -8,27 +8,17 @@ const generateCards = (product) => `
   </div>
   `;
 
-fetchAndRenderProducts();
-async function fetchAndRenderProducts() {
-  await fetch(`/api/products`)
+renderIsNewProducts();
+renderIsBestProducts();
+
+function renderIsNewProducts() {
+  fetch(`/api/products?isNew=true`)
     .then((response) => response.json())
     .then((data) => {
-      const bestProducts = data.filter((product) => product.isBest === true);
-      const newProducts = data.filter((product) => product.isNew === true);
-
-      const bestListEl = document.getElementById("bestList");
+      const newProducts = data;
       const newListEl = document.getElementById("newList");
-      bestListEl.innerHTML = "";
+
       newListEl.innerHTML = "";
-
-      const bestProductsSlice = bestProducts.slice(0, 4);
-      const newProductsSlice = newProducts.slice(0, 4);
-
-      bestProductsSlice.forEach((product) => {
-        const productCard = document.createElement("div");
-        productCard.innerHTML = generateCards(product);
-        bestListEl.appendChild(productCard);
-      });
 
       newProductsSlice.forEach((product) => {
         const productCard = document.createElement("div");
@@ -36,7 +26,31 @@ async function fetchAndRenderProducts() {
         newListEl.appendChild(productCard);
       });
     })
+
+    .catch((error) => {
+      console.error("Error occured: ", error);
+    });
+}
+
+function renderIsBestProducts() {
+  fetch(`/api/products?isBest=true`)
+    .then((response) => response.json())
+    .then((data) => {
+      const bestProducts = data;
+      const bestListEl = document.getElementById("bestList");
+
+      bestListEl.innerHTML = "";
+
+      bestProductsSlice.forEach((product) => {
+        const productCard = document.createElement("div");
+        productCard.innerHTML = generateCards(product);
+        bestListEl.appendChild(productCard);
+      });
+    })
     .catch((error) => {
       console.error("Error occured", error);
     });
+
 }
+
+
