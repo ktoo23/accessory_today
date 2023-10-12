@@ -1,8 +1,5 @@
-.row > .mainImg {
-  max-width: 100%;
-  height: 300px;
-  width: auto;
-  align-items: center;
+.main-content {
+  margin-bottom: 200px;
 }
 
 .row .main-text > p {
@@ -13,43 +10,44 @@
   margin: 50px 0;
 }
 
-.mainCard {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  align-items: center;
-  gap: 15px;
-  margin: 5px;
-}
-
-.mainCard > img {
-  width: 300px;
-  height: 200px;
-}
-
-#bestList {
-  margin-bottom: 50px;
-}
-
-#newList {
-  margin-bottom: 300px;
-}
-
 .product-img {
   width: 200px;
-  height: 200px;
+  border-radius: 10px;
+  max-width: 100%;
+  /* align-items: center; */
+  align-self: center;
+}
+
+div.card {
+  width: 200px;
+  border: none;
 }
 
 .product-info {
   padding: 20px;
+  text-align: center;
 }
 
-.product-name{
-
+.best-list {
+  margin-bottom: 50px;
+  gap: 15px;
+  margin: 5px;
 }
 
-.product-price {
+.new-list {
+  margin-bottom: 50px;
+  gap: 15px;
+  margin: 5px;
+  max-width: 100%;
+  width: auto;
+  align-items: center;
+}
 
+.row > .mainImg {
+  max-width: 100%;
+  height: 300px;
+  width: auto;
+  align-items: center;
 }
 
 /* about css */

@@ -1,15 +1,12 @@
 const generateCards = (product) => `
-  <div class="card">
+  <div class="card col">
     <img class="product-img" src="${product.productImg}" alt="productImg">
     <div class="product-info">
       <p class="product-name">${product.productName}</p>
-      <p class="product-price">${product.price}</p>
+      <p class="product-price">KRW ${product.price}</p>
     </div>
   </div>
   `;
-
-renderIsNewProducts();
-renderIsBestProducts();
 
 function renderIsNewProducts() {
   fetch(`/api/products?isNew=true`)
@@ -18,14 +15,15 @@ function renderIsNewProducts() {
       const newListEl = document.getElementById("newList");
 
       newListEl.innerHTML = "";
-
-      const productCard = document.createElement("div");
-      productCard.innerHTML = generateCards(data);
-      newListEl.appendChild(productCard);
+      data.forEach((product) => {
+        const newCards = generateCards(product);
+        newListEl.innerHTML += (newCards);
+      })
     })
-    .catch ((error) => {
-  console.error("Error occured: ", error);
-});
+    .catch((error) => {
+      console.error("Error occured: ", error);
+    });
+}
 
 function renderIsBestProducts() {
   fetch(`/api/products?isBest=true`)
@@ -35,15 +33,16 @@ function renderIsBestProducts() {
 
       bestListEl.innerHTML = "";
 
-
-      const productCard = document.createElement("div");
-      productCard.innerHTML = generateCards(data);
-      bestListEl.appendChild(productCard);
+      data.forEach((product) => {
+        const bestCards = generateCards(product);
+        bestListEl.innerHTML += (bestCards);
+      })
     })
     .catch((error) => {
       console.error("Error occured", error);
     });
-
-
+}
+renderIsNewProducts();
+renderIsBestProducts();
 
 
