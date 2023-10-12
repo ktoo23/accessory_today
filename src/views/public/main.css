@@ -35,6 +35,23 @@
   margin-bottom: 300px;
 }
 
+.product-img {
+  width: 200px;
+  height: 200px;
+}
+
+.product-info {
+  padding: 20px;
+}
+
+.product-name{
+
+}
+
+.product-price {
+
+}
+
 /* about css */
 .about-page {
   position: relative;
@@ -61,6 +78,7 @@
 .text-box  {
   width: 600px;
 }
+
 h1 {
   padding: 80px 0 20px 0;
 }
