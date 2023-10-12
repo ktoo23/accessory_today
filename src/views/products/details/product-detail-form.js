@@ -1,26 +1,36 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // URL에서 쿼리 스트링 파싱
-  const urlParams = new URLSearchParams(window.location.search);
-  const type = urlParams.get("type");
+  const url = window.location.href;
+  const type = url.split("/")[6].split("-")[0]; // review or inquiry
+  // console.log(type);
 
   const formTitleElement = document.getElementById("submit-form");
   const formTitleInput = document.getElementById("form-title-input");
   const formContent = document.getElementById("form-content");
   const formAuthor = document.getElementById("form-author-input");
   const saveButton = document.getElementById("save-button");
+  const cancelButton = document.getElementById("cancel-button");
 
   if (type === "review") {
     formTitleElement.textContent = "REVIEW";
     saveButton.addEventListener("click", submitReviewEvent);
-  } else if (type === "question") {
+    // 취소 버튼 클릭 시 상품 디테일 화면으로 이동
+    cancelButton.addEventListener("click", () => {
+      window.location.href = `/products/details/${productId}`;
+    });
+  } else if (type === "inquiry") {
     formTitleElement.textContent = "Q&A";
     saveButton.addEventListener("click", submitQuestionEvent);
+    // 취소 버튼 클릭 시 상품 디테일 화면으로 이동
+    cancelButton.addEventListener("click", () => {
+      window.location.href = `/products/details/${productId}`;
+    });
   } else {
     alert("알 수 없는 유형입니다. 올바른 폼 유형을 사용해주세요.");
   }
   // 상품 ID 가져오기 예시 (수정이 필요할 수 있습니다)
-  const productId = window.location.pathname.split("/")[2];
-  console.log("productId:", productId);
+  // 상품 ID 현재 path에서 가져오는 부분 경로 수정하면서 [2]에서 [3]으로 바꿨습니다!
+  const productId = window.location.pathname.split("/")[3];
+
   function submitReviewEvent(event) {
     event.preventDefault();
     if (formTitleInput.value.trim() === "" || formContent.value.trim() === "") {
@@ -33,9 +43,9 @@ document.addEventListener("DOMContentLoaded", function () {
       content: formContent.value,
     };
     submitData(
+      // 경로가 잘못되었었어요!
       `/api/products/${productId}/review`,
       reviewData,
-      console.log(reviewData),
       "리뷰가 제출되었습니다: "
     );
   }
@@ -52,6 +62,7 @@ document.addEventListener("DOMContentLoaded", function () {
       content: formContent.value,
     };
     submitData(
+      // 경로가 잘못되었었어요!
       `/api/products/${productId}/inquiry`,
       questionData,
       "문의가 제출되었습니다: "
@@ -60,16 +71,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
   function submitData(apiEndpoint, data, alertMessage) {
     fetch(apiEndpoint, {
-      method: "POST",
+      method: "PUT",
       body: JSON.stringify(data),
       headers: {
         "Content-Type": "application/json",
       },
     })
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.success) {
+      .then((response) => {
+        if (response.status === 201) {
           alert(alertMessage + data.title + " - " + data.content);
+          window.location.href = `/products/details/${productId}`;
         } else {
           alert("Failed to submit");
         }

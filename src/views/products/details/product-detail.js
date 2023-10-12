@@ -151,13 +151,15 @@ document.querySelector(".order-button").addEventListener("click", function () {
 // 후기,문의 버튼 클릭 시 로그인 토큰 검사
 document.getElementById("reviews-btn").addEventListener("click", function () {
   verifyTokenAndRedirect(
-    `/products/details/products-detail-form.html?type=review`
+    // 경로 수정!
+    `/products/details/${productId}/review-upload`
   );
 });
 
 document.getElementById("questions-btn").addEventListener("click", function () {
   verifyTokenAndRedirect(
-    `/products/details/products-detail-form.html?type=question`
+    // 경로 수정!
+    `/products/details/${productId}/inquiry-upload`
   );
 });
 
