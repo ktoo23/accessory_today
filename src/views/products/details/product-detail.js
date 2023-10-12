@@ -191,10 +191,7 @@ function verifyTokenAndRedirect(url) {
 
 //후기,문의작성 title,author,content
 function fetchReviews(productId, getAll = false) {
-  // URL을 동적으로 구성합니다.
-  const url = `/products/${productId}/review?getAll=${getAll}`;
-
-  fetch(url)
+  fetch(`/products/${productId}/review`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("error" + response.statusText);
@@ -203,36 +200,37 @@ function fetchReviews(productId, getAll = false) {
     })
     .then((data) => {
       const tableBody = document.querySelector("#review-table tbody");
+      // 데이터를 테이블로 출력
       data.forEach((review) => {
-        const row = document.createElement("tr");
+        if (getAll || review.productId === productId) {
+          // productId 확인
+          const row = document.createElement("tr");
 
-        const dateCell = document.createElement("td");
-        dateCell.textContent = review.date;
-        row.appendChild(dateCell);
+          const dateCell = document.createElement("td");
+          dateCell.textContent = review.date;
+          row.appendChild(dateCell);
 
-        const idCell = document.createElement("td");
-        idCell.textContent = review._id;
-        row.appendChild(idCell);
+          const authorCell = document.createElement("td");
+          authorCell.textContent = review.author;
+          row.appendChild(authorCell);
 
-        const titleCell = document.createElement("td");
-        titleCell.textContent = review.title;
-        row.appendChild(titleCell);
+          const titleCell = document.createElement("td");
+          titleCell.textContent = review.title;
+          row.appendChild(titleCell);
 
-        const contentCell = document.createElement("td");
-        contentCell.textContent = review.content;
-        row.appendChild(contentCell);
+          const contentCell = document.createElement("td");
+          contentCell.textContent = review.content;
+          row.appendChild(contentCell);
 
-        tableBody.appendChild(row);
+          tableBody.appendChild(row);
+        }
       });
     })
     .catch((err) => console.error("Error", err));
 }
 
 function fetchQuestion(productId, getAll = false) {
-  // URL을 동적으로 구성합니다.
-  const url = `/products/${productId}/inquiry?getAll=${getAll}`;
-
-  fetch(url)
+  fetch(`/products/${productId}/inquiry`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("error " + response.statusText);
@@ -241,27 +239,35 @@ function fetchQuestion(productId, getAll = false) {
     })
     .then((data) => {
       const tableBody = document.querySelector("#question-table tbody");
+      // 데이터를 테이블로 출력
       data.forEach((question) => {
-        const row = document.createElement("tr");
+        if (getAll || question.productId === productId) {
+          // productId 확인
+          const row = document.createElement("tr");
 
-        const dateCell = document.createElement("td");
-        dateCell.textContent = question.date;
-        row.appendChild(dateCell);
+          const dateCell = document.createElement("td");
+          dateCell.textContent = question.date;
+          row.appendChild(dateCell);
 
-        const idCell = document.createElement("td");
-        idCell.textContent = question._id;
-        row.appendChild(idCell);
+          const authorCell = document.createElement("td");
+          authorCell.textContent = question.author;
+          row.appendChild(authorCell);
 
-        const titleCell = document.createElement("td");
-        titleCell.textContent = question.title;
-        row.appendChild(titleCell);
+          const titleCell = document.createElement("td");
+          titleCell.textContent = question.title;
+          row.appendChild(titleCell);
 
-        const contentCell = document.createElement("td");
-        contentCell.textContent = question.content;
-        row.appendChild(contentCell);
+          const contentCell = document.createElement("td");
+          contentCell.textContent = question.content;
+          row.appendChild(contentCell);
 
-        tableBody.appendChild(row);
+          tableBody.appendChild(row);
+        }
       });
     })
     .catch((err) => console.error("Error", err));
 }
+window.onload = function () {
+  fetchReviews(productId);
+  fetchQuestion(productId);
+};
