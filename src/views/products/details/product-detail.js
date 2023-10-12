@@ -191,7 +191,7 @@ function verifyTokenAndRedirect(url) {
 
 //후기,문의작성 title,author,content
 function fetchReviews(productId, getAll = false) {
-  fetch(`/products/${productId}/review`)
+  fetch(`/api/products/${productId}/review`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("error" + response.statusText);
@@ -230,7 +230,7 @@ function fetchReviews(productId, getAll = false) {
 }
 
 function fetchQuestion(productId, getAll = false) {
-  fetch(`/products/${productId}/inquiry`)
+  fetch(`/api/products/${productId}/inquiry`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("error " + response.statusText);
