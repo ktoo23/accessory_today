@@ -1,39 +1,42 @@
-fetch("/api/products")
-  .then((response) => { response.json(); })
-  .then((data) => {
-    const bestProducts = data.filter((data) => data.isBest === true);
-    const newProducts = data.filter((data) => data.isNew === true);
+const generateCards = (product) => `
+  <div class="card">
+    <img class="product-img" src="${product.productImg}" alt="productImg">
+    <div class="product-info">
+      <p class="product-name">${product.productName}</p>
+      <p class="product-price">${product.price}</p>
+    </div>
+  </div>
+  `;
 
-    const bestListEl = document.getElementById("bestList");
-    bestListEl.innerHTML = "";
-    const newListEl = document.getElementById("newList");
-    newListEl.innerHTML = "";
+fetchAndRenderProducts();
+async function fetchAndRenderProducts() {
+  await fetch(`/api/products`)
+    .then((response) => response.json())
+    .then((data) => {
+      const bestProducts = data.filter((product) => product.isBest === true);
+      const newProducts = data.filter((product) => product.isNew === true);
 
-    bestProducts.forEach((product) => {
-      const productCard = document.createElement("div");
-      productCard.classList.add("card");
-      productCard.innerHTML = generateCards(product);
+      const bestListEl = document.getElementById("bestList");
+      const newListEl = document.getElementById("newList");
+      bestListEl.innerHTML = "";
+      newListEl.innerHTML = "";
 
-      bestListEl.appendChild(productCard);
+      const bestProductsSlice = bestProducts.slice(0, 4);
+      const newProductsSlice = newProducts.slice(0, 4);
+
+      bestProductsSlice.forEach((product) => {
+        const productCard = document.createElement("div");
+        productCard.innerHTML = generateCards(product);
+        bestListEl.appendChild(productCard);
+      });
+
+      newProductsSlice.forEach((product) => {
+        const productCard = document.createElement("div");
+        productCard.innerHTML = generateCards(product);
+        newListEl.appendChild(productCard);
+      });
+    })
+    .catch((error) => {
+      console.error("Error occured", error);
     });
-
-    newProducts.forEach((product) => {
-      const productCard = document.createElement("div");
-      productCard.classList.add("card");
-      productCard.innerHTML = generateCards(product);
-
-      newListEl.appendChild(productCard);
-    });
-
-    const generateCards = (product) => {
-      let card = `
-      <img src="${product.productImg}" alt="productImg">
-      <div class="product-info">
-        <p class="product-name">${product.productName}</p>
-        <p class="product-price">${product.price}</p>
-      </div>
-      `;
-
-      return card;
-    }
-  });
+}
