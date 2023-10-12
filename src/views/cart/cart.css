@@ -24,11 +24,6 @@ h1, h2, h3, h4 {
     color: #fff;
 }
 
-a {
-    color: #fff;
-    text-decoration: none;
-}
-
 /* 1rem은 기본적으로 경로 HTML 요소의 글꼴 크기의 픽셀 수와 동일 */
 
 img {
@@ -130,8 +125,15 @@ button:hover {
     flex-direction: column;
 }
 
+.cart-item-option a {
+    color: #fff;
+    text-decoration: none;
+}
+
 .cart-item-option .cart-item-name {
-    font-size: 14px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    color: #535252;
     margin-bottom: 0.5rem;
 }
 .cart-item-option .cart-item-size {
@@ -149,7 +151,12 @@ button:hover {
 .cart-table .cart-item-price {
     text-align: center;
 }
-
+.cart-item-quantity > p {
+    margin-bottom: 0;
+}
+.cart-item-price > p {
+    font-size: 1.3rem;
+}
 /* cart Btn */
 .cart-table .cart-item-quantity button {
     margin-top: 0.5rem;
