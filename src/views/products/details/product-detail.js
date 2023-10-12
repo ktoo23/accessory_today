@@ -50,7 +50,7 @@ fetch(`/api/products/${productId}`)
       price: productData.price,
       productImg: productData.productImg,
       size: selectedSizeText,
-      quantity: (product.quantity = product.quantity || 1),
+      quantity:(product.quantity = product.quantity || 1),
     };
   })
   .catch((error) => {
@@ -287,3 +287,30 @@ window.onload = function () {
   fetchReviews(productId);
   fetchQuestion(productId);
 };
+
+// //카테고리 구현
+// document.addEventListener("DOMContentLoaded", () => {
+//   const categorySelect = document.getElementById("categorySelect");
+
+//   const fetchAndRenderProducts = (selected) => {
+//     fetch(`/api/products?category=${selected}`)
+//       .then((response) => response.json())
+//       .then((products) => {
+//         renderProducts(products);
+//       })
+//       .catch((error) => {
+//         console.error("Error: fail to fetch", error);
+//       });
+//   };
+
+//   categorySelect.addEventListener("change", (e) => {
+//     e.preventDefault();
+
+//     const selected = categorySelect.value;
+//     console.log(selected);
+
+//     if (selected) {
+//       fetchAndRenderProducts(selected);
+//     }
+//   });
+// });
