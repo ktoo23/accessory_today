@@ -121,12 +121,11 @@ document.querySelector(".order-button").addEventListener("click", function () {
 
   const token = localStorage.getItem("Authorization") || "";
 
-  // 비회원일 때 경로를 다르게 수정해 주어야 합니당!
-  function createProductInfoQueryString(product) {
-    return Object.keys(product)
-      .map((key) => `${key}=${encodeURIComponent(product[key])}`)
-      .join("&");
-  }
+  // function createProductInfoQueryString(product) {
+  //   return Object.keys(product)
+  //     .map((key) => `${key}=${encodeURIComponent(product[key])}`)
+  //     .join("&");
+  // }
   if (!token) {
     // 비회원일 때 로컬스토리지에 상품 정보 저장
     const cart = JSON.parse(localStorage.getItem("myCart")) || [];
