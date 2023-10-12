@@ -124,4 +124,18 @@ viewsRouter.get("/admin/order-setting", (req, res) => {
   );
 });
 
+// 리뷰, 문의 작성
+viewsRouter.get("/products/details/:productId/:uploadType", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "src",
+      "views",
+      "products",
+      "details",
+      "products-detail-form.html"
+    )
+  );
+});
+
 export { viewsRouter };
