@@ -2,7 +2,7 @@ document.addEventListener('DOMContentLoaded', () => {
   const categorySelect = document.getElementById('categorySelect');
 
   const fetchAndRenderProducts = (selected) => {
-    fetch(`/api/products/?category=${selected}`)
+    fetch(`/api/products?category=${selected}`)
       .then((response) => response.json())
       .then((products) => {
         renderProducts(products);
@@ -41,9 +41,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const selected = categorySelect.value;
     console.log(selected);
   
-    if (selected) {
-      fetchAndRenderProducts(selected);
-    }
+
+    fetchAndRenderProducts(selected);
+
   });
 
   fetchAndRenderProducts(categorySelect.value);
