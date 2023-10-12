@@ -71,7 +71,7 @@ function showOrderInfo(allOrders) {
     <td>${itemName}</td>
     <td>${totalPrice}</td>
     <td>${totalCount}</td>
-    <td>${order.orderer}</td>
+    <td>${order.user === null ? order.orderer : order.user.username}</td>
     <td>
       <button id='delete'>주문 삭제</button>
     </td>
