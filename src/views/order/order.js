@@ -1,7 +1,11 @@
 document.addEventListener("DOMContentLoaded", function () {
-  // 쿼리스트링으로 전달된 것이 없으면 장바구니 창에서 상품 주문을 클릭한 것이므로 localstorage order 안에 있는 정보들을 보여 주어야 함.
-  const currentQuery = window.location.search;
-  if (!currentQuery) {
+  // // 쿼리스트링으로 전달된 것이 없으면 장바구니 창에서 상품 주문을 클릭한 것이므로 localstorage order 안에 있는 정보들을 보여 주어야 함.
+  // const currentQuery = window.location.search;
+  // 로컬스토리지에 nonmember-buynow 필드가 있으면 비회원이 buyNow를 누른 것이므로 해당 품목 하나를 가져와서 띄운 다음에 로컬스토리지에서 바로 삭제함
+  const isNonmemberBuyNow = localStorage.getItem("nonmember-buynow") || null;
+  if (isNonmemberBuyNow) {
+    nonmemberBuyNow(JSON.parse(isNonmemberBuyNow));
+  } else {
     showCartProducts();
   }
 });
@@ -188,6 +192,41 @@ function showCartProducts() {
   const cartPrice = document.querySelector(".cart-price");
   cartPrice.innerText = `상품 구매금액 ${totalPrice}원 + 배송비 무료 = 합계 ${totalPrice}원`;
 
+  return;
+}
+
+async function nonmemberBuyNow(buynowProduct) {
+  console.log(buynowProduct);
+  const orderList = document.querySelector(".order-list");
+  const newDiv = document.createElement("div");
+  newDiv.id = `product1`;
+  let html = `<div class="row item-info" class='products'>
+      <div class="col-1 item-img"><img src="${buynowProduct.productImg}"></div>
+      <div class="col-4 cart-item-option">${
+        buynowProduct.productName
+      } - ${buynowProduct.size.slice(0, 1).toUpperCase()}</div>
+      <div class="col-1 item-price">${buynowProduct.price}</div>
+      <div class="col-1 cart-item-quantity">${buynowProduct.quantity}</div>
+      <div class="col-1 delivery-fee">무료</div>
+      <div class="col-1 total-price">${
+        buynowProduct.price * buynowProduct.quantity
+      }원</div>
+    </div>`;
+  newDiv.innerHTML = html;
+  // 부모 요소의 마지막 자식 요소 가져오기
+  const lastChild = orderList.lastChild;
+  // 부모 요소의 마지막 자식 요소의 이전 자식 요소 가져오기 (마지막에서 2번째 자식)
+  const secondToLastChild = lastChild.previousElementSibling;
+  // 추가할 요소를 부모 요소의 마지막에서 2번째 자식으로 삽입
+  orderList.insertBefore(newDiv, secondToLastChild);
+
+  const cartPrice = document.querySelector(".cart-price");
+  cartPrice.innerText = `상품 구매금액 ${
+    buynowProduct.price * buynowProduct.quantity
+  }원 + 배송비 무료 = 합계 ${buynowProduct.price * buynowProduct.quantity}원`;
+
+  // 화면에 다 띄운 다음에 로컬스토리지에서 삭제
+  localStorage.removeItem("nonmember-buynow");
   return;
 }
 
