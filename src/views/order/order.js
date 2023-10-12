@@ -161,6 +161,7 @@ function showCartProducts() {
 
     const cartPrice = document.querySelector(".cart-price");
     cartPrice.innerText = `상품 구매금액 ${orderProducts.totalPrice}원 + 배송비 무료 = 합계 ${orderProducts.totalPrice}원`;
+    localStorage.removeItem("order");
     return;
   }
 
@@ -191,7 +192,7 @@ function showCartProducts() {
   }
   const cartPrice = document.querySelector(".cart-price");
   cartPrice.innerText = `상품 구매금액 ${totalPrice}원 + 배송비 무료 = 합계 ${totalPrice}원`;
-
+  localStorage.removeItem("order");
   return;
 }
 
