@@ -1,5 +1,3 @@
-import { getAddress } from '/join/join.js';
-
 document.addEventListener("DOMContentLoaded", function () {
 
   // 쿼리스트링으로 전달된 것이 없으면 장바구니 창에서 상품 주문을 클릭한 것이므로 localstorage order 안에 있는 정보들을 보여 주어야 함.
@@ -41,6 +39,26 @@ async function getUserData() {
 // 주소 검색
 const addressSearchBtn = document.querySelector("#address-search");
 addressSearchBtn.addEventListener('click', getAddress);
+
+function getAddress() {
+  const postCode = document.getElementById("post-code");
+  const streetAddress = document.getElementById("street-address");
+  const detailAddress = document.getElementById("detail-address");
+
+  new daum.Postcode({
+    oncomplete: function (data) {
+      var addr = "";
+      if (data.userSelectedType === "R") {
+        addr = data.roadAddress;
+      } else {
+        addr = data.jibunAddress;
+      }
+      postCode.value = data.zonecode;
+      streetAddress.value = addr;
+      detailAddress.focus();
+    },
+  }).open();
+}
 
 // 유저 정보 미리 배송 정보에 입력
 function setUserInfoinShippingForm(data) {
@@ -144,10 +162,12 @@ function showCartProducts() {
   }
   const cartPrice = document.querySelector(".cart-price");
   cartPrice.innerText = `상품 구매금액 ${totalPrice}원 + 배송비 무료 = 합계 ${totalPrice}원`;
+
+  return totalPrice
 }
 
 
-const submitbtn = document.querySelector("form-submit-btn");
+const submitbtn = document.querySelector(".form-submit-btn");
 submitbtn.addEventListener("click", submitForm);
 
 async function submitForm(e) {
@@ -171,17 +191,13 @@ async function submitForm(e) {
   const submitOrderData = {
     orderer,
     orderPassword,
-    checkPassword,
     orderAddress,
     orderPhone,
     email,
     products,
     totalPrice,
-    paidThrough
   };
 
-
-  // submitOrderData를 어디로 보내야하는지 모르겠네요...
   fetch("/api/order/order-sheet", {
     method: "POST",
     headers: {
@@ -195,7 +211,8 @@ async function submitForm(e) {
     .then((data) => {
       if (data.status === 200) {
         console.log('주문 완료');
-        window.location.href = "/order/orderComplete";
+        const orderId = data.orderId;
+        window.location.href = "/order/orderComplete?orderId=" + orderId; 
       } else {
         alert(data.errMsg);
       }
