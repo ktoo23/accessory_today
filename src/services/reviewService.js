@@ -7,7 +7,7 @@ class ReviewService {
       try{
         let data = {};
         
-        data = await Reviews.find({ productId }).populate('productId');
+        data = await Reviews.find({ productId });
 
         return data;
       }catch(err){
