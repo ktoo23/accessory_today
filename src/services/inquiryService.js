@@ -7,7 +7,7 @@ class InquiryService {
       try{
         let data = {};
 
-        data = await Inquiries.find({ productId }).populate('productId');
+        data = await Inquiries.find({ productId });
 
         return data;
       }catch(err){

@@ -206,7 +206,7 @@ function verifyTokenAndRedirect(url) {
 }
 
 //후기,문의작성 title,author,content
-function fetchReviews(productId, getAll = false) {
+function fetchReviews(productId) {
   fetch(`/api/products/${productId}/review`)
     .then((response) => {
       if (!response.ok) {
@@ -218,7 +218,7 @@ function fetchReviews(productId, getAll = false) {
       const tableBody = document.querySelector("#review-table tbody");
       // 데이터를 테이블로 출력
       data.forEach((review) => {
-        if (getAll || review.productId === productId) {
+        if (review.productId=== productId) {
           // productId 확인
           const row = document.createElement("tr");
 
@@ -245,7 +245,7 @@ function fetchReviews(productId, getAll = false) {
     .catch((err) => console.error("Error", err));
 }
 
-function fetchQuestion(productId, getAll = false) {
+function fetchQuestion(productId) {
   fetch(`/api/products/${productId}/inquiry`)
     .then((response) => {
       if (!response.ok) {
@@ -257,7 +257,7 @@ function fetchQuestion(productId, getAll = false) {
       const tableBody = document.querySelector("#question-table tbody");
       // 데이터를 테이블로 출력
       data.forEach((question) => {
-        if (getAll || question.productId === productId) {
+        if (question.productId === productId) {
           // productId 확인
           const row = document.createElement("tr");
 

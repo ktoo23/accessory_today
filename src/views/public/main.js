@@ -9,12 +9,13 @@ const generateCards = (product) => `
   `;
 
 fetchAndRenderProducts();
-async function fetchAndRenderProducts() {
-  await fetch(`/api/products`)
+function fetchAndRenderProducts() {
+  fetch('/api/products?isNew=true')
     .then((response) => response.json())
     .then((data) => {
+      console.log(data)
       const bestProducts = data.filter((product) => product.isBest === true);
-      const newProducts = data.filter((product) => product.isNew === true);
+      const newProducts = data;
 
       const bestListEl = document.getElementById("bestList");
       const newListEl = document.getElementById("newList");
@@ -39,4 +40,7 @@ async function fetchAndRenderProducts() {
     .catch((error) => {
       console.error("Error occured", error);
     });
+
+    
 }
+
