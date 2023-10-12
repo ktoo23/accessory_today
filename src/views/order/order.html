@@ -22,7 +22,115 @@
   <body>
     <div id="wrapper">
       <div id="header"></div>
-      <div id="orderInfo"></div>
+      <div class="order-container">
+        <div class="cart-contents">
+          <div class="row page-title">
+            <h2>주문서 작성</h2>
+          </div>
+          <div class="row order-list">
+            <div class="row cart-title">
+              <div class="col-1 ">이미지</div>
+              <div class="col-4">상품 정보</div>
+              <div class="col-1">판매가</div>
+              <div class="col-1">수량</div>
+              <div class="col-1">배송비</div>
+              <div class="col-1">합계</div>
+            </div>
+            <div class="row cart-price"></div>
+          </div>
+          </div>
+        <div>
+          <form id="order-form" method="post">
+            <span>배송 정보</span>
+            <div>
+                <label for="receiver-name">받으시는 분*</label>
+                <input type="text" class="form-control" id="receiver-name" name="receiver-name" value="" required>
+            </div>
+            <div id="order-password-section" style="display: none;">
+                <label for="order-password">주문조회 비밀번호*</label>
+                <input type="password" class="form-control" id="order-password" name="order-password" placeholder="영문 대소문자/숫자 조합, 8~16자">
+              </div>
+            <div id="confirm-password-section" style="display: none;">
+                <label for="confirm-password">주문조회 비밀번호 확인*<span class="check-password">&nbsp&nbsp비밀번호가 일치하지 않습니다</span></label> 
+                <input type="password" class="form-control" id="confirm-password" name="confirm-password" required>
+            </div>
+            <div>
+                <label for="receiver-address">주소*</label>
+                <div class="post-group">
+                  <input
+                    type="text"
+                    class="post-code"
+                    id="post-code"
+                    placeholder="우편번호"
+                    value="" 
+                    required="true"
+                  />
+                  <div class="input-group-append">
+                    <button
+                      class="btn btn-outline-secondary"
+                      type="button"
+                      id="address-search"
+                    >
+                      주소검색
+                    </button>
+                  </div>
+                </div>
+                <div class="address-group">
+                  <input
+                    type="text"
+                    class="street-address"
+                    id="street-address"
+                    name="street-address"
+                    placeholder="도로명 주소"
+                    value=""
+                    required="true"
+                  />
+                  <input
+                    type="text"
+                    class="detail-address"
+                    id="detail-address"
+                    name="detail-address"
+                    placeholder="상세주소"
+                    value=""
+                    required="true"
+                  />
+                </div>
+              </div>
+            </div>
+            <div class="phone">
+                <label for="phone-number">휴대전화*</label>
+                <div class="phone-inputs">
+                <input type="tel" class="form-control" id="phone1" name="phone1" maxlength="3" size="3" value=""  required> -
+                <input type="tel" class="form-control" id="phone2" name="phone2" maxlength="4" size="4" value="" required> -
+                <input type="tel" class="form-control" id="phone3" name="phone3" maxlength="4" size="4" value="" required>
+                </div>
+            </div>
+            <div>
+                <label for="email">이메일*</label>
+                <div class="email-group">
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email-user"
+                    value=""
+                    required="true"
+                  />
+                  <div>@</div>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="email-domain"
+                    value=""
+                    required="true"
+                  />
+                </div>
+              </div>
+            <div class="form-submit-container">
+                <button type="submit" class="form-submit-btn" value="order complete">주문 완료하기</button>
+            </div>
+            </div>
+        </form>
+        </div>
     </div>
     <div id="footer"></div>
 
@@ -34,5 +142,6 @@
       integrity="sha384-HwwvtgBNo3bZJJLYd8oVXjrBZt8cqVSpeBNS5n7C8IVInixGAoxmnlMuBnhbgrkm"
       crossorigin="anonymous"
     ></script>
+    <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
   </body>
 </html>

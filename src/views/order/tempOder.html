@@ -24,6 +24,7 @@
     <div id="header"></div>
 
     <!-- 주문서작성페이지 -->
+    
     <div class="order-container">
       <div class="cart-contents">
         <div class="row page-title">
@@ -48,6 +49,7 @@
           </div>
           <div class="row cart-price">상품 구매금액 ${item-price} + 배송비 무료 = 합계 ${total-price} 원</div>
         </div>
+      </div>
       <div>
         <form id="order-form" method="post">
           <span>배송 정보</span>
@@ -65,7 +67,44 @@
           </div>
           <div>
               <label for="receiver-address">주소*</label>
-              <input type="text" class="form-control" id="receiver-address" name="receiver-address">
+              <!-- <input type="text" class="form-control" id="receiver-address" name="receiver-address"> -->
+              <div class="post-group">
+                <input
+                  type="text"
+                  class="post-code"
+                  id="post-code"
+                  placeholder="우편번호"
+                  required="true"
+                />
+                <div class="input-group-append">
+                  <button
+                    class="btn btn-outline-secondary"
+                    type="button"
+                    id="address-search"
+                  >
+                    주소검색
+                  </button>
+                </div>
+              </div>
+              <div class="address-group">
+                <input
+                  type="text"
+                  class="street-address"
+                  id="street-address"
+                  name="street-address"
+                  placeholder="도로명 주소"
+                  required="true"
+                />
+                <input
+                  type="text"
+                  class="detail-address"
+                  id="detail-address"
+                  name="detail-address"
+                  placeholder="상세주소"
+                  required="true"
+                />
+              </div>
+            </div>
           </div>
           <div class="phone">
               <label for="phone-number">휴대전화*</label>
@@ -75,10 +114,25 @@
               <input type="tel" class="form-control" id="phone3" name="phone3" maxlength="4" size="4" required>
               </div>
           </div>
-          <div>
+          <div class="email">
               <label for="email">이메일*</label>
-              <input type="email" class="form-control" id="email" name="email" required>
-          </div>
+              <!-- <input type="email" class="form-control" id="email" name="email" required> -->
+              <div class="email-group">
+                <input
+                  type="text"
+                  class="form-control"
+                  id="email-user"
+                  required="true"
+                />
+                <div>@</div>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="email-domain"
+                  required="true"
+                />
+              </div>
+            </div>
           <div class="form-submit-container">
               <button type="submit" class="form-submit-btn" value="order complete" onclick="submitForm()">주문 완료하기</button>
           </div>
