@@ -25,6 +25,9 @@ const pathSegments = window.location.pathname.split("/");
 const productId = pathSegments[pathSegments.length - 1]; // 마지막 세그먼트를 가져옵니다.
 let product = {};
 console.log("productId:", productId);
+const productSizeSelect = document.getElementById("product-size");
+const selectedSizeText =
+  productSizeSelect.options[productSizeSelect.selectedIndex].innerText;
 fetch(`/api/products/${productId}`)
   .then((response) => {
     console.log(response);
@@ -40,19 +43,19 @@ fetch(`/api/products/${productId}`)
     document.querySelector(".product-price").textContent = productData.price;
     document.querySelector(".products-img").src = productData.productImg;
     document.querySelector(".productsDet-img").src = productData.description;
-    // 개수랑 사이즈 쿼리셀렉터 작성
+
     product = {
       productId: productData._id,
       productName: productData.productName,
       price: productData.price,
       productImg: productData.productImg,
+      size: selectedSizeText,
+      quantity: (product.quantity = product.quantity || 1),
     };
   })
   .catch((error) => {
     console.error("Error", error);
   });
-
-const productSizeSelect = document.getElementById("product-size");
 
 document
   .querySelector(".add-to-cart-button")
@@ -106,7 +109,7 @@ function createCartUrl({ productImg, productName, price, quantity, size }) {
   return `/cart?productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
 }
 
-// 이거 buynow인가용?
+//BUYNOW 버튼 클릭 시
 document.querySelector(".order-button").addEventListener("click", function () {
   const { productImg, productName, price, quantity, size } = product;
 
@@ -119,19 +122,25 @@ document.querySelector(".order-button").addEventListener("click", function () {
   const token = localStorage.getItem("Authorization") || "";
 
   // 비회원일 때 경로를 다르게 수정해 주어야 합니당!
+  function createProductInfoQueryString(product) {
+    return Object.keys(product)
+      .map((key) => `${key}=${encodeURIComponent(product[key])}`)
+      .join("&");
+  }
   if (!token) {
-    window.location.href = createCartUrl({
-      productImg,
-      productName,
-      price,
-      quantity,
-      size,
-    });
+    // 비회원일 때 로컬스토리지에 상품 정보 저장
+    const cart = JSON.parse(localStorage.getItem("myCart")) || [];
+    cart.push(product);
+    console.log(product);
+    localStorage.setItem("myCart", JSON.stringify(cart));
+
+    // const productInfo = createProductInfoQueryString(product);
+    // console.log("productInfo:", productInfo);
+    window.location.href = `/order`;
     return;
   }
 
   // 토큰이 있을 경우(로그인 상태)
-  // 경로 undefined인 거 빼고는 잘됨!
   verifyToken(token).then((isValid) => {
     if (isValid) {
       window.location.href = createCartUrl({
