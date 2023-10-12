@@ -68,8 +68,9 @@ section {
     padding: 1.2rem 1.5rem;
 }
 
-.order-status > p {
+.order-status-title {
     font-size: 1.1rem;
+    font-weight: 700;
 }
 
 .status-boxes {

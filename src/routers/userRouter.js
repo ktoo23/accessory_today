@@ -3,6 +3,16 @@ import { userService } from "../services/userService.js";
 
 const userRouter = Router();
 
+userRouter.get("/verify-user", async (req, res) => {
+  const { token } = req.header;
+  try {
+    const verifyResult = await verifyToken(token);
+    return res.status(200).json(verifyResult);
+  } catch (err) {
+    return res.status(400).json(verifyResult);
+  }
+});
+
 // 회원가입 (포스트맨 성공)
 userRouter.post("/join", async (req, res) => {
   // 요청으로 들어온 내용들 구조 분해 할당
@@ -89,7 +99,7 @@ userRouter
     try {
       const cancelOrderResult = await userService.cancelOrder(orderId);
       console.log(cancelOrderResult);
-      // 삭제에 성공하면 다시 비회원 주문조회 페이지로 리다이렉트 (주문 삭제 결과 반영)
+      // 삭제에 성공하면 다시 회원 주문조회 페이지로 리다이렉트 (주문 삭제 결과 반영)
       if (cancelOrderResult.status === 200) {
         return res.status(200).json(cancelOrderResult);
         // return res.redirect("/mypage/order-tracking");
@@ -190,9 +200,8 @@ userRouter.post("/non-member-login", async (req, res) => {
 // 비회원 페이지(비회원 주문조회 페이지) 정보 불러오기 및 주문 취소 처리하기 (아까 위에서 비회원 주문 검증을 통과해야 가능)
 // 비회원 페이지는 회원 마이페이지와 다르게 들어가자마자 배송 현황과 주문한 상품 목록이 한 화면에 다 나옴.
 userRouter
-  .route("/non-member-page")
   // 비회원 페이지 정보 불러오기 (users/non-member-page?orderId=${orderId} 형식으로 요청 보내기)
-  .get(async (req, res) => {
+  .get("/non-member-page", async (req, res) => {
     const { orderId } = req.query;
     try {
       const getNonMemberPageResult = await userService.getNonMemberPage(
@@ -206,24 +215,24 @@ userRouter
     } catch (err) {
       return res.status(500).json({ errMsg: err.message });
     }
-  })
-  // 비회원 페이지 주문 취소 처리하기
-  .delete(async (req, res) => {
-    const { orderId } = req.query;
-    try {
-      const cancelOrderResult = await userService.cancelOrder(orderId);
-      // 삭제에 성공하면 삭제 성공을 알리고 홈페이지로 리다이렉트 (주문 삭제 결과 반영)
-      // 다시 비회원 주문에 접근하려고 정보를 입력하고 제출하면 주문 번호가 존재하지 않아 접근 불가
-      if (cancelOrderResult.status === 200) {
-        return res.status(200).json(cancelOrderResult);
-        // return res.redirect("/");
-      } else {
-        // 배송 준비중 단계 이상의 상품이거나 어떤 이유로 삭제가 안된다면 그 메시지 보내기
-        return res.status(400).json(cancelOrderResult);
-      }
-    } catch (err) {
-      return res.status(500).json({ errMsg: err.message });
-    }
   });
+// 비회원 페이지 주문 취소 처리하기
+userRouter.delete("/non-member-page", async (req, res) => {
+  const { orderId } = req.query;
+  try {
+    const cancelOrderResult = await userService.cancelOrder(orderId);
+    // 삭제에 성공하면 삭제 성공을 알리고 홈페이지로 리다이렉트 (주문 삭제 결과 반영)
+    // 다시 비회원 주문에 접근하려고 정보를 입력하고 제출하면 주문 번호가 존재하지 않아 접근 불가
+    if (cancelOrderResult.status === 200) {
+      return res.status(200).json(cancelOrderResult);
+      // return res.redirect("/");
+    } else {
+      // 배송 준비중 단계 이상의 상품이거나 어떤 이유로 삭제가 안된다면 그 메시지 보내기
+      return res.status(400).json(cancelOrderResult);
+    }
+  } catch (err) {
+    return res.status(500).json({ errMsg: err.message });
+  }
+});
 
 export { userRouter };

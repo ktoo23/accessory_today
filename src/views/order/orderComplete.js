@@ -1,21 +1,20 @@
-let orderCompleteEl = `
-  <span id="user-order-num">고객님이 주문하신 주문번호는<br>
-  111 입니다.</span>
-  <span><br>주문내역 확인은 <a href="../user/orderTracking/orderTracking.html">주문조회</a>에서 가능합니다.
-  </span>
-  `;
-
-const initorderComplete = () => {
-  const targetEl = document.getElementById('orderNum');
-  if (targetEl) {
-    targetEl.innerHTML = orderCompleteEl;
-  } else {
-    console.error('targetEl not found');
+document.addEventListener("DOMContentLoaded", function () {
+  const userOrderNumber = localStorage.getItem('userOrderNumber');
+  if (userOrderNumber) {
+    document.getElementById('user-order-num').textContent = userOrderNumber;
   }
-};
+});
 
-document.querySelector(".toMain-btn").onclick = function () {
-  window.location.href = "../public/main.html";
-};
+const token = localStorage.getItem("Authorization") || "null";
 
-initorderComplete();
+document.querySelector(".order-search-btn").addEventListener("click", function () {
+  if (token === "null") { //비회원 주문
+    window.location.href = `/non-member/order-tracking/${userOrderNumber}`;
+  } else { // 회원 주문
+    window.location.href = `/user/orderTracking/${userOrderNumber}`;
+  }
+});
+
+document.querySelector(".toMain-btn").addEventListener("click", function () {
+  window.location.href = "/";
+});

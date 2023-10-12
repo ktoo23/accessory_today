@@ -3,48 +3,18 @@ import path from "path";
 
 const viewsRouter = express.Router();
 
-viewsRouter.use(
-  "/",
-  express.static(path.join(process.cwd(), "src", "views", "public"))
-);
-viewsRouter.use(
-  "/cart",
-  express.static(path.join(process.cwd(), "src", "views", "cart"))
-);
-viewsRouter.use(
-  "/join",
-  express.static(path.join(process.cwd(), "src", "views", "join"))
-);
-viewsRouter.use(
-  "/login",
-  express.static(path.join(process.cwd(), "src", "views", "login"))
-);
-viewsRouter.use(
-  "/order",
-  express.static(path.join(process.cwd(), "src", "views", "order"))
-);
-viewsRouter.use(
-  "/products",
-  express.static(path.join(process.cwd(), "src", "views", "products"))
-);
-viewsRouter.use(
-  "/products/details",
-  express.static(path.join(process.cwd(), "src", "views", "products", "detail"))
-);
-viewsRouter.use(
-  "/mypage",
-  express.static(path.join(process.cwd(), "src", "views", "user", "mypage"))
-);
-viewsRouter.use(
-  "/mypage/order-tracking/:orderId",
-  express.static(
-    path.join(process.cwd(), "src", "views", "mypage", "orderTracking")
-  )
-);
+viewsRouter.use("/", express.static(path.join(process.cwd(), "src/views")));
 
 // 홈
 viewsRouter.get("/", (req, res) => {
   res.sendFile(path.join(process.cwd(), "src", "views", "public", "main.html"));
+});
+
+// About
+viewsRouter.get("/about", (req, res) => {
+  res.sendFile(
+    path.join(process.cwd(), "src", "views", "public", "about.html")
+  );
 });
 
 // 장바구니
@@ -72,19 +42,33 @@ viewsRouter.get("/order", (req, res) => {
 // 상품 페이지
 viewsRouter.get("/products", (req, res) => {
   res.sendFile(
-    path.join(process.cwd(), "src", "views", "products", "product.html")
+    path.join(process.cwd(), "src", "views", "products", "products.html")
+  );
+});
+
+// 유저 정보 변경 페이지
+viewsRouter.get("/user/userinfo/:userId", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "src",
+      "views",
+      "user",
+      "userInfo",
+      "userInfo.html"
+    )
   );
 });
 
 // 상품 디테일 페이지
-viewsRouter.get("/products/details", (req, res) => {
+viewsRouter.get("/products/details/:productId", (req, res) => {
   res.sendFile(
     path.join(
       process.cwd(),
       "src",
       "views",
       "products",
-      "detail",
+      "details",
       "product-detail.html"
     )
   );
@@ -98,8 +82,8 @@ viewsRouter.get("/mypage", (req, res) => {
 });
 
 // 회원 주문 조회
-// 이 부분은 주문 id가 필요하므로 orderId를 추가함.
-viewsRouter.get("/mypage/order-tracking/:orderId", (req, res) => {
+// 이 부분은 주문 id가 필요하므로 userId를 추가함.
+viewsRouter.get("/user/orderTracking/:userId", (req, res) => {
   res.sendFile(
     path.join(
       process.cwd(),
@@ -108,6 +92,34 @@ viewsRouter.get("/mypage/order-tracking/:orderId", (req, res) => {
       "user",
       "orderTracking",
       "orderTracking.html"
+    )
+  );
+});
+
+// 비회원 주문 조회
+viewsRouter.get("/non-member/order-tracking/:orderId", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "src",
+      "views",
+      "user",
+      "nonMemberPage",
+      "nonMemberPage.html"
+    )
+  );
+});
+
+// 관리자 주문 관리
+viewsRouter.get("/admin/order-setting", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "src",
+      "views",
+      "admin",
+      "orderSetting",
+      "adminOrderSetting.html"
     )
   );
 });
