@@ -37,9 +37,18 @@ viewsRouter.get("/order", (req, res) => {
   res.sendFile(path.join(process.cwd(), "src", "views", "order", "order.html"));
 });
 
-// 주문완료 페이지
+// 주문완료 페이지 (비회원)
 viewsRouter.get("/orderComplete/:orderId", (req, res) => {
-  res.sendFile(path.join(process.cwd(), "src", "views", "order", "orderComplete.html"));
+  res.sendFile(
+    path.join(process.cwd(), "src", "views", "order", "orderComplete.html")
+  );
+});
+
+// 주문완료 페이지 (회원)
+viewsRouter.get("/orderComplete/:orderId/:userId", (req, res) => {
+  res.sendFile(
+    path.join(process.cwd(), "src", "views", "order", "orderComplete.html")
+  );
 });
 
 // 상품 페이지

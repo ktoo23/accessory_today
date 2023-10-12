@@ -111,13 +111,29 @@ function createCartUrl({ productImg, productName, price, quantity, size }) {
 
 //BUYNOW 버튼 클릭 시
 document.querySelector(".order-button").addEventListener("click", function () {
-  const { productImg, productName, price, quantity, size } = product;
+  // const { productImg, productName, price, quantity, size } = product;
+  const productName = document.querySelector(".product-name").innerText;
+  const price = document.querySelector(".product-price").innerText;
+  const productImg = document
+    .querySelector(".products-img")
+    .getAttribute("src");
+  const size = document.querySelector("#product-size").value;
+  const quantity = document.querySelector(".number").innerText;
 
-  product.size = productSizeSelect.value;
+  const product = {
+    productName,
+    price,
+    productImg,
+    size,
+    quantity,
+  };
+
   if (product.size === "" || product.size === null) {
     alert("상품 사이즈를 선택해주세요.");
     return;
   }
+
+  console.log(product);
 
   const token = localStorage.getItem("Authorization") || "";
 
@@ -128,10 +144,10 @@ document.querySelector(".order-button").addEventListener("click", function () {
   // }
   if (!token) {
     // 비회원일 때 로컬스토리지에 상품 정보 저장
-    const cart = JSON.parse(localStorage.getItem("myCart")) || [];
-    cart.push(product);
-    console.log(product);
-    localStorage.setItem("myCart", JSON.stringify(cart));
+    localStorage.setItem("nonmember-buynow", JSON.stringify(product));
+    // cart.push(product);
+    // console.log(product);
+    // localStorage.setItem("myCart", JSON.stringify(cart));
 
     // const productInfo = createProductInfoQueryString(product);
     // console.log("productInfo:", productInfo);
@@ -190,7 +206,7 @@ function verifyTokenAndRedirect(url) {
 }
 
 //후기,문의작성 title,author,content
-function fetchReviews(productId, getAll = false) {
+function fetchReviews(productId) {
   fetch(`/api/products/${productId}/review`)
     .then((response) => {
       if (!response.ok) {
@@ -202,7 +218,7 @@ function fetchReviews(productId, getAll = false) {
       const tableBody = document.querySelector("#review-table tbody");
       // 데이터를 테이블로 출력
       data.forEach((review) => {
-        if (getAll || review.productId === productId) {
+        if (review.productId=== productId) {
           // productId 확인
           const row = document.createElement("tr");
 
@@ -229,7 +245,7 @@ function fetchReviews(productId, getAll = false) {
     .catch((err) => console.error("Error", err));
 }
 
-function fetchQuestion(productId, getAll = false) {
+function fetchQuestion(productId) {
   fetch(`/api/products/${productId}/inquiry`)
     .then((response) => {
       if (!response.ok) {
@@ -241,7 +257,7 @@ function fetchQuestion(productId, getAll = false) {
       const tableBody = document.querySelector("#question-table tbody");
       // 데이터를 테이블로 출력
       data.forEach((question) => {
-        if (getAll || question.productId === productId) {
+        if (question.productId === productId) {
           // productId 확인
           const row = document.createElement("tr");
 

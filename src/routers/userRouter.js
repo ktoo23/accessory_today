@@ -81,10 +81,10 @@ userRouter
     // 회원 주문조회 페이지는 무조건 마이페이지(배송 현황페이지)를 거쳐서 들어갈 수 있음.(마이페이지에서의 메뉴이므로)
     // 그래서 /mypage로의 요청의 결과로 받은 user 정보에서 user의 _id를 qureystring으로 하여 백엔드로 요청을 보내면 백엔드는 그 요청을 받아
     // 해당 querystring에 있는 userId로 user의 주문 정보를 찾기 (/mypage/order-tracking?userId=${user._id})
-    const { userId } = req.query;
-    console.log(userId);
+    const userId = req.query.userId;
+    const page = Number(req.query.page || 1); // 값이 없다면 기본값으로 1 사용
     try {
-      const getOrderInfoResult = await userService.getUserOrders(userId);
+      const getOrderInfoResult = await userService.getUserOrders(userId, page);
       if (getOrderInfoResult.status === 200) {
         return res.status(200).json(getOrderInfoResult);
       } else {
