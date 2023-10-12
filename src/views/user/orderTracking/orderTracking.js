@@ -1,28 +1,27 @@
 let $noOrderProduct, $orderTable;
-let id = location.href.split('/');
-id = id[id.length - 1];
+let userId;
+let saveData; // 반환된 orderData들을 저장하는 변수. 이 변수로 기간이나 배송상태 선택해서 filter
+// 오늘 날짜 - 주문 날짜와 차이 계산하기 위해
+let today = new Date;
+today = today.toISOString().substring(0,10); // 0000-00-00 형태
 
-let totalPage, currentPage = 1;
-let pageCount = 3;
-let lastNumber, firstNumber, next, prev, pageGroup = 1;
 getOrderData(); // 데이터 불러오기
-async function getOrderData() {
-
-  await fetch(`/api/users/mypage/order-tracking?userId=${id}&page=${currentPage}`, {
+  async function getOrderData() {
+    const currentUrl = window.location.href;
+    userId = currentUrl.split('/')[5];
+  console.log(userId);
+  await fetch(`/api/users/mypage/order-tracking?userId=${userId}`, {
     method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
   })
     .then((res) => {
-      if (res.status === 400) {
-        tableDisplay("none", "display");
-      } 
+      console.log(res);
+      // if (res.status === 400) {
+      //   tableDisplay("none", "display");
+      // } 
       return res.json();
     })
-    .then((res) => {
-        const orderData = res.data;
-        totalPage = res.totalPage;
+    .then((orderData) => {
+      console.log(orderData);
 
         if (orderData.length < 1) { // 주문 내역 없을 때
           tableDisplay("none", "display");
@@ -30,12 +29,10 @@ async function getOrderData() {
           tableDisplay("display", "none");
           saveData = orderData;
           orderData.forEach(data => {
-            let { deliveryStatus, orderProducts, totalPrice, isCanceled, orderDate: date } = data;
+            let { deliveryStatus, orderProducts, totalPrice, orderDate: date } = data;
             const orderId = data["_id"];
             date = date.toString().substring(0,10);
-            addProduct(orderId, date, orderProducts, deliveryStatus, isCanceled, totalPrice);
-
-            if (document.querySelector('.pageNumber') === null) renderPagination(totalPage, currentPage);
+            addProduct(orderId, date, orderProducts, deliveryStatus, totalPrice);
           });
         }
     })
@@ -43,13 +40,14 @@ async function getOrderData() {
 }
 
 // 상품 삽입
-function addProduct(orderId, orderDate, orderProducts, deliveryStatus, isCanceled, totalPrice) {
+function addProduct(orderId, orderDate, orderProducts, deliveryStatus, totalPrice) {
   let cnt = 0;
   for (let product of orderProducts) {
     cnt += product.count;
   }
   const product = orderProducts[0].products;
   const size = orderProducts[0].size;
+  const productImg = product.description;
   const productName =
     orderProducts.length === 1
       ? String(product.productName).toUpperCase()
@@ -63,14 +61,12 @@ function addProduct(orderId, orderDate, orderProducts, deliveryStatus, isCancele
         <p>${orderDate}</p>
         <p>${orderId}</p>
       </td>
-      <td class="product-img"><img src=''></td>
+      <td class="product-img"><img src=${productImg}></td>
       <td class="product-name">${productName}</td>
       <td class="price">${String(totalPrice).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
       <td class="count">${cnt}</td>
       <td>
-        ${
-          isCanceled === false ? '<button class="order-cancel">취소 신청</button>' : '-'
-        }
+      <button class='cancel-btn'>취소신청</button>
       </td>
       <td class="delivery-status">${deliveryStatus}</td>
     </tr>`;
@@ -88,11 +84,92 @@ function tableDisplay(trDisplay, noOrderDivDisplay) {
 
 }
 
+let $select = document.getElementById('order-status-select');
+let orderStatus;
+$select.addEventListener('change', function() {
+  orderStatus = $select.options[$select.selectedIndex].label;
+  if (orderStatus === "전체 주문처리상태") 
+    window.location.href = `/user/orderTracking/${userId}`;
+
+  getOrderDataSelectStatus(orderStatus);
+});
+  
+// 주문 처리상태로 검색 - 배송완료, 주문 완료, 배송중 ..
+function getOrderDataSelectStatus(orderStatus) {
+  // 주문 내역이 없으면 아래 함수들 실행 안되게
+  if ($orderTable.querySelectorAll('tbody').length === 1) return;
+
+  $orderTable = document.querySelector('.order-tracking-table');
+  $noOrderProduct = document.querySelector('.no-order-product');
+  const $tableItems = $orderTable.querySelectorAll("tr:not([class='order-title'])");
+  $tableItems.forEach((el) => el.parentElement.remove());
+
+  saveData.forEach(data => {
+    let { deliveryStatus, orderProducts, totalPrice, orderDate: date } = data;
+    const orderId = data["_id"];
+    date = date.toString().substring(0,10);
+
+    if (deliveryStatus === orderStatus)
+      addProduct(orderId, date, orderProducts, deliveryStatus, totalPrice);
+  });
+
+  // 주문 내역이 있을 때 없을 때
+  if ($orderTable.querySelectorAll('tbody').length === 1) {
+    $noOrderProduct.style.display = "block";
+  } else {
+    $noOrderProduct.style.display = "none";
+  }
+}
+
+document.querySelector('.today').addEventListener('click', (e) => getOrderDataPeriod(0));
+document.querySelector('.months').addEventListener('click', () => getOrderDataPeriod(1));
+document.querySelector('.three-months').addEventListener('click', () => getOrderDataPeriod(3));
+document.querySelector('.six-months').addEventListener('click', () => getOrderDataPeriod(6));
+
+// 기간으로 검색 - 오늘, 1개월, 3개월
+function getOrderDataPeriod(period) {
+  // 주문 내역이 없으면 아래 함수들 실행 안되게
+  if ($orderTable.querySelectorAll('tbody').length === 1) return;
+
+  $orderTable = document.querySelector('.order-tracking-table');
+  $noOrderProduct = document.querySelector('.no-order-product');
+
+  const $tr = $orderTable.querySelectorAll("tr:not([class='order-title'])");
+  $tr.forEach(el => el.style.display = "block");
+  const $tableItems = $orderTable.querySelectorAll("tr:not([class='order-title'])");
+  $tableItems.forEach((el) => el.parentElement.remove());
+
+  todayDate = new Date(today);
+
+  saveData.forEach(data => {
+    let { deliveryStatus, orderProducts, totalPrice, orderDate: date } = data;
+    const orderId = data["_id"];
+    date = date.toString().substring(0,10);
+
+    let orderDate = new Date(date);
+
+    // 오늘날짜와 주문날짜 비교해서 개월 차이 반환
+    let diff = Math.abs((todayDate.getFullYear() - orderDate.getFullYear())*12 + (todayDate.getMonth() - orderDate.getMonth()));
+    
+    if (todayDate === date)
+      addProduct(orderId, date, orderProducts, deliveryStatus, totalPrice);
+
+    if (diff < period || diff === period)
+      addProduct(orderId, date, orderProducts, deliveryStatus, totalPrice);
+  });
+
+  // 주문 내역이 있을 때 없을 때
+  if ($orderTable.querySelectorAll('tbody').length === 1) {
+    $noOrderProduct.style.display = "block";
+  } else {
+    $noOrderProduct.style.display = "none";
+  }
+}
 document.querySelector('.order-tracking-table').addEventListener('click', (e) => {
-  if (e.target.className === "order-cancel") {
+  if (e.target.className === "cancel-btn") {
     cancelOrder(e.target);
   }
-})
+});
 
 async function cancelOrder(button) {
   const removeTarget = button.parentElement.closest('tr');
@@ -108,8 +185,10 @@ async function cancelOrder(button) {
     .then((res) => res.json())
     .then((data) => {
       if (data.status === 200) {
-        removeTarget.parentElement.remove();
-        window.location.href = `/user/orderTracking/${id}`;
+        if (confirm("취소하시겠습니까?")){
+            removeTarget.parentElement.remove();
+            window.location.href = `/user/orderTracking/${userId}`;
+        }
       } else {
         alert(data.errMsg);
       }
@@ -117,50 +196,3 @@ async function cancelOrder(button) {
     .catch((err) => alert(err));
 }
 
-function renderPagination(totalPage, currentPage) {
-
-pageGroup = Math.ceil(currentPage / pageCount); // 현재 페이지 그룹
-
-lastNumber = pageGroup * pageCount // 현재 페이지 그룹의 마지막 숫자
-if (lastNumber > totalPage) {
-  lastNumber = totalPage;
-}
-
-if (totalPage < pageCount || totalPage === pageCount)
-  firstNumber = 1;
-else firstNumber = lastNumber - (pageCount - 1); // 현재 페이지 그룹의 첫번째 숫자
-
-next = lastNumber + 1;
-prev = firstNumber - 1;
-let html = "";
-if (prev > 0)
-    html +=  `<button class="prev">이전</button>`;
-
-for(let i = firstNumber; i <= lastNumber; i++) {
-    html += `<button class="pageNumber" id="page_${i}">${i}</button>`
-  }
-  if (lastNumber < totalPage)
-    html += `<button class="next">다음</button>`;
-
-  document.querySelector('.pages').innerHTML = html;
-  console.log(document.querySelector(`#page_${currentPage}`))
-  document.querySelector(`#page_${currentPage}`).style.color = '#90c0dd';
-  document.querySelector('.pages').addEventListener('click', select);
-}
-
-function select(e) {
-  console.log(e.target);
-  if (e.target.className === "pageNumber") {
-    currentPage = +(e.target.id.split("_")[1]);
-    getOrderData();
-    renderPagination(totalPage, currentPage);
-  } else if (e.target.className === "prev") {
-      currentPage--;
-      getOrderData()
-      renderPagination(totalPage, currentPage);
-  } else if (e.target.className === "next") {
-    currentPage++;
-    getOrderData();
-    renderPagination(totalPage, currentPage);
-    }
-};

@@ -7,6 +7,20 @@ const $optionMenu = document.querySelector(".option-menu");
 let cart,
   isAllCheck = false;
 
+let url = "?productImg=/products/img/ring/ring-2.jpeg&productName=ring-2&price=9000&quantity=1&size=small";
+const searchParams = new URLSearchParams(url);
+let itemFromUrl = {};
+console.log(searchParams);
+if(searchParams.size > 0) {
+  let c = [];
+  for (const param of searchParams) {
+    itemFromUrl[param[0]] = param[1];
+  }
+  c.push(itemFromUrl);
+  localStorage.setItem("myCart", JSON.stringify(c));
+}
+
+
 // 스크롤 높이 구해서 해당 높이 === 모달창 높이
 let scrollHeight;
 window.onload = () => {
@@ -23,7 +37,7 @@ function orderItem(sequence) {
   cart = findCartItem();
 
   // order 로컬스토리지 초기화
-  if(localStorage.getItem("order").length > 0) {
+  if(localStorage.getItem("order") !== null) {
     localStorage.removeItem("order");
   }
 
@@ -104,11 +118,15 @@ function addItemInCart(item, sequence) {
         <td colspan="2" class="cart-item">
             <div>
                 <input type="checkbox" name="check">
-                <img src="../public/img/home.png" alt="">
+                <a href="/products/details/${item.productId}">
+                  <img src="${item.productImg}" alt="">
+                </a>
                 <div class="cart-item-option">
-                    <p class="cart-item-name">${item.productName}</p>
+                <a href="/products/details/${item.productId}">
+                  <p class="cart-item-name">${item.productName}</p>
+                </a>
                     <p class="cart-item-size">
-                     ${item.size} - ${item.quantity}</p>
+                     ${item.size.toString().toUpperCase()} - ${item.quantity}</p>
                 </div>
             </div>
         </td>
