@@ -21,5 +21,4 @@ export const orderSchema = new Schema({
   email: { type: String, required: true },
   orderAddress: { type: String, required: true },
   orderPhone: { type: String, required: true },
-  paidThrough: { type: String, required: true },
 });
