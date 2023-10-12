@@ -50,7 +50,7 @@ fetch(`/api/products/${productId}`)
       price: productData.price,
       productImg: productData.productImg,
       size: selectedSizeText,
-      quantity: (product.quantity = product.quantity || 1),
+      quantity:(product.quantity = product.quantity || 1),
     };
   })
   .catch((error) => {
