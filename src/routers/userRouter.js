@@ -4,9 +4,10 @@ import { userService } from "../services/userService.js";
 const userRouter = Router();
 
 userRouter.get("/verify-user", async (req, res) => {
-  const { token } = req.header;
+  const accessToken = req.header("Authorization").split("Bearer ")[1];
+  console.log(accessToken);
   try {
-    const verifyResult = await verifyToken(token);
+    const verifyResult = await userService.verifyToken(accessToken);
     return res.status(200).json(verifyResult);
   } catch (err) {
     return res.status(400).json(verifyResult);
