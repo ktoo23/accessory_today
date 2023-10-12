@@ -1,6 +1,16 @@
 document.addEventListener("DOMContentLoaded", () => {
-  fetchAndRenderProducts("");
-  document.removeEventListener("DOMContentLoaded", onDOMContentLoaded);
+  const curUrl = window.location.href;
+  const query = curUrl.split("?")[1];
+  // 상품 목록 페이지에서 접근하거나 상품 디테일 페이지에서 ALL을 클릭했을 경우
+  if (!query) {
+    fetchAndRenderProducts("");
+    document.removeEventListener("DOMContentLoaded", onDOMContentLoaded);
+  } else {
+    // 상품 디테일 페이지에서 ALL이 아닌 카테고리를 클릭하여 들어올 때
+    const catecory = query.split("=")[1];
+    fetchAndRenderProducts(catecory);
+    document.removeEventListener("DOMContentLoaded", onDOMContentLoaded);
+  }
 
   async function onDOMContentLoaded() {
     await fetchAndRenderProducts();
@@ -8,7 +18,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function fetchAndRenderProducts(selected) {
-    console.log(selected);
     if (selected === null) {
       await fetch(`/api/products`)
         .then((response) => response.json())
@@ -38,10 +47,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const selected = e.target.getAttribute("data-category");
 
-      if (selected === "") {
-        fetchAndRenderProducts();
+      if (selected === "" || selected === null) {
+        window.location.href = "/products";
       } else {
-        fetchAndRenderProducts(selected);
+        // fetchAndRenderProducts(selected);
+        window.location.href = `/products?category=${selected}`;
       }
     });
   }

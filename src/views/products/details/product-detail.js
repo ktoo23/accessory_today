@@ -50,7 +50,7 @@ fetch(`/api/products/${productId}`)
       price: productData.price,
       productImg: productData.productImg,
       size: selectedSizeText,
-      quantity:(product.quantity = product.quantity || 1),
+      quantity: (product.quantity = product.quantity || 1),
     };
   })
   .catch((error) => {
@@ -218,7 +218,7 @@ function fetchReviews(productId) {
       const tableBody = document.querySelector("#review-table tbody");
       // 데이터를 테이블로 출력
       data.forEach((review) => {
-        if (review.productId=== productId) {
+        if (review.productId === productId) {
           // productId 확인
           const row = document.createElement("tr");
 
@@ -314,3 +314,22 @@ window.onload = function () {
 //     }
 //   });
 // });
+
+// 이 코드는 디테일 페이지에서 상품 카테고리 클릭 시 상품 화면이 올바르게 나오게 하기 위한 코드입니다.
+const categories = document.querySelectorAll("#categorySelect li");
+
+for (let category of categories) {
+  category.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const selected = e.target.getAttribute("data-category");
+
+    // ALL을 선택 시
+    if (selected === "") {
+      window.location.href = "/products";
+    } else {
+      // ALL이 아닌 다른 카테고리 선택 시
+      window.location.href = `/products?category=${selected}`;
+    }
+  });
+}
