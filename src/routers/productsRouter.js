@@ -25,7 +25,7 @@ productRouter.get("/:productId",async (req,res,next)=>{
         const productsData = await productService.getDetail(productId);
 
         if(!productsData){
-            res.status(404).send("해당 상품이 없습니다!");
+            res.status(404).json({ error: "해당 상품이 없습니다!" });
         }
 
         res.status(200).json(productsData);

@@ -15,8 +15,8 @@ class ReviewService {
         }
         return data;
       }catch(err){
-        console.error("getReview 오류:",err);
-        next(err);
+        console.error("getReview 오류:");
+        throw err;
     }
     }
   
@@ -34,8 +34,8 @@ class ReviewService {
         
         return ;
       }catch(err){
-        console.error("putReview 오류:",err);
-        next(err);
+        console.error("putReview 오류:");
+        throw err;
     }
     }
   
@@ -46,8 +46,8 @@ class ReviewService {
         
         return ;
       }catch(err){
-        console.error("delReview 오류:",err);
-        next(err);
+        console.error("delReview 오류:");
+        throw err;
     }
     }
   }

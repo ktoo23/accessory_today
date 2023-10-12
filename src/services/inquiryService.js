@@ -13,8 +13,8 @@ class InquiryService {
         }
         return data;
       }catch(err){
-        console.error("getInquiry 오류:",err);
-        next(err);
+        console.error("getInquiry 오류:");
+        throw err;
     }
     }
   
@@ -31,8 +31,8 @@ class InquiryService {
         await Inquiries.findOneAndUpdate({ productId, author }, data, { upsert: true });
         return ;
       }catch(err){
-        console.error("putInquiry 오류:",err);
-        next(err);
+        console.error("putInquiry 오류:");
+        throw err;
     }
     }
   
@@ -43,8 +43,8 @@ class InquiryService {
 
         return ;
       }catch(err){
-        console.error("delInquiry 오류:",err);
-        next(err);
+        console.error("delInquiry 오류:");
+        throw err;
     }
     }
   }
