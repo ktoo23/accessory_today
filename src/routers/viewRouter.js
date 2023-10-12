@@ -33,10 +33,13 @@ viewsRouter.get("/login", (req, res) => {
 });
 
 // 주문 페이지
-// tempOder는 무엇인가요?
-// order가 html이 뜨지 않습니다!
 viewsRouter.get("/order", (req, res) => {
   res.sendFile(path.join(process.cwd(), "src", "views", "order", "order.html"));
+});
+
+// 주문완료 페이지
+viewsRouter.get("/orderComplete/:orderId", (req, res) => {
+  res.sendFile(path.join(process.cwd(), "src", "views", "order", "orderComplete.html"));
 });
 
 // 상품 페이지
