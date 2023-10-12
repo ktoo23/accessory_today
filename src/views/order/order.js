@@ -1,3 +1,5 @@
+import { getAddress } from '/join/join.js';
+
 document.addEventListener("DOMContentLoaded", function () {
 
   // 쿼리스트링으로 전달된 것이 없으면 장바구니 창에서 상품 주문을 클릭한 것이므로 localstorage order 안에 있는 정보들을 보여 주어야 함.
@@ -36,6 +38,9 @@ async function getUserData() {
   }
 }
 
+// 주소 검색
+const addressSearchBtn = document.querySelector("#address-search");
+addressSearchBtn.addEventListener('click', getAddress);
 
 // 유저 정보 미리 배송 정보에 입력
 function setUserInfoinShippingForm(data) {
@@ -69,6 +74,10 @@ function setUserInfoinShippingForm(data) {
   document.getElementById("phone3").value = phone3;
   document.getElementById("email-user").value = emailId;
   document.getElementById("email-domain").value = emailDomain;
+
+  // 이메일 정보 고정
+  document.getElementById("email-user").disabled = true;
+  document.getElementById("email-domain").disabled = true;
 }
 
 // 비회원 주문번호 비밀번호 form 추가
@@ -82,6 +91,7 @@ const firstPasswordInput = document.getElementById("order-password");
 const secondPasswordInput = document.getElementById("confirm-password");
 const checkOrderPassword = document.querySelector(".check-password");
 
+firstPasswordInput.addEventListener("blur", checkOrderPasswordEqual);
 secondPasswordInput.addEventListener("blur", checkOrderPasswordEqual);
 
 // 주문 비밀번호 일치 확인
@@ -91,6 +101,10 @@ function checkOrderPasswordEqual() {
 
   if (!(firstPassword === secondPassword)) {
     checkOrderPassword.style.display = "block";
+  }
+
+  if (firstPassword === secondPassword) {
+    checkOrderPassword.style.display = "none";
   }
 }
 
@@ -141,7 +155,7 @@ async function submitForm(e) {
 
   const user = document.getElementById("email-user").value;
   const domain = document.getElementById("email-domain").value;
-  const orderPassword = document.getElementById("order-password").value; //checkPassword는 안 보내도 될 것 같음
+  const orderPassword = document.getElementById("order-password").value;
   const orderer = document.getElementById("receiver-name").value;
   const postCode = document.getElementById("post-code").value;
   const streetAddress = document.getElementById("street-address").value;
@@ -165,6 +179,7 @@ async function submitForm(e) {
     totalPrice,
     paidThrough
   };
+
 
   // submitOrderData를 어디로 보내야하는지 모르겠네요...
   fetch("/api/order/order-sheet", {
