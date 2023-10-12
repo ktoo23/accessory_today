@@ -87,26 +87,8 @@ document
     alert("장바구니에 추가되었습니다.");
   });
 
-//BUY NOW 버튼 클릭 시
-document.querySelector(".order-button").addEventListener("click", function () {
-  const { productImg, productName, price, quantity, size } = product;
-
-  const token = localStorage.getItem("Authorization") || "";
-
-  product.size = productSizeSelect.value;
-  if (product.size === "" || product.size === null) {
-    alert("상품 사이즈를 선택해주세요.");
-    return;
-  }
-
-  if (!token) {
-    const orderUrl = `/order?productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
-    window.location.href = orderUrl;
-    return;
-  }
-
-  // 토큰이 있을 경우(로그인 상태)
-  fetch(`/api/verify-user`, {
+function verifyToken(token) {
+  return fetch("/api/verify-user", {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
@@ -114,22 +96,67 @@ document.querySelector(".order-button").addEventListener("click", function () {
     },
   })
     .then((response) => {
-      if (response.ok) {
-        const cartUrl = `/cart?productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
-        window.location.href = cartUrl;
+      if (!response.ok) {
+        console.log(
+          "Server error during token verification:",
+          response.statusText
+        );
+        return false;
       }
-      // 토큰 검증 실패
-      else {
-        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-        window.location.href = "/login";
-      }
+      return response.ok;
     })
-    .catch((error) => console.error("Error: ", error));
+    .catch((error) => {
+      console.log("Network error during token verification:", error);
+      return false;
+    });
+}
+
+
+function createCartUrl({ productImg, productName, price, quantity, size }) {
+  return `/cart?productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
+}
+
+document.querySelector(".order-button").addEventListener("click", function () {
+  const { productImg, productName, price, quantity, size } = product;
+
+  product.size = productSizeSelect.value;
+  if (product.size === "" || product.size === null) {
+    alert("상품 사이즈를 선택해주세요.");
+    return;
+  }
+
+  const token = localStorage.getItem("Authorization") || "";
+
+  if (!token) {
+    window.location.href = createCartUrl({
+      productImg,
+      productName,
+      price,
+      quantity,
+      size,
+    });
+    return;
+  }
+
+  // 토큰이 있을 경우(로그인 상태)
+  verifyToken(token).then((isValid) => {
+    if (isValid) {
+      window.location.href = createCartUrl({
+        productImg,
+        productName,
+        price,
+        quantity,
+        size,
+      });
+    } else {
+      alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+      window.location.href = "/login";
+    }
+  });
 });
 
 // 후기,문의 버튼 클릭 시 로그인 토큰 검사
 document.getElementById("reviews-btn").addEventListener("click", function () {
-  console.log("Reviews button clicked");
   verifyTokenAndRedirect(
     `/products/details/products-detail-form.html?type=review`
   );
@@ -145,28 +172,18 @@ function verifyTokenAndRedirect(url) {
   const token = localStorage.getItem("Authorization") || "";
   if (!token) {
     alert("로그인이 필요합니다.");
-    console.log("Redirecting to login page...");
     window.location.href = "/login";
     return;
   }
 
-  fetch(`/api/products/${productId}`, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
-  })
-    .then((response) => {
-      console.log(response);
-      if (response.ok) {
-        window.location.href = url;
-      } else {
-        alert("세션이 만료되었습니다. 다시 로그인해주세요.");
-        window.location.href = "/login";
-      }
-    })
-    .catch((err) => console.log(err));
+  verifyToken(token).then((isValid) => {
+    if (isValid) {
+      window.location.href = url;
+    } else {
+      alert("세션이 만료되었습니다. 다시 로그인해주세요.");
+      window.location.href = "/login";
+    }
+  });
 }
 
 //후기,문의작성 title,author,content
