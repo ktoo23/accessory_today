@@ -6,6 +6,7 @@ const ObjectId = mongoose.Types.ObjectId; //ObjectId 형식으로 변환
 class ProductService{
     
     async getProducts(category,word,isBest,isNew){ //제품 목록 출력
+        try{
             const filter = {};
 
             if(isBest){
@@ -36,14 +37,22 @@ class ProductService{
             });
 
             return productsData;
+        }catch(err){
+            console.error("getProducts 오류:",err);
+            next(err);
+        }
 
     }
 
     async getDetail(Id){ //제품의 상세 내용 출력
+        try{
+            const product = await Products.findById(new ObjectId(Id)); //id로 찾기
 
-        const product = await Products.findById(new ObjectId(Id)); //id로 찾기
-
-        return product;
+            return product;
+        }catch(err){
+            console.error("getDetail 오류:",err);
+            next(err);
+        }
 
     }
 }
