@@ -164,20 +164,14 @@ class UserService {
   }
 
   // 일반 회원 주문 조회 페이지 접근
-  async getUserOrders(userId, page) {
+  async getUserOrders(userId) {
     try {
       // Order 스키마에서 user의 _id가 userId와 같은 주문 찾기 (한 user의 주문이 여러개일 수 있다.)
-      const perPage = 5;
-      const total = await Order.countDocuments({ user: new ObjectId(userId) });
-      const userOrders = Order.find({ user: new ObjectId(userId) })
-         .populate("orderProducts.products")
-         .sort({ createdAt: -1 })
-         .skip(perPage * (page - 1))
-         .limit(perPage);
+      const userOrders = Order.find({ user: new ObjectId(userId) }).populate(
+        "orderProducts.products"
+      );
 
-      const totalPage = Math.ceil(total / perPage); // 총 페이지 개수
-      // 회원이 주문한 목록을 내보내기
-      return { userOrders, totalPage };
+      return userOrders;
     } catch (err) {
       return err;
     }

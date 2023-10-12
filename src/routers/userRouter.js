@@ -71,7 +71,6 @@ userRouter
     // 그래서 /mypage로의 요청의 결과로 받은 user 정보에서 user의 _id를 qureystring으로 하여 백엔드로 요청을 보내면 백엔드는 그 요청을 받아
     // 해당 querystring에 있는 userId로 user의 주문 정보를 찾기 (/mypage/order-tracking?userId=${user._id})
     const { userId } = req.query;
-    console.log(userId);
     try {
       const getOrderInfoResult = await userService.getUserOrders(userId);
       if (getOrderInfoResult.status === 200) {
