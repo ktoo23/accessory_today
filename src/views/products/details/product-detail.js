@@ -111,13 +111,29 @@ function createCartUrl({ productImg, productName, price, quantity, size }) {
 
 //BUYNOW 버튼 클릭 시
 document.querySelector(".order-button").addEventListener("click", function () {
-  const { productImg, productName, price, quantity, size } = product;
+  // const { productImg, productName, price, quantity, size } = product;
+  const productName = document.querySelector(".product-name").innerText;
+  const price = document.querySelector(".product-price").innerText;
+  const productImg = document
+    .querySelector(".products-img")
+    .getAttribute("src");
+  const size = document.querySelector("#product-size").value;
+  const quantity = document.querySelector(".number").innerText;
 
-  product.size = productSizeSelect.value;
+  const product = {
+    productName,
+    price,
+    productImg,
+    size,
+    quantity,
+  };
+
   if (product.size === "" || product.size === null) {
     alert("상품 사이즈를 선택해주세요.");
     return;
   }
+
+  console.log(product);
 
   const token = localStorage.getItem("Authorization") || "";
 
@@ -128,10 +144,10 @@ document.querySelector(".order-button").addEventListener("click", function () {
   // }
   if (!token) {
     // 비회원일 때 로컬스토리지에 상품 정보 저장
-    const cart = JSON.parse(localStorage.getItem("myCart")) || [];
-    cart.push(product);
-    console.log(product);
-    localStorage.setItem("myCart", JSON.stringify(cart));
+    localStorage.setItem("nonmember-buynow", JSON.stringify(product));
+    // cart.push(product);
+    // console.log(product);
+    // localStorage.setItem("myCart", JSON.stringify(cart));
 
     // const productInfo = createProductInfoQueryString(product);
     // console.log("productInfo:", productInfo);
@@ -191,7 +207,7 @@ function verifyTokenAndRedirect(url) {
 
 //후기,문의작성 title,author,content
 function fetchReviews(productId, getAll = false) {
-  fetch(`/products/${productId}/review`)
+  fetch(`/api/products/${productId}/review`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("error" + response.statusText);
@@ -230,7 +246,7 @@ function fetchReviews(productId, getAll = false) {
 }
 
 function fetchQuestion(productId, getAll = false) {
-  fetch(`/products/${productId}/inquiry`)
+  fetch(`/api/products/${productId}/inquiry`)
     .then((response) => {
       if (!response.ok) {
         throw new Error("error " + response.statusText);
