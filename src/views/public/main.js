@@ -15,42 +15,35 @@ function renderIsNewProducts() {
   fetch(`/api/products?isNew=true`)
     .then((response) => response.json())
     .then((data) => {
-      const newProducts = data;
       const newListEl = document.getElementById("newList");
 
       newListEl.innerHTML = "";
 
-      newProductsSlice.forEach((product) => {
-        const productCard = document.createElement("div");
-        productCard.innerHTML = generateCards(product);
-        newListEl.appendChild(productCard);
-      });
+      const productCard = document.createElement("div");
+      productCard.innerHTML = generateCards(data);
+      newListEl.appendChild(productCard);
     })
-
-    .catch((error) => {
-      console.error("Error occured: ", error);
-    });
-}
+    .catch ((error) => {
+  console.error("Error occured: ", error);
+});
 
 function renderIsBestProducts() {
   fetch(`/api/products?isBest=true`)
     .then((response) => response.json())
     .then((data) => {
-      const bestProducts = data;
       const bestListEl = document.getElementById("bestList");
 
       bestListEl.innerHTML = "";
 
-      bestProductsSlice.forEach((product) => {
-        const productCard = document.createElement("div");
-        productCard.innerHTML = generateCards(product);
-        bestListEl.appendChild(productCard);
-      });
+
+      const productCard = document.createElement("div");
+      productCard.innerHTML = generateCards(data);
+      bestListEl.appendChild(productCard);
     })
     .catch((error) => {
       console.error("Error occured", error);
     });
 
-}
+
 
 

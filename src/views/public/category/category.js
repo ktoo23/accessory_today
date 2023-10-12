@@ -7,9 +7,10 @@ let categoryEl = `
         <li><a href="/products?category=bracelet" data-category='bracelet'>BRACELET</a></li>
         <li><a href="/products?category=necklace" data-category='necklace'>NECKLACE</a></li>
     </ul>
+    <button class="order-admin"><a href="/admin/order-setting">주문 관리</a></button>
     </div>
+    
 `;
-
 
 const initCategory = () => {
   const targetEl = document.getElementById("category");

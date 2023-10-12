@@ -1,25 +1,59 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const categorySelect = document.getElementById('categorySelect');
+document.addEventListener("DOMContentLoaded", () => {
+  fetchAndRenderProducts("");
+  document.removeEventListener("DOMContentLoaded", onDOMContentLoaded);
 
-  const fetchAndRenderProducts = (selected) => {
-    fetch(`/api/products/?category=${selected}`)
-      .then((response) => response.json())
-      .then((products) => {
-        renderProducts(products);
-      })
-      .catch((error) => {
-        console.error('Error: fail to fetch', error);
-      });
+  async function onDOMContentLoaded() {
+    await fetchAndRenderProducts();
+    document.removeEventListener("DOMContentLoaded", onDOMContentLoaded);
+  }
+
+  async function fetchAndRenderProducts(selected) {
+    console.log(selected);
+    if (selected === null) {
+      await fetch(`/api/products`)
+        .then((response) => response.json())
+        .then((products) => {
+          renderProducts(products);
+        })
+        .catch((error) => {
+          console.error("Error: fail to fetch", error);
+        });
+    } else {
+      await fetch(`/api/products?category=${selected}`)
+        .then((response) => response.json())
+        .then((products) => {
+          renderProducts(products);
+        })
+        .catch((error) => {
+          console.error("Error: fail to fetch", error);
+        });
+    }
+  }
+
+  const categories = document.querySelectorAll("#categorySelect li");
+
+  for (let category of categories) {
+    category.addEventListener("click", (e) => {
+      e.preventDefault();
+
+      const selected = e.target.getAttribute("data-category");
+
+      if (selected === "") {
+        fetchAndRenderProducts();
+      } else {
+        fetchAndRenderProducts(selected);
+      }
+    });
   }
 
   const renderProducts = (products) => {
-    const prdListEl = document.getElementById('prdList');
-    if(prdListEl) {
-      prdListEl.innerHTML = '';
+    const prdListEl = document.getElementById("prdList");
+    if (prdListEl) {
+      prdListEl.innerHTML = "";
 
       products.forEach((product) => {
-        const productCard = document.createElement('div');
-        productCard.classList.add('card');
+        const productCard = document.createElement("div");
+        productCard.classList.add("card");
         productCard.innerHTML = `
         <img src="${product.productImg}" alt="productImg">
         <div class="product-info">
@@ -34,18 +68,4 @@ document.addEventListener('DOMContentLoaded', () => {
       console.error(`productListEl not found`);
     }
   };
-
-  categorySelect.addEventListener('change', (e) => {
-    e.preventDefault();
-  
-    const selected = categorySelect.value;
-    console.log(selected);
-  
-    if (selected) {
-      fetchAndRenderProducts(selected);
-    }
-  });
-
-  fetchAndRenderProducts(categorySelect.value);
-
 });

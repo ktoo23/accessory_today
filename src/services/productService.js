@@ -38,8 +38,8 @@ class ProductService{
 
             return productsData;
         }catch(err){
-            console.error("getProducts 오류:",err);
-            next(err);
+            console.error("getProducts 오류:");
+            throw err;
         }
 
     }
@@ -50,8 +50,8 @@ class ProductService{
 
             return product;
         }catch(err){
-            console.error("getDetail 오류:",err);
-            next(err);
+            console.error("getDetail 오류:");
+            throw err;
         }
 
     }
