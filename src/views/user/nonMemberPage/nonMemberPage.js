@@ -28,7 +28,7 @@ async function loadNonMemberOrder(e) {
         // console.log(product);
         const productName =
           orderedProducts.length === 1
-            ? product.productName
+            ? `${product.productName}-${size}`
             : `${product.productName}-${size}외 ${
                 orderedProducts.length - 1
               } 품목`;
@@ -54,24 +54,27 @@ async function loadNonMemberOrder(e) {
   cancelBtn.addEventListener("click", deleteTargetOrder);
 
   async function deleteTargetOrder(e) {
-    const targetOrderId =
-      e.target.parentElement.parentElement.firstElementChild.innerText;
-    const url = `/api/users/non-member-page?orderId=${targetOrderId}`;
-    await fetch(url, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json", // JSON 데이터 전송을 위한 헤더
-      },
-    })
-      .then((res) => res.json())
-      .then((data) => {
-        if (data.status === 200) {
-          alert("비회원 주문 취소에 성공하였습니다. 홈페이지로 이동합니다.");
-          window.location.href = "/";
-        } else {
-          alert(data.errMsg);
-        }
+    const cancel = confirm("해당 상품 주문을 취소하시겠습니까?");
+    if (cancel) {
+      const targetOrderId =
+        e.target.parentElement.parentElement.firstElementChild.innerText;
+      const url = `/api/users/non-member-page?orderId=${targetOrderId}`;
+      await fetch(url, {
+        method: "DELETE",
+        headers: {
+          "Content-Type": "application/json", // JSON 데이터 전송을 위한 헤더
+        },
       })
-      .catch((err) => alert(err));
+        .then((res) => res.json())
+        .then((data) => {
+          if (data.status === 200) {
+            alert("비회원 주문 취소에 성공하였습니다. 홈페이지로 이동합니다.");
+            window.location.href = "/";
+          } else {
+            alert(data.errMsg);
+          }
+        })
+        .catch((err) => alert(err));
+    }
   }
 }

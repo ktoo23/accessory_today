@@ -3,6 +3,16 @@ import { userService } from "../services/userService.js";
 
 const userRouter = Router();
 
+userRouter.get("/verify-user", async (req, res) => {
+  const { token } = req.header;
+  try {
+    const verifyResult = await verifyToken(token);
+    return res.status(200).json(verifyResult);
+  } catch (err) {
+    return res.status(400).json(verifyResult);
+  }
+});
+
 // 회원가입 (포스트맨 성공)
 userRouter.post("/join", async (req, res) => {
   // 요청으로 들어온 내용들 구조 분해 할당
@@ -89,7 +99,7 @@ userRouter
     try {
       const cancelOrderResult = await userService.cancelOrder(orderId);
       console.log(cancelOrderResult);
-      // 삭제에 성공하면 다시 비회원 주문조회 페이지로 리다이렉트 (주문 삭제 결과 반영)
+      // 삭제에 성공하면 다시 회원 주문조회 페이지로 리다이렉트 (주문 삭제 결과 반영)
       if (cancelOrderResult.status === 200) {
         return res.status(200).json(cancelOrderResult);
         // return res.redirect("/mypage/order-tracking");
