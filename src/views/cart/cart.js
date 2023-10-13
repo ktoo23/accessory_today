@@ -9,16 +9,23 @@ let cart,
 
 const searchParams = new URLSearchParams(location.href);
 let itemFromUrl = {};
-console.log(searchParams);
-if(searchParams.size > 0) {
-  let c = [];
-  for (const param of searchParams) {
-    itemFromUrl[param[0]] = param[1];
-  }
-  c.push(itemFromUrl);
-  localStorage.setItem("myCart", JSON.stringify(c));
-}
 
+if (searchParams.size > 1) {
+  const cart = findCartItem();
+
+  for (const param of searchParams) {
+    if (param[0].includes('productImg')){
+     itemFromUrl[param[0].slice(-10)] = param[1];
+    }else itemFromUrl[param[0]] = param[1];
+  }
+  cart.push(itemFromUrl);
+  localStorage.setItem("myCart", JSON.stringify(cart));
+  }
+
+document.querySelector('.shopping').addEventListener('click', goShopping);
+function goShopping() {
+  location.href="/products";
+}
 
 // 스크롤 높이 구해서 해당 높이 === 모달창 높이
 let scrollHeight;
@@ -93,6 +100,7 @@ document.querySelector('#orderCheckBtn').addEventListener('click', () => {
 getItems();
 function getItems() {
   cart = findCartItem();
+  console.log(cart);
 
   if (cart.length < 1) {
     $carts.style.display = "none";
@@ -164,6 +172,7 @@ function deleteItem(itemSequence) {
     getItems();
   if (isAllCheck) {
     const $checkboxes = document.querySelectorAll('input[name="check"]');
+    console.log($checkboxes)
     totalPaymentAmount($checkboxes);
     allCheck($checkboxes, true);
   } else {
@@ -344,11 +353,11 @@ let itemPrice;
 function showModal(target) {
   $modalLayout.style.height = `${scrollHeight}px`;
   let item = getItem(itemSequence);
-  let { productName, price, quantity, size } = item;
+  let { productName, productImg, price, quantity, size } = item;
   itemPrice = price;
   const optionHeader = `
     <div class="option-header">
-        <img src="../public/img/home.png" alt="">
+        <img src="${productImg}" alt="">
         <div>
             <p class="option-item-name">${productName}</p>
             <p class="option-item-price">${changePrice(price)}</p>
