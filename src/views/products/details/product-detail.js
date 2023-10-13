@@ -50,7 +50,7 @@ fetch(`/api/products/${productId}`)
       price: productData.price,
       productImg: productData.productImg,
       size: selectedSizeText,
-      quantity: (product.quantity = product.quantity || 1),
+      quantity: 1,
     };
   })
   .catch((error) => {
@@ -88,6 +88,8 @@ document
     localStorage.setItem("myCart", JSON.stringify(cart));
 
     alert("장바구니에 추가되었습니다.");
+    console.log("Added product:", product);
+    console.log("Current cart:", JSON.parse(localStorage.getItem("myCart")));
   });
 
 async function verifyToken(token) {
@@ -106,7 +108,7 @@ async function verifyToken(token) {
 }
 
 function createCartUrl({ productImg, productName, price, quantity, size }) {
-  return `/cart?productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
+  return `/cart?productId=${productId}&productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
 }
 
 //BUYNOW 버튼 클릭 시
@@ -207,6 +209,15 @@ function verifyTokenAndRedirect(url) {
   });
 }
 
+//날짜데이터 수정
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(date.getUTCDate()).padStart(2, "0")}`;
+}
+
 //후기,문의작성 title,author,content
 function fetchReviews(productId) {
   fetch(`/api/products/${productId}/review`)
@@ -225,7 +236,7 @@ function fetchReviews(productId) {
           const row = document.createElement("tr");
 
           const dateCell = document.createElement("td");
-          dateCell.textContent = review.date;
+          dateCell.textContent = formatDate(review.date); 
           row.appendChild(dateCell);
 
           const authorCell = document.createElement("td");
@@ -264,7 +275,7 @@ function fetchQuestion(productId) {
           const row = document.createElement("tr");
 
           const dateCell = document.createElement("td");
-          dateCell.textContent = question.date;
+          dateCell.textContent = formatDate(question.date); 
           row.appendChild(dateCell);
 
           const authorCell = document.createElement("td");
