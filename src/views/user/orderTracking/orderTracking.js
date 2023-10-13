@@ -9,20 +9,13 @@ getOrderData(); // 데이터 불러오기
   async function getOrderData() {
     const currentUrl = window.location.href;
     userId = currentUrl.split('/')[5];
-  console.log(userId);
   await fetch(`/api/users/mypage/order-tracking?userId=${userId}`, {
     method: "GET",
   })
     .then((res) => {
-      console.log(res);
-      // if (res.status === 400) {
-      //   tableDisplay("none", "display");
-      // } 
       return res.json();
     })
     .then((orderData) => {
-      console.log(orderData);
-
         if (orderData.length < 1) { // 주문 내역 없을 때
           tableDisplay("none", "display");
         } else {
@@ -97,7 +90,7 @@ $select.addEventListener('change', function() {
 // 주문 처리상태로 검색 - 배송완료, 주문 완료, 배송중 ..
 function getOrderDataSelectStatus(orderStatus) {
   // 주문 내역이 없으면 아래 함수들 실행 안되게
-  if ($orderTable.querySelectorAll('tbody').length === 1) return;
+  //if ($orderTable.querySelectorAll('tbody').length === 1) return;
 
   $orderTable = document.querySelector('.order-tracking-table');
   $noOrderProduct = document.querySelector('.no-order-product');
