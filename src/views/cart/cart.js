@@ -14,9 +14,9 @@ if (searchParams.size > 1) {
   const cart = findCartItem();
 
   for (const param of searchParams) {
-    if (param[0].includes('productImg')){
-     itemFromUrl[param[0].slice(-10)] = param[1];
-    }else itemFromUrl[param[0]] = param[1];
+    if (param[0].includes('productId')){
+      itemFromUrl[param[0].slice(-9)] = param[1];
+    } else itemFromUrl[param[0]] = param[1];
   }
   cart.push(itemFromUrl);
   localStorage.setItem("myCart", JSON.stringify(cart));
