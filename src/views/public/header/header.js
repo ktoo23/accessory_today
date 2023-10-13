@@ -104,13 +104,13 @@ window.addEventListener("storage", updateCartCount);
 
 
 // 주문조회 페이지로 이동
-const token = localStorage.getItem("Authorization") || "";
+const userToken = localStorage.getItem("Authorization") || "";
 document.querySelector('.order-tracking').addEventListener('click', (e) => {
   e.preventDefault();
 
   console.log('Order tracking link clicked')
-  console.log('Token:', token);
-  if (!token) {
+  console.log('Token:', userToken);
+  if (!userToken) {
     window.location.href = "/login";
   } else movetToOrderTracking();
 });
@@ -120,7 +120,7 @@ async function movetToOrderTracking() {
     method: "GET",
     headers: {
       "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${userToken}`,
     },
   })
     .then((res) => res.json())

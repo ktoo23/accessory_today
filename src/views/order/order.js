@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 });
 
-const token = localStorage.getItem("Authorization") || "null";
-if (token === "null") {
+const orderToken = localStorage.getItem("Authorization") || "null";  
+if (orderToken === "null") {
   //비회원 주문
   setOrderPasswordForm();
 } else {
@@ -25,7 +25,7 @@ async function getUserData() {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        Authorization: `Bearer ${token}`,
+        Authorization: `Bearer ${orderToken}`,
       },
     });
 
@@ -325,24 +325,6 @@ async function submitForm(e) {
         // 회원 주문의 경우
         window.location.href = `/orderComplete/${data.orderId}/${data.user._id}`;
       }
-      // window.location.href = `/orderComplete/${data.orderId}/${data.userId}`;
-      //   if (data.status === 200) {
-      //     console.log("주문 완료");
-
-      //     if (token === "null") {
-      //       const orderId = data.orderId;
-      //       localStorage.setItem("orderNumber", orderId);
-      //       console.log("비회원 orderNumber:", orderId);
-      //     } else {
-      //       const _id = data["_id"];
-      //       console.log("회원 orderNumber:", _id);
-      //       localStorage.setItem("orderNumber", _id);
-      //     }
-
-      //     window.location.href = "/order/orderComplete";
-      //   } else {
-      //     alert(data.errMsg);
-      //   }
     })
     .catch((err) => console.error(err));
-}
+  }s
