@@ -32,7 +32,12 @@ let headerEl = `
         <li><a href="/join" data-page="join">JOIN</a></li>
         <li><a href="/mypage" data-page="mypage">MYPAGE</a></li>
         <li class="/mypage/order-tracking/:orderId" data-page="order-search"><a href="#">주문조회</a></li>
-        <li class="count"><a href="/cart" data-page="cart"><i class="bi bi-basket3-fill"></i><span class="count">1</span></a></li>
+        <li class="count">
+          <a href="/cart" data-page="cart">
+            <i class="bi bi-basket3-fill"></i>
+            <span class="count" id="cart-count"></span>
+          </a>
+        </li>
       </ul>
     </div>
   </div>
@@ -83,3 +88,16 @@ logout.addEventListener("click", (e) => {
     window.location.href = "/";
   }
 });
+
+// 페이지 로드 시 혹은 상품이 장바구니에 추가될 때마다 호출되어야 하는 함수입니다.
+function updateCartCount() {
+  const cart = JSON.parse(localStorage.getItem("myCart")) || [];
+  let count = 0;
+  cart.forEach((item) => {
+    count += Number(item.quantity) || 0;
+  });
+  document.getElementById("cart-count").textContent = count;
+}
+
+window.onload = updateCartCount;
+window.addEventListener("storage", updateCartCount);

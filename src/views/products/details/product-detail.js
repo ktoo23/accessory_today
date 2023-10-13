@@ -90,6 +90,7 @@ document
     alert("장바구니에 추가되었습니다.");
     console.log("Added product:", product);
     console.log("Current cart:", JSON.parse(localStorage.getItem("myCart")));
+    updateCartCount();
   });
 
 async function verifyToken(token) {
@@ -236,7 +237,7 @@ function fetchReviews(productId) {
           const row = document.createElement("tr");
 
           const dateCell = document.createElement("td");
-          dateCell.textContent = formatDate(review.date); 
+          dateCell.textContent = formatDate(review.date);
           row.appendChild(dateCell);
 
           const authorCell = document.createElement("td");
@@ -275,7 +276,7 @@ function fetchQuestion(productId) {
           const row = document.createElement("tr");
 
           const dateCell = document.createElement("td");
-          dateCell.textContent = formatDate(question.date); 
+          dateCell.textContent = formatDate(question.date);
           row.appendChild(dateCell);
 
           const authorCell = document.createElement("td");
