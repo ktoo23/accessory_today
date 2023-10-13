@@ -11,12 +11,6 @@ let headerEl = `
 </div>
   <div class="header-gap row align-items-center justify-content-between">
     <div class="col">
-      <div class="search">
-        <form action="/search" method="GET">
-          <input type="text" id="search" name="q" placeholder="SEARCH">
-          <button type="submit" class="search-btn"><i class="bi bi-search"></i></button>
-        </form>
-      </div>
     </div>
     <div class="col">
       <ul class="header-middle">
@@ -101,7 +95,6 @@ function updateCartCount() {
 
 window.onload = updateCartCount;
 window.addEventListener("storage", updateCartCount);
-
 
 // 주문조회 페이지로 이동
 const userToken = localStorage.getItem("Authorization") || "";

@@ -16,17 +16,6 @@ header {
   margin-top: 40px !important;
 }
 
-#search {
-  border: none;
-  width: 160px;
-  border-bottom: 1px solid black;
-}
-
-.search-btn {
-  background-color: transparent;
-  border: none;
-}
-
 .cart a {
   min-width: 100px;
 }
