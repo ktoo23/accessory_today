@@ -50,7 +50,7 @@ fetch(`/api/products/${productId}`)
       price: productData.price,
       productImg: productData.productImg,
       size: selectedSizeText,
-      quantity:(product.quantity = product.quantity || 1),
+      quantity: (product.quantity = product.quantity || 1),
     };
   })
   .catch((error) => {
@@ -121,6 +121,7 @@ document.querySelector(".order-button").addEventListener("click", function () {
   const quantity = document.querySelector(".number").innerText;
 
   const product = {
+    productId,
     productName,
     price,
     productImg,
@@ -159,6 +160,7 @@ document.querySelector(".order-button").addEventListener("click", function () {
   verifyToken(token).then((isValid) => {
     if (isValid) {
       window.location.href = createCartUrl({
+        productId,
         productImg,
         productName,
         price,
@@ -218,7 +220,7 @@ function fetchReviews(productId) {
       const tableBody = document.querySelector("#review-table tbody");
       // 데이터를 테이블로 출력
       data.forEach((review) => {
-        if (review.productId=== productId) {
+        if (review.productId === productId) {
           // productId 확인
           const row = document.createElement("tr");
 
@@ -287,30 +289,3 @@ window.onload = function () {
   fetchReviews(productId);
   fetchQuestion(productId);
 };
-
-// //카테고리 구현
-// document.addEventListener("DOMContentLoaded", () => {
-//   const categorySelect = document.getElementById("categorySelect");
-
-//   const fetchAndRenderProducts = (selected) => {
-//     fetch(`/api/products?category=${selected}`)
-//       .then((response) => response.json())
-//       .then((products) => {
-//         renderProducts(products);
-//       })
-//       .catch((error) => {
-//         console.error("Error: fail to fetch", error);
-//       });
-//   };
-
-//   categorySelect.addEventListener("change", (e) => {
-//     e.preventDefault();
-
-//     const selected = categorySelect.value;
-//     console.log(selected);
-
-//     if (selected) {
-//       fetchAndRenderProducts(selected);
-//     }
-//   });
-// });
