@@ -7,8 +7,7 @@ const $optionMenu = document.querySelector(".option-menu");
 let cart,
   isAllCheck = false;
 
-let url = "?productImg=/products/img/ring/ring-2.jpeg&productName=ring-2&price=9000&quantity=1&size=small";
-const searchParams = new URLSearchParams(url);
+const searchParams = new URLSearchParams(location.href);
 let itemFromUrl = {};
 console.log(searchParams);
 if(searchParams.size > 0) {
