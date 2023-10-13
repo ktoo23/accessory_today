@@ -8,7 +8,6 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   async function fetchAndRenderProducts(selected) {
-    console.log(selected);
     if (selected === null) {
       await fetch(`/api/products`)
         .then((response) => response.json())
@@ -53,13 +52,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
       products.forEach((product) => {
         const productCard = document.createElement("div");
+
         productCard.classList.add("card");
         productCard.innerHTML = `
-        <img src="${product.productImg}" alt="productImg">
+        <a href="/products/details/${product._id}" class="picked-product">
+        <img class="product-img" src="${product.productImg}" alt="productImg">
         <div class="product-info">
           <p class="product-name">${product.productName}</p>
-          <p class="product-price">${product.price}</p>
+          <p class="product-price">KRW ${product.price}</p>
         </div>
+        </a>
         `;
 
         prdListEl.appendChild(productCard);
@@ -68,4 +70,6 @@ document.addEventListener("DOMContentLoaded", () => {
       console.error(`productListEl not found`);
     }
   };
+
 });
+

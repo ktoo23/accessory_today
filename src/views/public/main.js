@@ -1,46 +1,59 @@
-const generateCards = (product) => `
-  <div class="card">
-    <img class="product-img" src="${product.productImg}" alt="productImg">
-    <div class="product-info">
-      <p class="product-name">${product.productName}</p>
-      <p class="product-price">${product.price}</p>
-    </div>
-  </div>
-  `;
+document.addEventListener("DOMContentLoaded", function () {
+  function renderIsNewProducts() {
+    fetch(`/api/products?isNew=true`)
+      .then((response) => response.json())
+      .then((data) => {
+        const newListEl = document.getElementById("newList");
+        newListEl.innerHTML = "";
 
-fetchAndRenderProducts();
-function fetchAndRenderProducts() {
-  fetch('/api/products?isNew=true')
-    .then((response) => response.json())
-    .then((data) => {
-      console.log(data)
-      const bestProducts = data.filter((product) => product.isBest === true);
-      const newProducts = data;
+        data.forEach((product) => {
+          const newCards = document.createElement("div");
+          newCards.classList.add("new-card");
+          newCards.innerHTML = `
+          <a class="picked-product" href="/products/details/${product._id}">
+            <img class="main-product-img" src="${product.productImg}" alt="productImg">
+            <div class="main-product-info">
+              <p class="main-product-name">${product.productName}</p>
+              <p class="main-product-price">KRW ${product.price}</p>
+            </div>
+          </a>
+        `;
 
-      const bestListEl = document.getElementById("bestList");
-      const newListEl = document.getElementById("newList");
-      bestListEl.innerHTML = "";
-      newListEl.innerHTML = "";
-
-      const bestProductsSlice = bestProducts.slice(0, 4);
-      const newProductsSlice = newProducts.slice(0, 4);
-
-      bestProductsSlice.forEach((product) => {
-        const productCard = document.createElement("div");
-        productCard.innerHTML = generateCards(product);
-        bestListEl.appendChild(productCard);
+        newListEl.appendChild(newCards);
+        })
+      })
+      .catch((error) => {
+        console.error("Error occured: ", error);
       });
+  }
 
-      newProductsSlice.forEach((product) => {
-        const productCard = document.createElement("div");
-        productCard.innerHTML = generateCards(product);
-        newListEl.appendChild(productCard);
+  function renderIsBestProducts() {
+    fetch(`/api/products?isBest=true`)
+      .then((response) => response.json())
+      .then((data) => {
+        const bestListEl = document.getElementById("bestList");
+        bestListEl.innerHTML = "";
+
+        data.forEach((product) => {
+          const bestCards = document.createElement("div");
+          bestCards.classList.add("best-card");
+          bestCards.innerHTML = `
+          <a class="picked-product" href="/products/details/${product._id}">
+            <img class="main-product-img" src="${product.productImg}" alt="productImg">
+            <div class="main-product-info">
+              <p class="main-product-name">${product.productName}</p>
+              <p class="main-product-price">KRW ${product.price}</p>
+            </div>
+          </a>
+        `;
+
+        bestListEl.appendChild(bestCards);
+        })
+      })
+      .catch((error) => {
+        console.error("Error occured: ", error);
       });
-    })
-    .catch((error) => {
-      console.error("Error occured", error);
-    });
-
-    
-}
-
+    }
+  renderIsNewProducts();
+  renderIsBestProducts();
+});
