@@ -3,6 +3,17 @@ import { userService } from "../services/userService.js";
 
 const userRouter = Router();
 
+userRouter.get("/verify-user", async (req, res) => {
+  const accessToken = req.header("Authorization").split("Bearer ")[1] || null;
+  console.log(accessToken);
+  try {
+    const verifyResult = await userService.verifyToken(accessToken);
+    return res.status(200).json(verifyResult);
+  } catch (err) {
+    return res.status(400).json(verifyResult);
+  }
+});
+
 // 회원가입 (포스트맨 성공)
 userRouter.post("/join", async (req, res) => {
   // 요청으로 들어온 내용들 구조 분해 할당
