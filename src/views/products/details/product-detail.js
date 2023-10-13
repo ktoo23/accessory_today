@@ -297,10 +297,11 @@ function fetchQuestion(productId) {
     })
     .catch((err) => console.error("Error", err));
 }
-window.onload = function () {
+document.addEventListener("DOMContentLoaded", () => {
+  console.log(productId);
   fetchReviews(productId);
   fetchQuestion(productId);
-};
+});
 
 // 이 코드는 디테일 페이지에서 상품 카테고리 클릭 시 상품 화면이 올바르게 나오게 하기 위한 코드입니다.
 const categories = document.querySelectorAll("#categorySelect li");
