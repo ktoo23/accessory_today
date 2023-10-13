@@ -50,7 +50,7 @@ fetch(`/api/products/${productId}`)
       price: productData.price,
       productImg: productData.productImg,
       size: selectedSizeText,
-      quantity:1,
+      quantity: 1,
     };
   })
   .catch((error) => {
@@ -236,7 +236,7 @@ function fetchReviews(productId) {
           const row = document.createElement("tr");
 
           const dateCell = document.createElement("td");
-          dateCell.textContent = formatDate(review.date); 
+          dateCell.textContent = formatDate(review.date);
           row.appendChild(dateCell);
 
           const authorCell = document.createElement("td");
@@ -275,7 +275,7 @@ function fetchQuestion(productId) {
           const row = document.createElement("tr");
 
           const dateCell = document.createElement("td");
-          dateCell.textContent = formatDate(question.date); 
+          dateCell.textContent = formatDate(question.date);
           row.appendChild(dateCell);
 
           const authorCell = document.createElement("td");
@@ -300,3 +300,22 @@ window.onload = function () {
   fetchReviews(productId);
   fetchQuestion(productId);
 };
+
+// 이 코드는 디테일 페이지에서 상품 카테고리 클릭 시 상품 화면이 올바르게 나오게 하기 위한 코드입니다.
+const categories = document.querySelectorAll("#categorySelect li");
+
+for (let category of categories) {
+  category.addEventListener("click", (e) => {
+    e.preventDefault();
+
+    const selected = e.target.getAttribute("data-category");
+
+    // ALL을 선택 시
+    if (selected === "") {
+      window.location.href = "/products";
+    } else {
+      // ALL이 아닌 다른 카테고리 선택 시
+      window.location.href = `/products?category=${selected}`;
+    }
+  });
+}
