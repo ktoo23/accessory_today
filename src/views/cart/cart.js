@@ -100,7 +100,6 @@ document.querySelector('#orderCheckBtn').addEventListener('click', () => {
 getItems();
 function getItems() {
   cart = findCartItem();
-  console.log(cart);
 
   if (cart.length < 1) {
     $carts.style.display = "none";
@@ -172,7 +171,6 @@ function deleteItem(itemSequence) {
     getItems();
   if (isAllCheck) {
     const $checkboxes = document.querySelectorAll('input[name="check"]');
-    console.log($checkboxes)
     totalPaymentAmount($checkboxes);
     allCheck($checkboxes, true);
   } else {
