@@ -31,7 +31,7 @@ let headerEl = `
         <li><a href="/login" data-page="login">LOGIN</a></li>
         <li><a href="/join" data-page="join">JOIN</a></li>
         <li><a href="/mypage" data-page="mypage">MYPAGE</a></li>
-        <li class="/mypage/order-tracking/:orderId" data-page="order-search"><a href="#">주문조회</a></li>
+        <li><a href="" class="order-tracking">주문조회</a></li>
         <li class="count">
           <a href="/cart" data-page="cart">
             <i class="bi bi-basket3-fill"></i>
@@ -101,3 +101,32 @@ function updateCartCount() {
 
 window.onload = updateCartCount;
 window.addEventListener("storage", updateCartCount);
+
+
+// 주문조회 페이지로 이동
+const token = localStorage.getItem("Authorization") || "";
+document.querySelector('.order-tracking').addEventListener('click', (e) => {
+  e.preventDefault();
+
+  console.log('Order tracking link clicked')
+  console.log('Token:', token);
+  if (!token) {
+    window.location.href = "/login";
+  } else movetToOrderTracking();
+});
+
+async function movetToOrderTracking() {
+  await fetch("/api/users/mypage", {
+    method: "GET",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((res) => res.json())
+    .then((data) => {
+      userId = data.user["_id"];
+      console.log(userId);
+      window.location.href = `/user/orderTracking/${userId}`;
+    })
+}
