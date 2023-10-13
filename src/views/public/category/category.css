@@ -6,7 +6,6 @@
 
 ul.nav.nav-pills.nav-stacked {
     display: block;
-    padding-left: 15%;
 }
 
 ul.nav.nav-pills.nav-stacked a {
@@ -15,7 +14,7 @@ ul.nav.nav-pills.nav-stacked a {
 }
 
 ul.nav.nav-pills.nav-stacked a:hover {
-    color: #D3CDB3!important;    
+    color: #D3CDB3 !important;
     text-decoration: underline !important;
 }
 
@@ -27,4 +26,22 @@ ul.nav.nav-pills.nav-stacked a:hover {
 
 .sidenav li {
     font-size: 23px;
-  }
+}
+
+.order-admin {
+    background: #D3CDC8;
+    border: 1px solid #D3CDC8;
+    border-radius: 5px;
+    padding: 8px;
+    margin-top: 26px;
+    font-size: 14px;
+}
+
+.order-admin a {
+    color: #fff;
+    text-decoration: none;
+}
+
+.order-admin:hover {
+    background: #B4A687;
+}

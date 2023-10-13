@@ -107,7 +107,7 @@ class OrderService {
         if (!targetProduct) {
           return {
             status: 400,
-            err: `${curProduct.productName}은 현재 존재하지 않는 상품입니다.`,
+            errMsg: `${curProduct.productName}은 현재 존재하지 않는 상품입니다.`,
           };
         }
         // 상품이 존재하면 주문할 상품 배열에 정보 push하기
@@ -140,6 +140,7 @@ class OrderService {
           status: 200,
           message: "주문이 정상적으로 완료되었습니다.",
           orderId: newOrder._id,
+          user,
         };
       } else {
         // 비회원일 경우 주문 비밀번호를 입력하므로 비밀번호가 일치하는지 확인하고, 해시화하여 저장한다.

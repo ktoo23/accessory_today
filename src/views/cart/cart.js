@@ -7,6 +7,26 @@ const $optionMenu = document.querySelector(".option-menu");
 let cart,
   isAllCheck = false;
 
+const searchParams = new URLSearchParams(location.href);
+let itemFromUrl = {};
+
+if (searchParams.size > 1) {
+  const cart = findCartItem();
+
+  for (const param of searchParams) {
+    if (param[0].includes('productId')){
+      itemFromUrl[param[0].slice(-9)] = param[1];
+    } else itemFromUrl[param[0]] = param[1];
+  }
+  cart.push(itemFromUrl);
+  localStorage.setItem("myCart", JSON.stringify(cart));
+  }
+
+document.querySelector('.shopping').addEventListener('click', goShopping);
+function goShopping() {
+  location.href="/products";
+}
+
 // 스크롤 높이 구해서 해당 높이 === 모달창 높이
 let scrollHeight;
 window.onload = () => {
@@ -23,7 +43,7 @@ function orderItem(sequence) {
   cart = findCartItem();
 
   // order 로컬스토리지 초기화
-  if(localStorage.getItem("order").length > 0) {
+  if(localStorage.getItem("order") !== null) {
     localStorage.removeItem("order");
   }
 
@@ -80,6 +100,7 @@ document.querySelector('#orderCheckBtn').addEventListener('click', () => {
 getItems();
 function getItems() {
   cart = findCartItem();
+  console.log(cart);
 
   if (cart.length < 1) {
     $carts.style.display = "none";
@@ -104,11 +125,15 @@ function addItemInCart(item, sequence) {
         <td colspan="2" class="cart-item">
             <div>
                 <input type="checkbox" name="check">
-                <img src="../public/img/home.png" alt="">
+                <a href="/products/details/${item.productId}">
+                  <img src="${item.productImg}" alt="">
+                </a>
                 <div class="cart-item-option">
-                    <p class="cart-item-name">${item.productName}</p>
+                <a href="/products/details/${item.productId}">
+                  <p class="cart-item-name">${item.productName}</p>
+                </a>
                     <p class="cart-item-size">
-                     ${item.size} - ${item.quantity}</p>
+                     ${item.size.toString().toUpperCase()} - ${item.quantity}</p>
                 </div>
             </div>
         </td>
@@ -147,6 +172,7 @@ function deleteItem(itemSequence) {
     getItems();
   if (isAllCheck) {
     const $checkboxes = document.querySelectorAll('input[name="check"]');
+    console.log($checkboxes)
     totalPaymentAmount($checkboxes);
     allCheck($checkboxes, true);
   } else {
@@ -327,11 +353,11 @@ let itemPrice;
 function showModal(target) {
   $modalLayout.style.height = `${scrollHeight}px`;
   let item = getItem(itemSequence);
-  let { productName, price, quantity, size } = item;
+  let { productName, productImg, price, quantity, size } = item;
   itemPrice = price;
   const optionHeader = `
     <div class="option-header">
-        <img src="../public/img/home.png" alt="">
+        <img src="${productImg}" alt="">
         <div>
             <p class="option-item-name">${productName}</p>
             <p class="option-item-price">${changePrice(price)}</p>

@@ -33,10 +33,22 @@ viewsRouter.get("/login", (req, res) => {
 });
 
 // 주문 페이지
-// tempOder는 무엇인가요?
-// order가 html이 뜨지 않습니다!
 viewsRouter.get("/order", (req, res) => {
   res.sendFile(path.join(process.cwd(), "src", "views", "order", "order.html"));
+});
+
+// 주문완료 페이지 (비회원)
+viewsRouter.get("/orderComplete/:orderId", (req, res) => {
+  res.sendFile(
+    path.join(process.cwd(), "src", "views", "order", "orderComplete.html")
+  );
+});
+
+// 주문완료 페이지 (회원)
+viewsRouter.get("/orderComplete/:orderId/:userId", (req, res) => {
+  res.sendFile(
+    path.join(process.cwd(), "src", "views", "order", "orderComplete.html")
+  );
 });
 
 // 상품 페이지
@@ -120,6 +132,20 @@ viewsRouter.get("/admin/order-setting", (req, res) => {
       "admin",
       "orderSetting",
       "adminOrderSetting.html"
+    )
+  );
+});
+
+// 리뷰, 문의 작성
+viewsRouter.get("/products/details/:productId/:uploadType", (req, res) => {
+  res.sendFile(
+    path.join(
+      process.cwd(),
+      "src",
+      "views",
+      "products",
+      "details",
+      "products-detail-form.html"
     )
   );
 });

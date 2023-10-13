@@ -25,7 +25,7 @@ productRouter.get("/:productId",async (req,res,next)=>{
         const productsData = await productService.getDetail(productId);
 
         if(!productsData){
-            res.status(404).send("해당 상품이 없습니다!");
+            res.status(404).json({ error: "해당 상품이 없습니다!" });
         }
 
         res.status(200).json(productsData);
@@ -38,8 +38,7 @@ productRouter.get("/:productId",async (req,res,next)=>{
 productRouter.get("/:productId/review",async (req,res,next)=>{
     try{
         const productId = req.params.productId;
-        const {getAll} = req.query
-        const reviewData= await reviewService.getReview(productId,getAll);
+        const reviewData= await reviewService.getReview(productId);
         res.status(200).json(reviewData);
     }catch(err){
         next(err);
@@ -73,8 +72,7 @@ productRouter.delete("/:productId/review",async(req,res,next)=>{
 productRouter.get("/:productId/inquiry",async (req,res,next)=>{
     try{
         const productId = req.params.productId;
-        const {getAll}=req.query;
-        const inquiryData=await inquiryService.getInquiry(productId,getAll);
+        const inquiryData=await inquiryService.getInquiry(productId);
         res.status(200).json(inquiryData);
     }catch(err){
         next(err);

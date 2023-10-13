@@ -167,9 +167,9 @@ class UserService {
   async getUserOrders(userId) {
     try {
       // Order 스키마에서 user의 _id가 userId와 같은 주문 찾기 (한 user의 주문이 여러개일 수 있다.)
-      const userOrders = Order.find({ user: new ObjectId(userId) }).populate(
-        "orderProducts.products"
-      );
+      const userOrders = await Order.find({
+        user: new ObjectId(userId),
+      }).populate("orderProducts.products");
       // 회원이 주문한 목록을 내보내기
       return userOrders;
     } catch (err) {
