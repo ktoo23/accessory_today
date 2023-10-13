@@ -234,7 +234,7 @@ async function nonmemberBuyNow(buynowProduct) {
 const submitbtn = document.querySelector(".form-submit-btn");
 submitbtn.addEventListener("click", submitForm);
 
-async function submitForm(e) {
+function submitForm(e) {
   e.preventDefault();
 
   const itemImgs = document.querySelectorAll(".item-img img");
@@ -327,4 +327,4 @@ async function submitForm(e) {
       }
     })
     .catch((err) => console.error(err));
-  }s
+  }
