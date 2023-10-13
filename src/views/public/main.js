@@ -1,48 +1,59 @@
-const generateCards = (product) => `
-  <div class="card col">
-    <img class="product-img" src="${product.productImg}" alt="productImg">
-    <div class="product-info">
-      <p class="product-name">${product.productName}</p>
-      <p class="product-price">KRW ${product.price}</p>
-    </div>
-  </div>
-  `;
+document.addEventListener("DOMContentLoaded", function () {
+  function renderIsNewProducts() {
+    fetch(`/api/products?isNew=true`)
+      .then((response) => response.json())
+      .then((data) => {
+        const newListEl = document.getElementById("newList");
+        newListEl.innerHTML = "";
 
-function renderIsNewProducts() {
-  fetch(`/api/products?isNew=true`)
-    .then((response) => response.json())
-    .then((data) => {
-      const newListEl = document.getElementById("newList");
+        data.forEach((product) => {
+          const newCards = document.createElement("div");
+          newCards.classList.add("new-card");
+          newCards.innerHTML = `
+          <a class="picked-product" href="/products/details/${product._id}">
+            <img class="main-product-img" src="${product.productImg}" alt="productImg">
+            <div class="main-product-info">
+              <p class="main-product-name">${product.productName}</p>
+              <p class="main-product-price">KRW ${product.price}</p>
+            </div>
+          </a>
+        `;
 
-      newListEl.innerHTML = "";
-      data.forEach((product) => {
-        const newCards = generateCards(product);
-        newListEl.innerHTML += (newCards);
+        newListEl.appendChild(newCards);
+        })
       })
-    })
-    .catch((error) => {
-      console.error("Error occured: ", error);
-    });
-}
+      .catch((error) => {
+        console.error("Error occured: ", error);
+      });
+  }
 
-function renderIsBestProducts() {
-  fetch(`/api/products?isBest=true`)
-    .then((response) => response.json())
-    .then((data) => {
-      const bestListEl = document.getElementById("bestList");
+  function renderIsBestProducts() {
+    fetch(`/api/products?isBest=true`)
+      .then((response) => response.json())
+      .then((data) => {
+        const bestListEl = document.getElementById("bestList");
+        bestListEl.innerHTML = "";
 
-      bestListEl.innerHTML = "";
+        data.forEach((product) => {
+          const bestCards = document.createElement("div");
+          bestCards.classList.add("best-card");
+          bestCards.innerHTML = `
+          <a class="picked-product" href="/products/details/${product._id}">
+            <img class="main-product-img" src="${product.productImg}" alt="productImg">
+            <div class="main-product-info">
+              <p class="main-product-name">${product.productName}</p>
+              <p class="main-product-price">KRW ${product.price}</p>
+            </div>
+          </a>
+        `;
 
-      data.forEach((product) => {
-        const bestCards = generateCards(product);
-        bestListEl.innerHTML += (bestCards);
+        bestListEl.appendChild(bestCards);
+        })
       })
-    })
-    .catch((error) => {
-      console.error("Error occured", error);
-    });
-}
-renderIsNewProducts();
-renderIsBestProducts();
-
-
+      .catch((error) => {
+        console.error("Error occured: ", error);
+      });
+    }
+  renderIsNewProducts();
+  renderIsBestProducts();
+});
