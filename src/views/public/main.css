@@ -1,5 +1,4 @@
 .mainImg {
-  width: ;
   max-width: 100%;
 }
 
@@ -86,7 +85,6 @@ div.new-list {
   left: 50%;
   transform: translate(-50%, -50%);
   color: brown;
-
 }
 
 .text-box  {
