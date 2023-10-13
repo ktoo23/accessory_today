@@ -4,9 +4,11 @@ const preparing = document.querySelector(".preparing-delivery");
 const delivery = document.querySelector(".delivery");
 const deliveryComplete = document.querySelector(".delivery-complete");
 
-document.querySelector(".order-tracking").addEventListener("click", () => {
-  window.location.href = `/user/orderTracking/${userId}`;
-});
+document
+  .getElementsByClassName("order-tracking")[1]
+  .addEventListener("click", () => {
+    window.location.href = `/user/orderTracking/${userId}`;
+  });
 
 let userId;
 document.querySelector(".info-update").addEventListener("click", () => {
