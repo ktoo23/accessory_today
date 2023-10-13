@@ -50,7 +50,7 @@ fetch(`/api/products/${productId}`)
       price: productData.price,
       productImg: productData.productImg,
       size: selectedSizeText,
-      quantity: (product.quantity = product.quantity || 1),
+      quantity:1,
     };
   })
   .catch((error) => {
@@ -88,6 +88,8 @@ document
     localStorage.setItem("myCart", JSON.stringify(cart));
 
     alert("장바구니에 추가되었습니다.");
+    console.log("Added product:", product);
+    console.log("Current cart:", JSON.parse(localStorage.getItem("myCart")));
   });
 
 async function verifyToken(token) {
@@ -106,7 +108,7 @@ async function verifyToken(token) {
 }
 
 function createCartUrl({ productImg, productName, price, quantity, size }) {
-  return `/cart?productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
+  return `/cart?productId=${productId}&productImg=${productImg}&productName=${productName}&price=${price}&quantity=${quantity}&size=${size}`;
 }
 
 //BUYNOW 버튼 클릭 시
@@ -121,6 +123,7 @@ document.querySelector(".order-button").addEventListener("click", function () {
   const quantity = document.querySelector(".number").innerText;
 
   const product = {
+    productId,
     productName,
     price,
     productImg,
@@ -159,6 +162,7 @@ document.querySelector(".order-button").addEventListener("click", function () {
   verifyToken(token).then((isValid) => {
     if (isValid) {
       window.location.href = createCartUrl({
+        productId,
         productImg,
         productName,
         price,
@@ -205,6 +209,15 @@ function verifyTokenAndRedirect(url) {
   });
 }
 
+//날짜데이터 수정
+function formatDate(dateStr) {
+  const date = new Date(dateStr);
+  return `${date.getUTCFullYear()}-${String(date.getUTCMonth() + 1).padStart(
+    2,
+    "0"
+  )}-${String(date.getUTCDate()).padStart(2, "0")}`;
+}
+
 //후기,문의작성 title,author,content
 function fetchReviews(productId) {
   fetch(`/api/products/${productId}/review`)
@@ -223,7 +236,7 @@ function fetchReviews(productId) {
           const row = document.createElement("tr");
 
           const dateCell = document.createElement("td");
-          dateCell.textContent = review.date;
+          dateCell.textContent = formatDate(review.date); 
           row.appendChild(dateCell);
 
           const authorCell = document.createElement("td");
@@ -262,7 +275,7 @@ function fetchQuestion(productId) {
           const row = document.createElement("tr");
 
           const dateCell = document.createElement("td");
-          dateCell.textContent = question.date;
+          dateCell.textContent = formatDate(question.date); 
           row.appendChild(dateCell);
 
           const authorCell = document.createElement("td");
@@ -287,49 +300,3 @@ window.onload = function () {
   fetchReviews(productId);
   fetchQuestion(productId);
 };
-
-// //카테고리 구현
-// document.addEventListener("DOMContentLoaded", () => {
-//   const categorySelect = document.getElementById("categorySelect");
-
-//   const fetchAndRenderProducts = (selected) => {
-//     fetch(`/api/products?category=${selected}`)
-//       .then((response) => response.json())
-//       .then((products) => {
-//         renderProducts(products);
-//       })
-//       .catch((error) => {
-//         console.error("Error: fail to fetch", error);
-//       });
-//   };
-
-//   categorySelect.addEventListener("change", (e) => {
-//     e.preventDefault();
-
-//     const selected = categorySelect.value;
-//     console.log(selected);
-
-//     if (selected) {
-//       fetchAndRenderProducts(selected);
-//     }
-//   });
-// });
-
-// 이 코드는 디테일 페이지에서 상품 카테고리 클릭 시 상품 화면이 올바르게 나오게 하기 위한 코드입니다.
-const categories = document.querySelectorAll("#categorySelect li");
-
-for (let category of categories) {
-  category.addEventListener("click", (e) => {
-    e.preventDefault();
-
-    const selected = e.target.getAttribute("data-category");
-
-    // ALL을 선택 시
-    if (selected === "") {
-      window.location.href = "/products";
-    } else {
-      // ALL이 아닌 다른 카테고리 선택 시
-      window.location.href = `/products?category=${selected}`;
-    }
-  });
-}
