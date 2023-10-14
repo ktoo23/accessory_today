@@ -12,8 +12,8 @@ let headerEl = `
   <div class="header-gap row align-items-center justify-content-between">
     <div class="col">
       <div class="search">
-        <form action="/search" method="GET">
-          <input type="text" id="search" name="q" placeholder="SEARCH">
+        <form action="/products" method="GET">
+          <input type="text" id="search" name="word" placeholder="SEARCH">
           <button type="submit" class="search-btn"><i class="bi bi-search"></i></button>
         </form>
       </div>

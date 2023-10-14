@@ -19,7 +19,8 @@ document.addEventListener("DOMContentLoaded", () => {
           console.error("Error: fail to fetch", error);
         });
     } else {
-      await fetch(`/api/products?category=${selected}`)
+      await fetch(`/api/products?category=${selected}
+      `)
         .then((response) => response.json())
         .then((products) => {
           renderProducts(products);

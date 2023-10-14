@@ -169,7 +169,7 @@ class UserService {
       // Order 스키마에서 user의 _id가 userId와 같은 주문 찾기 (한 user의 주문이 여러개일 수 있다.)
       const perPage = 5;
       const total = await Order.countDocuments({ user: new ObjectId(userId) });
-      const userOrders = Order.find({ user: new ObjectId(userId) })
+      const userOrders = await Order.find({ user: new ObjectId(userId) })
          .populate("orderProducts.products")
          .sort({ createdAt: -1 })
          .skip(perPage * (page - 1))
